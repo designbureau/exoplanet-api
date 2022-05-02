@@ -1,6 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import Link from 'next/link'
+
 import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
@@ -35,8 +37,8 @@ export default function Home() {
       <div>
       <h3>Endpoints:</h3>
       <ul>
-        <li>/systems</li>
-        <li>/system/&#123;system&#125;</li>
+        <li><Link href="/api/systems">/api/systems</Link></li>
+        <li><Link href={`/api/system/${systemData? systemData.name : "24 Boo"}`}>{`${systemData? "/api/system/"+ encodeURIComponent(systemData.name) : "/api/system/{system}" }`}</Link></li>
       </ul>
       <ul>
         {data.systems.map((system) => {
