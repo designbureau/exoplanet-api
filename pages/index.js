@@ -55,8 +55,7 @@ export default function Home() {
       </ul>
       </div>
       {systemData && (<pre>
-        { isLoading ? <p>Loading...</p> : ""}
-        {JSON.stringify(systemData, null, 2)}
+        { isLoading ? <p>Loading...</p> : JSON.stringify(systemData, null, 2)}
         </pre>)}
     </div>
   );
