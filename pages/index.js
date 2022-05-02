@@ -18,16 +18,15 @@ export default function Home() {
       });
   }, []);
 
-  if (isLoading) return <p>Loading...</p>;
   if (!data) return <p>No system data</p>;
 
   const clickHandler = (system) => {
-    // setLoading(true);
+    setLoading(true);
     fetch(`api/system/${system}`)
       .then((res) => res.json())
       .then((data) => {
         setSystemData(data.result.system);
-        // setLoading(false);
+        setLoading(false);
       });
   };
 
@@ -55,7 +54,10 @@ export default function Home() {
         })}
       </ul>
       </div>
-      {systemData && (<pre>{JSON.stringify(systemData, null, 2)}</pre>)}
+      {systemData && (<pre>
+        { isLoading ? <p>Loading...</p> : ""}
+        {JSON.stringify(systemData, null, 2)}
+        </pre>)}
     </div>
   );
 }
