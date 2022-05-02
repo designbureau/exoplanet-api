@@ -33,6 +33,12 @@ export default function Home() {
 
   return (
     <div className="grid">
+      <div>
+      <h3>Endpoints:</h3>
+      <ul>
+        <li>/systems</li>
+        <li>/system/&#123;system&#125;</li>
+      </ul>
       <ul>
         {data.systems.map((system) => {
           return (
@@ -48,6 +54,7 @@ export default function Home() {
           );
         })}
       </ul>
+      </div>
       {systemData && (<pre>{JSON.stringify(systemData, null, 2)}</pre>)}
     </div>
   );
