@@ -19,18 +19,43 @@ export default function Home() {
         // setLoading(false);
       });
   }, []);
+  
 
   if (!data) return <p>No system data</p>;
 
   const clickHandler = (system) => {
     setLoading(true);
     fetch(`api/systems/${system}`)
-      .then((res) => res.json())
+        
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        throw new Error('Something went wrong');
+        })
       .then((data) => {
         setSystemData(data.result.system);
         setLoading(false);
-      });
+      })
+      .catch((error) => {
+          setSystemData(error);
+          setLoading(false);
+        });
   };
+
+  // fetch(url).then((response) => {
+  //   if (response.ok) {
+  //     return response.json();
+  //   }
+  //   throw new Error('Something went wrong');
+  // })
+  // .then((responseJson) => {
+  //   // Do something with the response
+  // })
+  // .catch((error) => {
+  //   console.log(error)
+  // });
+
 
   return (
     <div className="grid">
