@@ -23,7 +23,7 @@ export default function Home() {
 
   const clickHandler = (system) => {
     // setLoading(true);
-    fetch(`api/${system}`)
+    fetch(`api/system/${system}`)
       .then((res) => res.json())
       .then((data) => {
         setSystemData(data.result.system);
