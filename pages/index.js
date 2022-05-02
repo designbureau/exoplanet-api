@@ -12,7 +12,7 @@ export default function Home() {
 
   useEffect(() => {
     // setLoading(true);
-    fetch("api/systems")
+    fetch("api/systems/all")
       .then((res) => res.json())
       .then((data) => {
         setData(data);
@@ -24,7 +24,7 @@ export default function Home() {
 
   const clickHandler = (system) => {
     setLoading(true);
-    fetch(`api/system/${system}`)
+    fetch(`api/systems/${system}`)
       .then((res) => res.json())
       .then((data) => {
         setSystemData(data.result.system);
@@ -37,8 +37,8 @@ export default function Home() {
       <div>
       <h3>Endpoints:</h3>
       <ul>
-        <li><Link href="/api/systems">/api/systems</Link></li>
-        <li><Link href={`/api/system/${systemData? systemData.name : "24 Boo"}`}>{`${systemData? "/api/system/"+ encodeURIComponent(systemData.name) : "/api/system/{system}" }`}</Link></li>
+        <li><Link href="/api/systems/all">/api/systems/all</Link></li>
+        <li><Link href={`/api/systems/${systemData? systemData.name : "24 Boo"}`}>{`${systemData? "/api/systems/"+ encodeURIComponent(systemData.name) : "/api/systems/{system}" }`}</Link></li>
       </ul>
       <ul>
         {data.systems.map((system) => {
