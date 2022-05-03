@@ -21,7 +21,6 @@ export default function Home() {
   }, []);
   
 
-  if (!data) return <p>No system data</p>;
 
   const clickHandler = (system) => {
     setLoading(true);
@@ -60,6 +59,7 @@ export default function Home() {
   return (
     <div className="grid">
       <div>
+      { !data? <p>No system data</p> : ""}
       <h3>Endpoints:</h3>
       <ul>
         <li><Link href="/api/systems/all">/api/systems/all</Link></li>
