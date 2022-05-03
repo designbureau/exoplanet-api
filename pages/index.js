@@ -38,7 +38,7 @@ export default function Home() {
         setLoading(false);
       })
       .catch((error) => {
-          setSystemData(error);
+          setSystemData(res);
           setLoading(false);
         });
   };
