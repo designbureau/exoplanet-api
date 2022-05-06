@@ -1,9 +1,9 @@
-:root{
+:root {
   --background: 30, 30, 40;
   --background-darker: 20, 20, 30;
-  --border:10, 10, 20;
-  --text:rgb(180,180,190);
-  --white:white
+  --border: 10, 10, 20;
+  --text: rgb(180, 180, 190);
+  --white: white;
 }
 
 html,
@@ -12,137 +12,149 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    color: white;
-    background:rgb(var(--background));
-    font-size:100%;
+  color: white;
+  background: rgb(var(--background));
+  font-size: 100%;
 }
 
-body{
-  font-size:0.8rem;
+body {
+  font-size: 0.8rem;
 }
 
 a {
   color: inherit;
   text-decoration: none;
-  
 }
 
 * {
   box-sizing: border-box;
 }
 
-
-.grid{
-  display:flex;
-  padding:20px;
-  gap:40px;
-  align-items:flex-start;
+.grid {
+  display: flex;
+  padding: 20px;
+  gap: 40px;
+  align-items: flex-start;
 }
 
-.grid > *{
-  flex-grow:1;
-  width:100%;
-  max-width:50%;
+.grid > * {
+  flex-grow: 1;
+  width: 100%;
+  max-width: 50%;
 }
 
-ul{
-  list-style:none;
-  margin:0;
-  padding:0;
-  
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-ul + ul{
-  margin-top:20px;
+ul + ul {
+  margin-top: 20px;
 }
-pre{
-  padding:20px;
-  background:rgb(var(--background-darker));
+pre {
+  padding: 20px;
+  background: rgb(var(--background-darker));
   box-shadow: 0 0 1px rgb(var(--border));
-  margin:0;
-  white-space:break-spaces;
-  position:sticky;
-  top:20px;
-  overflow:auto;
-  height:calc(100vh - 40px);
+  margin: 0;
+  white-space: break-spaces;
+  position: sticky;
+  top: 20px;
+  overflow: auto;
+  height: calc(100vh - 40px);
   /* border:20px solid rgba(0,0,0,0.5); */
-
 }
 
-button{
+button {
   display: inline-block;
-  background:none;
-  border:none;
-  padding:0;
-  cursor:pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
   color: inherit;
 }
 
-button, a{
-  transition:color .1s ease;
+button,
+a {
+  transition: color 0.1s ease;
 }
 
-button:active, a:active,
-button:hover, a:hover{
-  color:var(--white);
+button:active,
+a:active,
+button:hover,
+a:hover {
+  color: var(--white);
 }
 
-
-
-.navigation{
-  position:fixed;
-  display:grid;
-  height:100vh;
-  transform:translateX(-100%);
-  transition: all .25s linear;
-  background:rgb(var(--background-darker));
-  border-right:1px solid rgb(var(--border));
-  color:var(--text);
+.navigation {
+  position: fixed;
+  z-index: 99;
+  display: grid;
+  height: 100vh;
+  transform: translateX(-100%);
+  transition: all 0.25s linear;
+  background: rgb(var(--background-darker));
+  border-right: 1px solid rgb(var(--border));
+  color: var(--text);
 }
 
 .navigation li a,
 .navigation li button,
-.navigation li span{
-  padding-bottom:.5rem;
-  display:block;
+.navigation li span {
+  padding-bottom: 0.5rem;
+  display: block;
 }
 
-.navigation ul{
-  overflow-y:auto;
-  padding:20px;
+.navigation ul {
+  overflow-y: auto;
+  padding: 20px;
 }
 
-.navigation > ul{
-  display:grid;
+.navigation > ul {
+  display: grid;
 }
 .hasSubMenu,
-.subMenu{
-  height:100%;
-  overflow:auto;
+.subMenu {
+  height: 100%;
+  overflow: auto;
 }
 
 .navigation > ul > li,
-.navigation > ul > li{
-  font-weight:bold;
+.navigation > ul > li {
+  font-weight: bold;
 }
 
-.navigation li > ul{
-  padding-right:0;
+.navigation li > ul {
+  padding-right: 0;
   padding-top: 0;
-
 }
 
-.navigationToggle{
-  position:absolute;
-  transform:translateX(100%);
-  background:rgb(var(--background-darker));
-  border:1px solid rgb(var(--border));
-  border-left:none;
+.navigationToggle {
+  position: absolute;
+  transform: translateX(100%);
+  background: rgb(var(--background-darker));
+  border: 1px solid rgb(var(--border));
+  border-left: none;
   border-radius: 0 4px 4px 0;
-  width:60px;
-  height:60px;
-  right:1px;
+  width: 60px;
+  height: 60px;
+  right: 1px;
 }
 
-.navigation.active{
-  transform:translateX(0);
+.navigation.active {
+  transform: translateX(0);
+}
+
+#canvas-container {
+  height: 100vh;
+  width: 100vw;
+}
+
+.systemNav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: rgb(var(--background-darker));
+  border: 1px solid rgb(var(--border));
+  padding: 20px;
+
 }

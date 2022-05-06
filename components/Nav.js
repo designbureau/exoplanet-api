@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-const Nav = () => {
+const Nav = ({setSystemData}) => {
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
-  const [systemData, setSystemData] = useState(null);
   const [navActive, setNavActive] = useState(false);
 
   useEffect(() => {
@@ -34,10 +33,10 @@ const Nav = () => {
       .then((data) => {
         setSystemData(data.result.system);
         setLoading(false);
-        console.log(data.result.system);
+        // console.log(data.result.system);
       })
       .catch((error) => {
-        setSystemData(res);
+        // setSystemData(data.result.system);
         setLoading(false);
       });
   };
