@@ -1,7 +1,9 @@
 :root {
+  --background-black:0,0,10;
+  /* --background: 30, 30, 40; */
   --background: 30, 30, 40;
-  --background-darker: 20, 20, 30;
-  --border: 10, 10, 20;
+  --background-darker: 0, 0, 10;
+  --border: 0, 0, 5;
   --text: rgb(180, 180, 190);
   --white: white;
 }
@@ -13,7 +15,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   color: white;
-  background: rgb(var(--background));
+  background: rgba(var(--background-black), 1);
   font-size: 100%;
 }
 
@@ -61,7 +63,7 @@ pre {
   top: 20px;
   overflow: auto;
   height: calc(100vh - 40px);
-  /* border:20px solid rgba(0,0,0,0.5); */
+  /* border:20px solid rgba(0,0,0,0.9); */
 }
 
 button {
@@ -92,15 +94,15 @@ a:hover {
   height: 100vh;
   transform: translateX(-100%);
   transition: all 0.25s linear;
-  background: rgb(var(--background-darker));
-  border-right: 1px solid rgb(var(--border));
+  background: rgba(var(--background-darker), 0.9);
+  border-right: 1px solid rgba(var(--border), 0.9);
   color: var(--text);
 }
 
 .navigation li a,
 .navigation li button,
 .navigation li span {
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.9rem;
   display: block;
 }
 
@@ -131,8 +133,8 @@ a:hover {
 .navigationToggle {
   position: absolute;
   transform: translateX(100%);
-  background: rgb(var(--background-darker));
-  border: 1px solid rgb(var(--border));
+  background: rgba(var(--background-darker), 0.9);
+  border: 1px solid rgba(var(--border), 0.9);
   border-left: none;
   border-radius: 0 4px 4px 0;
   width: 60px;
@@ -156,5 +158,5 @@ a:hover {
   background: rgb(var(--background-darker));
   border: 1px solid rgb(var(--border));
   padding: 20px;
-
+  z-index:99;
 }
