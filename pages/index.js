@@ -10,7 +10,7 @@ extend({ OrbitControls });
 
 import SkyBox from "../components/SkyBox";
 import Star from "../components/Star";
-
+import CreateSystem from "../components/CreateSystem";
 
 const CameraControls = () => {
   // Get a reference to the Three.js Camera, and the canvas html element.
@@ -49,6 +49,7 @@ export default function Home() {
           <pointLight position={[10, 10, 10]} />
           <Star position={[0, 0, 0]} />
           <SkyBox/>
+          {systemData && (<CreateSystem systemData={systemData}/>)}
         </Canvas>
       </div>
     </>
