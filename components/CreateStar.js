@@ -1,10 +1,13 @@
 import Star from "./Star";
 const CreateStar = (data) => {
-    data.map((star) => {
-      console.log("star", star.name);   
+ 
+    const Stars = data.map((star) => {
+      console.log("star", star.name[0]);   
+      return <Star key={star.name[0]} starSystemData={star} />
     });
 
-    return(<Star/>);
+    return Stars;
+
   };
 
   export default CreateStar;

@@ -1,7 +1,12 @@
+import Planet from "./Planet";
+
 const CreatePlanet = (data) => {
-  data.map((planet) => {
-    console.log("planet", planet.name);
+  const Planets = data.map((planet) => {
+    console.log("planet", planet.name[0]);
+    return <Planet key={planet.name[0]}/>;
   });
+
+  return Planets;
 };
 
 export default CreatePlanet;
