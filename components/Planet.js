@@ -13,10 +13,14 @@ const Planet = (props) => {
     // Return view, these are regular three.js elements expressed in JSX
     const planetNormalTexture = useLoader(TextureLoader, "/textures/2k_neptune.jpeg");
     
+
+    console.log(mesh);
+
     return (
       <mesh
         {...props}
         ref={mesh}
+        name={props.name}
         // scale={active ? 1.5 : 1}
         onClick={(event) => setActive(!active)}
         onPointerOver={(event) => setHover(true)}

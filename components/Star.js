@@ -6,6 +6,7 @@ import Planet from './Planet'
 const Star = (props) => {
     // This reference will give us direct access to the mesh
     const mesh = useRef()
+    const group = useRef()
     // Set up state for the hover and active state
     // const [hover, setHover] = useState(false)
     // const [active, setActive] = useState(false)
@@ -22,17 +23,25 @@ const Star = (props) => {
       let y = Math.random() * 6 - 1;
       let z = Math.random() * 6 - 1;
 
-      return <Planet key={planet.name[0]} position={[x,y,z]} />  
+      return <Planet key={planet.name[0]} position={[x,y,z]} name={planet.name[0]} />  
     });
 
+    console.log("group mesh", group);
+    console.log("star mesh", mesh);
+
+    console.log("star position", props.position);
+
+    console.log(props);
 
     return (
-      <group>
+      <group ref={group} name={props.starSystemData.name[0]}> 
         <mesh
           {...props}
           ref={mesh}
+          name={props.starSystemData.name[0]}
           // scale={active ? 1.5 : 1}
           // onClick={(event) => setActive(!active)}
+          onClick={() => props.setCameraPosition(props.position)}
           // onPointerOver={(event) => setHover(true)}
           // onPointerOut={(event) => setHover(false)}
           >
