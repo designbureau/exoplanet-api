@@ -3,7 +3,7 @@ import { useMemo } from "react";
 
 const CreateSystem =  ({systemData, setCameraPosition}) => {
   // return CreateBinary(systemData, setCameraPosition);
-  return CreateBinary(systemData, setCameraPosition);
+  return useMemo(() => CreateBinary(systemData, setCameraPosition), [systemData, setCameraPosition])
 
 }
 

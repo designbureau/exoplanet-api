@@ -11,10 +11,11 @@ const Planet = (props) => {
     // Subscribe this component to the render-loop, rotate the mesh every frame
     useFrame((state, delta) => (mesh.current.rotation.y += 0.001))
     // Return view, these are regular three.js elements expressed in JSX
-    const planetNormalTexture = useLoader(TextureLoader, "/textures/2k_neptune.jpeg");
+    const planetNormalTexture = useLoader(TextureLoader, "/textures/2k_mercury.jpeg");
     
 
     console.log(mesh);
+    console.log(props);
 
     return (
       <mesh
@@ -22,11 +23,15 @@ const Planet = (props) => {
         ref={mesh}
         name={props.name}
         // scale={active ? 1.5 : 1}
-        onClick={(event) => setActive(!active)}
+        // onClick={(event) => setActive(!active)}
+        onClick={() => {
+          props.setCameraPosition(props.position)
+          console.log(mesh);
+        }}
         onPointerOver={(event) => setHover(true)}
         onPointerOut={(event) => setHover(false)}>
         <sphereGeometry args={[.1, 64, 64]} />
-        <meshBasicMaterial map={planetNormalTexture} color={hover ? 'hotpink' : 'white'} />
+        <meshBasicMaterial map={planetNormalTexture} color={hover ? '#FFAAAA' : 'white'} />
       </mesh>
     )
 }

@@ -1,6 +1,6 @@
 import { useFrame, useLoader } from '@react-three/fiber'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
-import { useRef, useState } from 'react'
+import { useRef, useState, useMemo } from 'react'
 import Planet from './Planet'
 
 const Star = (props) => {
@@ -8,7 +8,7 @@ const Star = (props) => {
     const mesh = useRef()
     const group = useRef()
     // Set up state for the hover and active state
-    // const [hover, setHover] = useState(false)
+    const [hover, setHover] = useState(false)
     // const [active, setActive] = useState(false)
     // Subscribe this component to the render-loop, rotate the mesh every frame
     useFrame((state, delta) => (mesh.current.rotation.y += 0.001))
@@ -23,7 +23,7 @@ const Star = (props) => {
       let y = Math.random() * 6 - 1;
       let z = Math.random() * 6 - 1;
 
-      return <Planet key={planet.name[0]} position={[x,y,z]} name={planet.name[0]} />  
+      return <Planet key={planet.name[0]} position={[x,y,z]} name={planet.name[0]} setCameraPosition={props.setCameraPosition} />  
     });
 
     console.log("group mesh", group);
@@ -41,15 +41,17 @@ const Star = (props) => {
           name={props.starSystemData.name[0]}
           // scale={active ? 1.5 : 1}
           // onClick={(event) => setActive(!active)}
-          onClick={() => props.setCameraPosition(props.position)}
-          // onPointerOver={(event) => setHover(true)}
-          // onPointerOut={(event) => setHover(false)}
+          onClick={() => {
+            props.setCameraPosition(props.position)
+            console.log(mesh);
+          }}
+          onPointerOver={(event) => setHover(true)}
+          onPointerOut={(event) => setHover(false)}
           >
           <sphereGeometry args={[1, 64, 64]} />
-          <meshBasicMaterial map={starNormalTexture} />
-          {/* <meshStandardMaterial color={hover ? 'hotpink' : 'orange'} /> */}
+          <meshBasicMaterial map={starNormalTexture} color={hover ? '#FFAAAA' : 'white'} />
         </mesh>
-        {Planets}
+        {useMemo(() => Planets,[])}
       </group>
     )
 }
