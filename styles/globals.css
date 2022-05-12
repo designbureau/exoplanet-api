@@ -1,5 +1,5 @@
 :root {
-  --background-black:0,0,10;
+  --background-black: 0, 0, 10;
   /* --background: 30, 30, 40; */
   --background: 30, 30, 40;
   --background-darker: 0, 0, 10;
@@ -97,6 +97,8 @@ a:hover {
   background: rgba(var(--background-darker), 0.9);
   border-right: 1px solid rgba(var(--border), 0.9);
   color: var(--text);
+  width: 100%;
+  max-width: clamp(200px, calc(100vw - 60px), 300px);
 }
 
 .navigation li a,
@@ -112,17 +114,34 @@ a:hover {
 }
 
 .navigation > ul {
-  display: grid;
+  /* display: grid; */
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
 }
 .hasSubMenu,
 .subMenu {
   height: 100%;
   overflow: auto;
 }
+ul.subMenu {
+  padding: 0;
+}
 
 .navigation > ul > li,
 .navigation > ul > li {
   font-weight: bold;
+  width: 100%;
+}
+
+.navigation .filter {
+  margin-bottom: 15px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 6px;
+  border-radius: 5px;
 }
 
 .navigation li > ul {
@@ -158,5 +177,5 @@ a:hover {
   background: rgb(var(--background-darker));
   border: 1px solid rgb(var(--border));
   padding: 20px;
-  z-index:99;
+  z-index: 99;
 }
