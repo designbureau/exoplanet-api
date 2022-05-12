@@ -69,7 +69,7 @@ export default function ApiBrowser() {
 
   return (
     <div className="grid">
-      <div class="api-nav">
+      <div className="api-nav">
       <h3>Endpoints</h3>
       <ul className="pb-0 api-menu">
         <li><Link href="/api/systems/all">/api/systems/all</Link></li>

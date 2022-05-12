@@ -42,14 +42,9 @@ export default function Home() {
           <Canvas
             dpr={[1, 2]}
           >
-            {/* <CameraControls/> */}
-
-            {/* <ambientLight /> */}
-            <pointLight position={[0, 0, 0]} />
-            
-
             {useMemo(() => <SkyBox />,[])}
-
+            
+            <ambientLight color={"0xffffff"} intensity={0.01} />
 
             {systemData && (<CreateSystem
               systemData={systemData}

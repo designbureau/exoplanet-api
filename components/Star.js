@@ -33,6 +33,12 @@ const Star = (props) => {
 
     console.log(props);
 
+
+    // const pointLight = new THREE.PointLight(0xffffff, 1, 10000);
+    // pointLight.position.set(0, 0, 0);
+    // starGroup.add(pointLight);
+
+
     return (
       <group ref={group} name={props.starSystemData.name[0]}> 
         <mesh
@@ -51,6 +57,7 @@ const Star = (props) => {
           <sphereGeometry args={[1, 64, 64]} />
           <meshBasicMaterial map={starNormalTexture} color={hover ? '#FFAAAA' : 'white'} />
         </mesh>
+        <pointLight position={props.position} color={"0xffffff"} intensity={1} distance={10000} castShadow/>
         {useMemo(() => Planets,[])}
       </group>
     )
