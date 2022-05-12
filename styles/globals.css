@@ -101,6 +101,11 @@ a:hover {
   max-width: clamp(200px, calc(100vw - 60px), 300px);
 }
 
+.relative{
+  position: relative;
+}
+
+.api-nav li a,
 .navigation li a,
 .navigation li button,
 .navigation li span {
@@ -127,7 +132,6 @@ a:hover {
 ul.subMenu {
   padding: 0;
 }
-
 .navigation > ul > li,
 .navigation > ul > li {
   font-weight: bold;
@@ -178,4 +182,24 @@ ul.subMenu {
   border: 1px solid rgb(var(--border));
   padding: 20px;
   z-index: 99;
+}
+
+
+.text-white{
+  color:white;
+}
+
+.pb-0{
+  padding-bottom:0;
+}
+.mt-0{
+  margin-top:0;
+}
+
+.api-menu li a {
+  color:var(--text);
+}
+
+.api-menu li a:hover, .api-menu li a:focus{
+  color:var(--white);
 }
