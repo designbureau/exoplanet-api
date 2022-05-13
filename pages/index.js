@@ -13,6 +13,10 @@ import CameraControls from "camera-controls";
 
 
 
+
+
+
+
 // const Controls = ({cameraPosition}) => {
 //   const ref = useRef();
 //   // useFrame(() => (ref.target = cameraPosition));
@@ -25,39 +29,32 @@ import CameraControls from "camera-controls";
 CameraControls.install({ THREE })
 extend({ CameraControls })
 
-function Controls({cameraPosition, zoom, pos = new THREE.Vector3(), look = new THREE.Vector3()}) {
+function Controls({cameraPosition, focus}) {
   // const ref = useRef()
   const camera = useThree((state) => state.camera)
   const gl = useThree((state) => state.gl)
   const controls = useMemo(() => new CameraControls(camera, gl.domElement,), [])
 
-  controls.dollyTo(1.5, true)
+  let radius = 1
+  focus? radius = focus.current.geometry.parameters.radius : 1
+  controls.minDistance = radius + .1
 
 
+  focus? controls.fitToBox(focus.current, true) : controls.dollyTo(1.5, true)
+  controls.setTarget(cameraPosition[0], cameraPosition[1], cameraPosition[2], true)
 
   return useFrame((state, delta) => {
-  
-      // state.camera.position.lerp(pos, 0.5)
-      // state.camera.updateProjectionMatrix()
-   
-      controls.setTarget(cameraPosition[0], cameraPosition[1], cameraPosition[2], true)
-
-      return controls.update(delta)
+    return controls.update(delta)
   })
 }
 
 
-const Camera = ({cameraPosition}) => {
-  const ref = useRef();
-  // useFrame(() => (cameraRef.position = cameraPosition));
-  // useFrame((state) => console.log(cameraPosition));
-  return <PerspectiveCamera ref={ref} makeDefault fov={50} near={0.1} far={100000000} position={[0, 0, 5]} />;
-};
 
 export default function Home() {
   const [systemData, setSystemData] = useState(null);
   const [cameraPosition, setCameraPosition] = useState([0, 0, 5]);
   const [cursor, setCursor] = useState("default");
+  const [focus, setFocus] = useState();
 
   return (
     <>
@@ -75,8 +72,9 @@ export default function Home() {
             {systemData && (<CreateSystem
               systemData={systemData}
               setCameraPosition={setCameraPosition}
+              setFocus={setFocus}
             />)}
-            <Controls cameraPosition={cameraPosition} />
+            <Controls cameraPosition={cameraPosition} focus={focus} />
             {/* <Camera cameraPosition={cameraPosition}/> */}
             {/* <PerspectiveCamera makeDefault fov={50} near={0.1} far={100000000} /> */}
           </Canvas>

@@ -1,7 +1,7 @@
 import CreateStar from "./CreateStar";
 import CreatePlanet from "./CreatePlanet";
 
-const CreateBinary = (systemData, setCameraPosition) => {
+const CreateBinary = (systemData, setCameraPosition, setFocus) => {
   // return (
   //   <>
   //     {systemData.binary &&
@@ -25,12 +25,12 @@ const CreateBinary = (systemData, setCameraPosition) => {
 
 
 
-  let Star = systemData.star && CreateStar(systemData.star, setCameraPosition);
-  let Planet = systemData.planet && CreatePlanet(systemData.planet, setCameraPosition);
+  let Star = systemData.star && CreateStar(systemData.star, setCameraPosition, setFocus);
+  let Planet = systemData.planet && CreatePlanet(systemData.planet, setCameraPosition, setFocus);
 
   let Binary = systemData.binary && systemData.binary.map((binary) => {
     console.log("Binary", binary);
-    return CreateBinary(binary, setCameraPosition);
+    return CreateBinary(binary, setCameraPosition, setFocus);
   });
 
   // console.log("data", systemData);

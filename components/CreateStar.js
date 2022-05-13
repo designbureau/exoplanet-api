@@ -1,5 +1,5 @@
 import Star from "./Star";
-const CreateStar = (data, setCameraPosition) => {
+const CreateStar = (data, setCameraPosition, setFocus) => {
   const Stars = data.map((star, i) => {
 
     console.log(i);
@@ -15,7 +15,7 @@ const CreateStar = (data, setCameraPosition) => {
     // }
 
     console.log("star", star.name[0]);
-    return <Star key={star.name[0]} position={[x,y,z]} starSystemData={star} setCameraPosition={setCameraPosition} />;
+    return <Star key={star.name[0]} position={[x,y,z]} starSystemData={star} setCameraPosition={setCameraPosition} setFocus={setFocus} />;
   });
 
   return Stars;

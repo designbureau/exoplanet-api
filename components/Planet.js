@@ -29,11 +29,12 @@ const Planet = (props) => {
         // onClick={(event) => setActive(!active)}
         onClick={(e) => {
           props.setCameraPosition(props.position)
+          props.setFocus(mesh)
           console.log(mesh);
         }}
         onPointerOver={(event) => setHover(true)}
         onPointerOut={(event) => setHover(false)}>
-        <sphereGeometry args={[.1, 64, 64]} />
+        <sphereGeometry args={[.1, 256, 256]} />
         <meshStandardMaterial map={planetNormalTexture} color={hover ? '#FFAAAA' : 'white'} />
       </mesh>
     )

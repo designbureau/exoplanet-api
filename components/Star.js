@@ -23,7 +23,7 @@ const Star = (props) => {
       let y = Math.random() * 6 - 1;
       let z = Math.random() * 6 - 1;
 
-      return <Planet key={planet.name[0]} position={[x,y,z]} name={planet.name[0]} setCameraPosition={props.setCameraPosition} />  
+      return <Planet key={planet.name[0]} position={[x,y,z]} name={planet.name[0]} setCameraPosition={props.setCameraPosition} setFocus={props.setFocus} />  
     });
 
     console.log("group mesh", group);
@@ -49,12 +49,13 @@ const Star = (props) => {
           // onClick={(event) => setActive(!active)}
           onClick={(e) => {
             props.setCameraPosition(props.position)
+            props.setFocus(mesh)
             console.log(mesh);
           }}
           onPointerOver={(event) => setHover(true)}
           onPointerOut={(event) => setHover(false)}
           >
-          <sphereGeometry args={[1, 64, 64]} />
+          <sphereGeometry args={[1, 256, 256]} />
           <meshBasicMaterial map={starNormalTexture} color={hover ? '#FFAAAA' : 'white'} />
         </mesh>
         <pointLight position={props.position} color={0xffffff} intensity={1} distance={10000} castShadow/>
