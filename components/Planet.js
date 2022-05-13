@@ -35,7 +35,7 @@ const Planet = (props) => {
         onPointerOver={(event) => setHover(true)}
         onPointerOut={(event) => setHover(false)}>
         <sphereGeometry args={[.1, 256, 256]} />
-        <meshStandardMaterial map={planetNormalTexture} color={hover ? '#FFAAAA' : 'white'} />
+        <meshStandardMaterial map={planetNormalTexture} color={hover ? '#CCAAAA' : 'white'} />
       </mesh>
     )
 }

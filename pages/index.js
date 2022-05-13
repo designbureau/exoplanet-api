@@ -3,28 +3,12 @@ import * as THREE from 'three'
 import Nav from "../components/Nav";
 import SystemNav from "../components/SystemNav";
 import { useRef, useState, useMemo } from "react";
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-
+// import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas, useFrame, useThree, extend } from "@react-three/fiber";
-
 import SkyBox from "../components/SkyBox";
 import CreateSystem from "../components/CreateSystem";
 import CameraControls from "camera-controls";
 
-
-
-
-
-
-
-// const Controls = ({cameraPosition}) => {
-//   const ref = useRef();
-//   // useFrame(() => (ref.target = cameraPosition));
-//   // useFrame((state) => console.log(cameraPosition));
-//   // THREE.MathUtils.lerp(ref.target, cameraPosition, 0.1)
-
-//   return <OrbitControls ref={ref} makeDefault target={cameraPosition}/>;
-// };
 
 CameraControls.install({ THREE })
 extend({ CameraControls })
