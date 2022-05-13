@@ -57,7 +57,7 @@ const Star = (props) => {
           <sphereGeometry args={[1, 64, 64]} />
           <meshBasicMaterial map={starNormalTexture} color={hover ? '#FFAAAA' : 'white'} />
         </mesh>
-        <pointLight position={props.position} color={"0xffffff"} intensity={1} distance={10000} castShadow/>
+        <pointLight position={props.position} color={0xffffff} intensity={1} distance={10000} castShadow/>
         {useMemo(() => Planets,[])}
       </group>
     )

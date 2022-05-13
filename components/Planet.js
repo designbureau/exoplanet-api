@@ -14,6 +14,9 @@ const Planet = (props) => {
     const planetNormalTexture = useLoader(TextureLoader, "/textures/2k_mercury.jpeg");
     
 
+
+
+
     console.log(mesh);
     console.log(props);
 
