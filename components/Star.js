@@ -47,7 +47,7 @@ const Star = (props) => {
           name={props.starSystemData.name[0]}
           // scale={active ? 1.5 : 1}
           // onClick={(event) => setActive(!active)}
-          onClick={() => {
+          onClick={(e) => {
             props.setCameraPosition(props.position)
             console.log(mesh);
           }}

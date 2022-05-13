@@ -13,30 +13,38 @@ import CameraControls from "camera-controls";
 
 
 
-const Controls = ({cameraPosition}) => {
-  const ref = useRef();
-  // useFrame(() => (ref.target = cameraPosition));
-  // useFrame((state) => console.log(cameraPosition));
-  // THREE.MathUtils.lerp(ref.target, cameraPosition, 0.1)
+// const Controls = ({cameraPosition}) => {
+//   const ref = useRef();
+//   // useFrame(() => (ref.target = cameraPosition));
+//   // useFrame((state) => console.log(cameraPosition));
+//   // THREE.MathUtils.lerp(ref.target, cameraPosition, 0.1)
 
-  return <OrbitControls ref={ref} makeDefault target={cameraPosition}/>;
-};
+//   return <OrbitControls ref={ref} makeDefault target={cameraPosition}/>;
+// };
 
 CameraControls.install({ THREE })
 extend({ CameraControls })
 
-// function Controls({cameraPosition}) {
-//   const ref = useRef()
-//   const camera = useThree((state) => state.camera)
-//   const gl = useThree((state) => state.gl)
-//   // useFrame((state, delta) => ref.current.update(delta))
-//   useFrame((state, delta) => ref.current.update(delta))
+function Controls({cameraPosition, zoom, pos = new THREE.Vector3(), look = new THREE.Vector3()}) {
+  // const ref = useRef()
+  const camera = useThree((state) => state.camera)
+  const gl = useThree((state) => state.gl)
+  const controls = useMemo(() => new CameraControls(camera, gl.domElement,), [])
 
-//   // lerpLookAt
-//   return <cameraControls ref={ref} args={[camera, gl.domElement]} target={cameraPosition} />
-// }
+  controls.dollyTo(1.5, true)
 
 
+
+  return useFrame((state, delta) => {
+  
+      // state.camera.position.lerp(pos, 0.5)
+      // state.camera.updateProjectionMatrix()
+   
+      controls.setTarget(cameraPosition[0], cameraPosition[1], cameraPosition[2], true)
+
+      return controls.update(delta)
+  })
+}
 
 
 const Camera = ({cameraPosition}) => {
@@ -50,8 +58,6 @@ export default function Home() {
   const [systemData, setSystemData] = useState(null);
   const [cameraPosition, setCameraPosition] = useState([0, 0, 5]);
   const [cursor, setCursor] = useState("default");
-
-
 
   return (
     <>
