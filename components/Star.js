@@ -26,17 +26,11 @@ const Star = (props) => {
       return <Planet key={planet.name[0]} position={[x,y,z]} name={planet.name[0]} setCameraPosition={props.setCameraPosition} setFocus={props.setFocus} />  
     });
 
-    console.log("group mesh", group);
-    console.log("star mesh", mesh);
+    // console.log("group mesh", group);
+    // console.log("star mesh", mesh);
+    // console.log("star position", props.position);
+    // console.log(props);
 
-    console.log("star position", props.position);
-
-    console.log(props);
-
-
-    // const pointLight = new THREE.PointLight(0xffffff, 1, 10000);
-    // pointLight.position.set(0, 0, 0);
-    // starGroup.add(pointLight);
 
 
     return (
@@ -50,7 +44,8 @@ const Star = (props) => {
           onClick={(e) => {
             props.setCameraPosition(props.position)
             props.setFocus(mesh)
-            console.log(mesh);
+            console.log("clicked mesh", mesh);
+            console.log("clicked mesh group", group);
           }}
           onPointerOver={(event) => setHover(true)}
           onPointerOut={(event) => setHover(false)}
@@ -58,7 +53,7 @@ const Star = (props) => {
           <sphereGeometry args={[1, 256, 256]} />
           <meshBasicMaterial map={starNormalTexture} color={hover ? '#CCAAAA' : 'white'} />
         </mesh>
-        <pointLight position={props.position} color={0xffffff} intensity={1} distance={10000} castShadow/>
+        <pointLight position={props.position} color={0xffffff} intensity={.5} distance={100} castShadow/>
         {useMemo(() => Planets,[])}
       </group>
     )
