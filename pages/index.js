@@ -23,7 +23,7 @@ export default function Home() {
       <div id="canvas-container" style={{cursor:cursor}}>
           <Canvas
             dpr={[1, 2]}
-            camera={[50,0.1,1000000]}
+            camera={[40,0.1,1000000]}
           >
             <ambientLight color={0xffffff} intensity={0.001} />
             {useMemo(() => <SkyBox />,[])}
