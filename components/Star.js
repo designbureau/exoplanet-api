@@ -1,9 +1,12 @@
 import { useFrame, useLoader } from '@react-three/fiber'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
-import { useRef, useState, useMemo } from 'react'
+import { useRef, useState, useMemo, useContext } from 'react'
 import Planet from './Planet'
+import { EnvContext } from './EnvContext'
 
 const Star = (props) => {
+
+    const constants = useContext(EnvContext);
     // This reference will give us direct access to the mesh
     const mesh = useRef()
     const group = useRef()
@@ -15,7 +18,7 @@ const Star = (props) => {
     // Return view, these are regular three.js elements expressed in JSX
     const starNormalTexture = useLoader(TextureLoader, "/textures/8k_sun.jpeg");
     
-    // console.log("props", props.starSystemData);
+    console.log("star system props", props.starSystemData);
 
     const Planets = props.starSystemData.planet && props.starSystemData.planet.map((planet) => {
 
@@ -23,7 +26,7 @@ const Star = (props) => {
       let y = Math.random() * 6 - 1;
       let z = Math.random() * 6 - 1;
 
-      return <Planet key={planet.name[0]} position={[x,y,z]} name={planet.name[0]} setCameraPosition={props.setCameraPosition} setFocus={props.setFocus} />  
+      return <Planet key={planet.name[0]} position={[x,y,z]} name={planet.name[0]} setCameraPosition={props.setCameraPosition} setFocus={props.setFocus} planetDetails={planet} />  
     });
 
     // console.log("group mesh", group);
@@ -46,6 +49,7 @@ const Star = (props) => {
             props.setFocus(mesh)
             console.log("clicked mesh", mesh);
             console.log("clicked mesh group", group);
+            console.log("context from star", constants.distance.au);
           }}
           onPointerOver={(event) => setHover(true)}
           onPointerOut={(event) => setHover(false)}

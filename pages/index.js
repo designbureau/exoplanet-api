@@ -7,13 +7,14 @@ import { Canvas, useFrame, useThree, extend } from "@react-three/fiber";
 import SkyBox from "../components/SkyBox";
 import CreateSystem from "../components/CreateSystem";
 import Controls from '../components/CameraControls';
-
+import { EnvContext, Constants } from "../components/EnvContext";
 
 export default function Home() {
   const [systemData, setSystemData] = useState(null);
   const [cameraPosition, setCameraPosition] = useState([0, 0, 5]);
   const [cursor, setCursor] = useState("default");
   const [focus, setFocus] = useState();
+
 
   return (
     <>
@@ -24,18 +25,16 @@ export default function Home() {
             dpr={[1, 2]}
             camera={[50,0.1,1000000]}
           >
+            <ambientLight color={0xffffff} intensity={0.001} />
             {useMemo(() => <SkyBox />,[])}
-            
-            <ambientLight color={0xffffff} intensity={0.01} />
-
-            {systemData && (<CreateSystem
-              systemData={systemData}
-              setCameraPosition={setCameraPosition}
-              setFocus={setFocus}
-            />)}
+            <EnvContext.Provider value={Constants}>
+              {systemData && (<CreateSystem
+                systemData={systemData}
+                setCameraPosition={setCameraPosition}
+                setFocus={setFocus}
+              />)}
+            </EnvContext.Provider>
             <Controls cameraPosition={cameraPosition} focus={focus} />
-            {/* <Camera cameraPosition={cameraPosition}/> */}
-            {/* <PerspectiveCamera makeDefault fov={50} near={0.1} far={100000000} /> */}
           </Canvas>
         
       </div>
