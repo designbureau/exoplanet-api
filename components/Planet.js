@@ -1,5 +1,4 @@
-import { useFrame, useLoader } from '@react-three/fiber'
-import { TextureLoader } from 'three/src/loaders/TextureLoader'
+import { useFrame } from '@react-three/fiber'
 import { useRef, useState, useContext} from 'react'
 import { EnvContext } from './EnvContext'
 import PlanetTexture from './PlanetTextures'
@@ -21,7 +20,15 @@ const Planet = (props) => {
     console.log("planet details", props.planetDetails);
 
     // let radius = props.planetDetail.radius._ ? props.planetDetail.radius[0]._ : 0.5;
-    // console.log(props.planetDetail.radius)
+
+    // if(mesh){
+    //   props.refs.current.push(mesh);
+    // }
+    // console.log(props.refs)
+
+    mesh.current && props.refs.current.push(mesh)
+
+
 
     let radius;
     if (props.planetDetails.hasOwnProperty("radius")) {
@@ -32,7 +39,7 @@ const Planet = (props) => {
     let mass;
     if (props.planetDetails.hasOwnProperty("mass")) {
       if (Array.isArray(props.planetDetails.mass)) {
-        console.log("is array");
+        // console.log("is array");
         if(props.planetDetails.mass[0].hasOwnProperty("_")){
           mass = parseFloat(props.planetDetails.mass[0]._);
         }
@@ -41,10 +48,23 @@ const Planet = (props) => {
         mass = parseFloat(props.planetDetails.mass._);
       }
     }
-    console.log("mass", mass)
+
+    let scale = 1;
+
+    if(radius){
+        scale = radius;
+    }
+    if(mass){
+        scale = mass;
+    }
+
+    // scale = scale / constants.mass.jupiter;
 
 
     const planetTexture = PlanetTexture(mass, radius);
+
+    // props.refs.current.push(mesh);
+
 
     return (
       <mesh
@@ -58,10 +78,12 @@ const Planet = (props) => {
           props.setFocus(mesh)
           console.log("clicked mesh", mesh);
           console.log("context from planet", constants.distance.au);
+          console.log("planet scale", scale);
+
         }}
         onPointerOver={(event) => setHover(true)}
         onPointerOut={(event) => setHover(false)}>
-        <sphereGeometry args={[.25, 256, 256]} />
+        <sphereGeometry args={[(scale), 256, 256]} />
         <meshStandardMaterial map={planetTexture} color={hover ? '#FFEEEE' : 'white'} />
       </mesh>
     )

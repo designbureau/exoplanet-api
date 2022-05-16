@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import CameraControls from "camera-controls";
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, useEffect } from "react";
 import { useFrame, useThree, extend } from "@react-three/fiber";
 
 
@@ -9,9 +9,22 @@ extend({ CameraControls })
 
 const Controls = ({cameraPosition, focus}) => {
   // const ref = useRef()
+  // let width, height;
+  // useEffect(() => {
+  //   width = window.innerWidth;
+  //   height = window.innerHeight;
+  // });
+
+  let width = window.innerWidth;
+  let height = window.innerHeight;
   const camera = useThree((state) => state.camera)
   const gl = useThree((state) => state.gl)
   const controls = useMemo(() => new CameraControls(camera, gl.domElement,), [])
+  camera.near = 0.1;
+  camera.fov = 50;
+  camera.far = 100000;
+  camera.aspect = width/height;
+  console.log(camera);
 
   let radius = 1
   focus? radius = focus.current.geometry.parameters.radius : 1

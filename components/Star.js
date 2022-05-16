@@ -1,67 +1,166 @@
-import { useFrame, useLoader } from '@react-three/fiber'
-import { TextureLoader } from 'three/src/loaders/TextureLoader'
-import { useRef, useState, useMemo, useContext } from 'react'
-import Planet from './Planet'
-import { EnvContext } from './EnvContext'
+import { useFrame, useLoader } from "@react-three/fiber";
+import { TextureLoader } from "three/src/loaders/TextureLoader";
+import { useRef, useState, useMemo, useContext } from "react";
+import Planet from "./Planet";
+import { EnvContext } from "./EnvContext";
+import chroma from "chroma-js";
 
 const Star = (props) => {
+  const constants = useContext(EnvContext);
+  // This reference will give us direct access to the mesh
+  const mesh = useRef();
+  const group = useRef();
+  // Set up state for the hover and active state
+  const [hover, setHover] = useState(false);
+  // const [active, setActive] = useState(false)
+  // Subscribe this component to the render-loop, rotate the mesh every frame
+  useFrame((state, delta) => (mesh.current.rotation.y += 0.001));
+  // Return view, these are regular three.js elements expressed in JSX
+  const starNormalTexture = useLoader(TextureLoader, "/textures/8k_sun.jpeg");
 
-    const constants = useContext(EnvContext);
-    // This reference will give us direct access to the mesh
-    const mesh = useRef()
-    const group = useRef()
-    // Set up state for the hover and active state
-    const [hover, setHover] = useState(false)
-    // const [active, setActive] = useState(false)
-    // Subscribe this component to the render-loop, rotate the mesh every frame
-    useFrame((state, delta) => (mesh.current.rotation.y += 0.001))
-    // Return view, these are regular three.js elements expressed in JSX
-    const starNormalTexture = useLoader(TextureLoader, "/textures/8k_sun.jpeg");
-    
-    console.log("star system props", props.starSystemData);
+  console.log("star system props", props.starSystemData);
 
-    const Planets = props.starSystemData.planet && props.starSystemData.planet.map((planet) => {
+  const Planets =
+    props.starSystemData.planet &&
+    props.starSystemData.planet.map((planet) => {
+      let x = Math.random() * 50 - 1;
+      let y = Math.random() * 50 - 1;
+      let z = Math.random() * 50 - 1;
 
-      let x = Math.random() * 6 - 1;
-      let y = Math.random() * 6 - 1;
-      let z = Math.random() * 6 - 1;
-
-      return <Planet key={planet.name[0]} position={[x,y,z]} name={planet.name[0]} setCameraPosition={props.setCameraPosition} setFocus={props.setFocus} planetDetails={planet} />  
+      return (
+        <Planet
+          key={planet.name[0]}
+          position={[x, y, z]}
+          name={planet.name[0]}
+          setCameraPosition={props.setCameraPosition}
+          setFocus={props.setFocus}
+          planetDetails={planet}
+          refs={props.refs}
+        />
+      );
     });
 
-    // console.log("group mesh", group);
-    // console.log("star mesh", mesh);
-    // console.log("star position", props.position);
-    // console.log(props);
+  // console.log("group mesh", group);
+  // console.log("star mesh", mesh);
+  // console.log("star position", props.position);
+  // console.log(props);
 
+  // {items.map(item => (
+  //  <p key={item} ref={(element) => itemEls.current.push(element)}>{item}</p>
+  // console.log("starrefs", props.starRefs);
 
+  // props.refs.current.push(mesh);
 
-    return (
-      <group ref={group} name={props.starSystemData.name[0]}> 
-        <mesh
-          {...props}
-          ref={mesh}
-          name={props.starSystemData.name[0]}
-          // scale={active ? 1.5 : 1}
-          // onClick={(event) => setActive(!active)}
-          onClick={(e) => {
-            props.setCameraPosition(props.position)
-            props.setFocus(mesh)
-            console.log("clicked mesh", mesh);
-            console.log("clicked mesh group", group);
-            console.log("context from star", constants.distance.au);
-          }}
-          onPointerOver={(event) => setHover(true)}
-          onPointerOut={(event) => setHover(false)}
-          >
-          <sphereGeometry args={[1, 256, 256]} />
-          <meshBasicMaterial map={starNormalTexture} color={hover ? '#CCAAAA' : 'white'} />
-        </mesh>
-        <pointLight position={props.position} color={0xffffff} intensity={.5} distance={100} castShadow/>
-        {useMemo(() => Planets,[])}
-      </group>
-    )
-}
+  let radius;
+  if (props.starSystemData.hasOwnProperty("radius")) {
+    if (props.starSystemData.radius.hasOwnProperty("_")) {
+      radius = parseFloat(props.planetDetails.radius._);
+    }
+  }
+  let mass;
+  if (props.starSystemData.hasOwnProperty("mass")) {
+    if (Array.isArray(props.starSystemData.mass)) {
+      // console.log("is array");
+      if (props.starSystemData.mass[0].hasOwnProperty("_")) {
+        mass = parseFloat(props.starSystemData.mass[0]._);
+      }
+    }
+    if (props.starSystemData.mass.hasOwnProperty("_")) {
+      mass = parseFloat(props.starSystemData.mass._);
+    }
+  }
+
+  let scale = 1;
+  if (radius) {
+    scale = radius;
+  }
+  if (mass) {
+    scale = mass;
+  }
+  scale = scale * constants.radius.sol * 100;
+
+  let temperature = 6500;
+  let spectraltype;
+  if (props.starSystemData.hasOwnProperty("temperature")) {
+    if (Array.isArray(props.starSystemData.temperature)) {
+      // console.log("is array");
+      if (props.starSystemData.temperature[0].hasOwnProperty("_")) {
+        temperature = parseFloat(props.starSystemData.temperature[0]._);
+      }
+    }
+    if (props.starSystemData.temperature.hasOwnProperty("_")) {
+      temperature = parseFloat(props.starSystemData.temperature._);
+    }
+  } else if (props.starSystemData.hasOwnProperty("spectraltype")) {
+    spectraltype = props.starSystemData.spectraltype[0][0];
+    console.log("spectraltype", spectraltype);
+    switch (spectraltype) {
+      case "M":
+        temperature = 3000;
+        break;
+      case "K":
+        temperature = 4500;
+        break;
+      case "G":
+        temperature = 5500;
+        break;
+      case "F":
+        temperature = 6500;
+        break;
+      case "A":
+        temperature = 8000;
+        break;
+      case "B":
+        temperature = 20000;
+        break;
+      case "O":
+        temperature = 40000;
+        break;
+      default:
+        temperature = 6500;
+        break;
+    }
+  }
+
+  let color = chroma.temperature(temperature).hex("rgb");
+  console.log("temperature", temperature);
+  console.log("chroma", color);
+
+  return (
+    <group ref={group} name={props.starSystemData.name[0]}>
+      <mesh
+        {...props}
+        ref={mesh}
+        name={props.starSystemData.name[0]}
+        // scale={active ? 1.5 : 1}
+        // onClick={(event) => setActive(!active)}
+        onClick={(e) => {
+          props.setCameraPosition(props.position);
+          props.setFocus(mesh);
+          console.log("clicked mesh", mesh);
+          console.log("clicked mesh group", group);
+          console.log("context from star", constants.distance.au);
+          console.log("star scale", scale);
+        }}
+        onPointerOver={(event) => setHover(true)}
+        onPointerOut={(event) => setHover(false)}
+      >
+        <sphereGeometry args={[scale, 256, 256]} />
+        <meshMatcapMaterial
+          // map={starNormalTexture}
+          color={hover ? "#CCAAAA" : color}
+        />
+      </mesh>
+      <pointLight
+        position={props.position}
+        color={0xffffff}
+        intensity={1}
+        distance={10000}
+        castShadow
+      />
+      {useMemo(() => Planets, [])}
+    </group>
+  );
+};
 
 export default Star;
-  

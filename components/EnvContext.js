@@ -1,20 +1,21 @@
+import { createContext } from "react";
 
-  import { createContext } from "react";
+// 1047.35
 
-  export const Constants = {
-    mass: {
-      sol: 1,
-      jupiter: .1,
-      earth: .01
-    },
-    radius:{
-      sol: 1,
-      jupiter: .2,
-    },
-    distance: {
-      au: 5,
-    }
-  };
+export const Constants = {
+  mass: {
+    sol: 1,
+    jupiter: 1047.35,
+    earth: 332946,
+  },
+  radius: {
+    sol: 0.10045,
+    jupiter: 1,
+    earth: 11.209,
+  },
+  distance: {
+    au: 5,
+  }
+};
 
-
-  export const EnvContext = createContext();
+export const EnvContext = createContext();

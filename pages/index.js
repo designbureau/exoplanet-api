@@ -2,7 +2,7 @@
 import Nav from "../components/Nav";
 import SystemNav from "../components/SystemNav";
 import { useRef, useState, useMemo } from "react";
-// import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { PerspectiveCamera } from "@react-three/drei";
 import { Canvas, useFrame, useThree, extend } from "@react-three/fiber";
 import SkyBox from "../components/SkyBox";
 import CreateSystem from "../components/CreateSystem";
@@ -15,6 +15,8 @@ export default function Home() {
   const [cursor, setCursor] = useState("default");
   const [focus, setFocus] = useState();
 
+  const refs = useRef(new Array());
+
 
   return (
     <>
@@ -23,7 +25,8 @@ export default function Home() {
       <div id="canvas-container" style={{cursor:cursor}}>
           <Canvas
             dpr={[1, 2]}
-            camera={[40,0.1,1000000]}
+            // new THREE.PerspectiveCamera( 45, width / height, 1, 1000 );
+            // camera={[50, 1.7, 0.1, 1000]}
           >
             <ambientLight color={0xffffff} intensity={0.001} />
             {useMemo(() => <SkyBox />,[])}
@@ -32,8 +35,10 @@ export default function Home() {
                 systemData={systemData}
                 setCameraPosition={setCameraPosition}
                 setFocus={setFocus}
+                refs={refs}
               />)}
             </EnvContext.Provider>
+            {/* <PerspectiveCamera fov={50} aspect={1.7} near={0.1} far={100000000} /> */}
             <Controls cameraPosition={cameraPosition} focus={focus} />
           </Canvas>
         
