@@ -1,10 +1,14 @@
+import * as THREE from 'three'
 import { useFrame, useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { useRef, useState, useMemo, useContext } from "react";
 import Planet from "./Planet";
 import { EnvContext } from "./EnvContext";
 import chroma from "chroma-js";
-import * as THREE from 'three'
+// import BloomEffect from './BloomPass';
+import { EffectComposer, SelectiveBloom, Noise, Selection, Select } from '@react-three/postprocessing'
+
+
 
 
 const Star = (props) => {
@@ -57,6 +61,12 @@ const Star = (props) => {
 
   // props.refs.current.push(mesh);
 
+
+
+
+
+
+  
   let radius;
   if (props.starSystemData.hasOwnProperty("radius")) {
     if (props.starSystemData.radius.hasOwnProperty("_")) {
@@ -139,45 +149,60 @@ const Star = (props) => {
   // color.convertGammaToLinear( 2.2 );
   // console.log("temperature", temperature);
   // console.log("chroma", color);
+  const lightRef = useRef();
+
 
   return (
     <group ref={group} name={props.starSystemData.name[0]}>
-      <mesh
-        {...props}
-        ref={mesh}
-        name={props.starSystemData.name[0]}
-        // scale={active ? 1.5 : 1}
-        // onClick={(event) => setActive(!active)}
-        onClick={(e) => {
-          props.setCameraPosition(props.position);
-          props.setFocus(mesh);
-          console.log("clicked mesh", mesh);
-          console.log("clicked mesh group", group);
-          // console.log("context from star", constants.distance.au);
-          console.log("star scale", scale);
-          console.log("temperature", temperature);
-          console.log("chroma", color);
-          console.log("spectraltype", spectraltypeFull);
-        }}
-        // onPointerOver={(event) => setHover(true)}
-        // onPointerOut={(event) => setHover(false)}
-      >
-        <sphereGeometry args={[scale, 256, 256]} />
-        <meshBasicMaterial
-          map={starNormalTexture}
-          // blending={THREE.MixOperation}
-          // format={THREE.LuminanceFormat}
-          color={hover ? "#CCAAAA" : color}
-        />
-      </mesh>
-      <pointLight
-        position={props.position}
-        color={0xffffff}
-        intensity={1}
-        distance={10000}
-        castShadow
-      />
-      {useMemo(() => Planets, [])}
+
+      <Selection>
+        <EffectComposer>
+        <SelectiveBloom lights={lightRef} luminanceThreshold={0} luminanceSmoothing={0.9} height={400} />
+        {/* <Noise opacity={0.02} /> */}
+      </EffectComposer>
+        <Select enabled>
+          <mesh
+            {...props}
+            ref={mesh}
+            name={props.starSystemData.name[0]}
+            // scale={active ? 1.5 : 1}
+            // onClick={(event) => setActive(!active)}
+            onClick={(e) => {
+              props.setCameraPosition(props.position);
+              props.setFocus(mesh);
+              console.log("clicked mesh", mesh);
+              console.log("clicked mesh group", group);
+              // console.log("context from star", constants.distance.au);
+              console.log("star scale", scale);
+              console.log("temperature", temperature);
+              console.log("chroma", color);
+              console.log("spectraltype", spectraltypeFull);
+            }}
+            // onPointerOver={(event) => setHover(true)}
+            // onPointerOut={(event) => setHover(false)}
+          >
+            {useMemo(() => <sphereGeometry args={[scale, 256, 256]} />, [])}
+            {useMemo(() => <meshBasicMaterial
+              map={starNormalTexture}
+              color={hover ? "#CCAAAA" : color}
+            />, [])}
+          </mesh>
+          <pointLight ref={lightRef}
+            position={props.position}
+            color={color}
+            intensity={0.7}
+            distance={1000}
+            castShadow
+          />
+
+        </Select>
+        <Select>
+         {useMemo(() => Planets, [Planets])}
+        </Select>
+      </Selection>  
+
+
+        
     </group>
   );
 };
