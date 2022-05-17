@@ -28,7 +28,7 @@ export default function Home() {
             // new THREE.PerspectiveCamera( 45, width / height, 1, 1000 );
             // camera={[50, 1.7, 0.1, 1000]}
           >
-            <ambientLight color={0xffffff} intensity={0.001} />
+            {/* <ambientLight color={0xffffff} intensity={0.01} /> */}
             {useMemo(() => <SkyBox />,[])}
             <EnvContext.Provider value={Constants}>
               {systemData && (<CreateSystem
