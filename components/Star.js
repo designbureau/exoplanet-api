@@ -4,7 +4,7 @@ import { useRef, useState, useMemo, useContext } from "react";
 import Planet from "./Planet";
 import { EnvContext } from "./EnvContext";
 import chroma from "chroma-js";
-// import * as THREE from 'three'
+import * as THREE from 'three'
 
 
 const Star = (props) => {
@@ -18,7 +18,8 @@ const Star = (props) => {
   // Subscribe this component to the render-loop, rotate the mesh every frame
   useFrame((state, delta) => (mesh.current.rotation.y += 0.001));
   // Return view, these are regular three.js elements expressed in JSX
-  const starNormalTexture = useLoader(TextureLoader, "/textures/8k_sun_bw.jpg");
+  const starNormalTexture = useLoader(TextureLoader, "/textures/8k_sun_bw2.jpg");
+  starNormalTexture.encoding= THREE.sRGBEncoding;
 
   console.log("star system props", props.starSystemData);
 
@@ -135,6 +136,7 @@ const Star = (props) => {
   }
 
   let color = chroma.temperature(temperature).hex("rgb");
+  // color.convertGammaToLinear( 2.2 );
   // console.log("temperature", temperature);
   // console.log("chroma", color);
 
@@ -164,7 +166,7 @@ const Star = (props) => {
         <meshBasicMaterial
           map={starNormalTexture}
           // blending={THREE.MixOperation}
-
+          // format={THREE.LuminanceFormat}
           color={hover ? "#CCAAAA" : color}
         />
       </mesh>
