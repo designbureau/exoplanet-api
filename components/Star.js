@@ -4,6 +4,8 @@ import { useRef, useState, useMemo, useContext } from "react";
 import Planet from "./Planet";
 import { EnvContext } from "./EnvContext";
 import chroma from "chroma-js";
+// import * as THREE from 'three'
+
 
 const Star = (props) => {
   const constants = useContext(EnvContext);
@@ -16,10 +18,13 @@ const Star = (props) => {
   // Subscribe this component to the render-loop, rotate the mesh every frame
   useFrame((state, delta) => (mesh.current.rotation.y += 0.001));
   // Return view, these are regular three.js elements expressed in JSX
-  const starNormalTexture = useLoader(TextureLoader, "/textures/8k_sun.jpeg");
+  const starNormalTexture = useLoader(TextureLoader, "/textures/8k_sun_bw.jpg");
 
   console.log("star system props", props.starSystemData);
 
+  //TODO: nest planet refs in array under star. Forwardrefs?
+  const planetsArray = [];
+  
   const Planets =
     props.starSystemData.planet &&
     props.starSystemData.planet.map((planet) => {
@@ -81,6 +86,8 @@ const Star = (props) => {
 
   let temperature = 6500;
   let spectraltype;
+
+
   if (props.starSystemData.hasOwnProperty("temperature")) {
     if (Array.isArray(props.starSystemData.temperature)) {
       // console.log("is array");
@@ -93,7 +100,7 @@ const Star = (props) => {
     }
   } else if (props.starSystemData.hasOwnProperty("spectraltype")) {
     spectraltype = props.starSystemData.spectraltype[0][0];
-    console.log("spectraltype", spectraltype);
+    // console.log("spectraltype", spectraltype);
     switch (spectraltype) {
       case "M":
         temperature = 3000;
@@ -122,9 +129,14 @@ const Star = (props) => {
     }
   }
 
+  let spectraltypeFull;
+  if (props.starSystemData.hasOwnProperty("spectraltype")) {
+    spectraltypeFull = props.starSystemData.spectraltype[0];
+  }
+
   let color = chroma.temperature(temperature).hex("rgb");
-  console.log("temperature", temperature);
-  console.log("chroma", color);
+  // console.log("temperature", temperature);
+  // console.log("chroma", color);
 
   return (
     <group ref={group} name={props.starSystemData.name[0]}>
@@ -139,15 +151,20 @@ const Star = (props) => {
           props.setFocus(mesh);
           console.log("clicked mesh", mesh);
           console.log("clicked mesh group", group);
-          console.log("context from star", constants.distance.au);
+          // console.log("context from star", constants.distance.au);
           console.log("star scale", scale);
+          console.log("temperature", temperature);
+          console.log("chroma", color);
+          console.log("spectraltype", spectraltypeFull);
         }}
-        onPointerOver={(event) => setHover(true)}
-        onPointerOut={(event) => setHover(false)}
+        // onPointerOver={(event) => setHover(true)}
+        // onPointerOut={(event) => setHover(false)}
       >
         <sphereGeometry args={[scale, 256, 256]} />
-        <meshMatcapMaterial
-          // map={starNormalTexture}
+        <meshBasicMaterial
+          map={starNormalTexture}
+          // blending={THREE.MixOperation}
+
           color={hover ? "#CCAAAA" : color}
         />
       </mesh>

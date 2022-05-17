@@ -8,12 +8,6 @@ CameraControls.install({ THREE })
 extend({ CameraControls })
 
 const Controls = ({cameraPosition, focus}) => {
-  // const ref = useRef()
-  // let width, height;
-  // useEffect(() => {
-  //   width = window.innerWidth;
-  //   height = window.innerHeight;
-  // });
 
   let width = window.innerWidth;
   let height = window.innerHeight;
