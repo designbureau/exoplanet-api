@@ -81,8 +81,8 @@ const Planet = (props) => {
           console.log("planet scale", scale);
 
         }}
-        castShadow={true}
-        receiveShadow={true}
+        // castShadow={true}
+        // receiveShadow={true}
         onPointerOver={(event) => setHover(true)}
         onPointerOut={(event) => setHover(false)}>
         <sphereGeometry args={[(scale), 256, 256]} />
