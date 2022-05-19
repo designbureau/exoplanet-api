@@ -17,6 +17,7 @@ const Controls = ({cameraPosition, focus}) => {
   camera.near = 0.1;
   camera.fov = 50;
   camera.far = 100000;
+  // camera.isOrthographicCamera = true;
   camera.aspect = width/height;
   console.log(camera);
 

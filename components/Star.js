@@ -1,35 +1,61 @@
-import * as THREE from 'three'
-import { useFrame, useLoader } from "@react-three/fiber";
+import * as THREE from "three";
+import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { useRef, useState, useMemo, useContext } from "react";
 import Planet from "./Planet";
 import { EnvContext } from "./EnvContext";
 import chroma from "chroma-js";
-// import BloomEffect from './BloomPass';
-import { EffectComposer, SelectiveBloom, Noise, Selection, Select } from '@react-three/postprocessing'
-
-
-
+import {
+  EffectComposer,
+  SelectiveBloom,
+  Selection,
+  Select,
+} from "@react-three/postprocessing";
+import { Color, Noise, Texture } from "lamina";
+// import { Billboard } from "@react-three/drei";
+import {
+  LayerMaterial,
+  Depth,
+  Base,
+  Fresnel,
+  Displace,
+  Gradient,
+} from "lamina";
 
 const Star = (props) => {
   const constants = useContext(EnvContext);
   // This reference will give us direct access to the mesh
   const mesh = useRef();
+  const layerMaterial = useRef();
+  const glow = useRef();
   const group = useRef();
+  const noise = useRef();
+  const noise2 = useRef();
+  const camera = useThree((state) => state.camera);
+
   // Set up state for the hover and active state
-  const [hover, setHover] = useState(false);
+  // const [hover, setHover] = useState(false);
   // const [active, setActive] = useState(false)
   // Subscribe this component to the render-loop, rotate the mesh every frame
-  useFrame((state, delta) => (mesh.current.rotation.y += 0.001));
+  useFrame((state, delta) => {
+    mesh.current.rotation.y += 0.00015;
+    noise.current.scale += Math.sin(delta * 0.5) * .1;
+    // noise2.current.scale += Math.sin(delta * 0.05) * 0.005;
+    // noise.current.scale = scale + (Math.random() * 1 - 2 ) / 100;
+    // noise.current.scale = Math.sin(delta) * 1.5;
+  });
   // Return view, these are regular three.js elements expressed in JSX
-  const starNormalTexture = useLoader(TextureLoader, "/textures/8k_sun_bw2.jpg");
-  starNormalTexture.encoding= THREE.sRGBEncoding;
+  const starNormalTexture = useLoader(
+    TextureLoader,
+    "/textures/8k_sun_bw2.jpg"
+  );
+  starNormalTexture.encoding = THREE.sRGBEncoding;
 
   console.log("star system props", props.starSystemData);
 
   //TODO: nest planet refs in array under star. Forwardrefs?
   const planetsArray = [];
-  
+
   const Planets =
     props.starSystemData.planet &&
     props.starSystemData.planet.map((planet) => {
@@ -61,12 +87,6 @@ const Star = (props) => {
 
   // props.refs.current.push(mesh);
 
-
-
-
-
-
-  
   let radius;
   if (props.starSystemData.hasOwnProperty("radius")) {
     if (props.starSystemData.radius.hasOwnProperty("_")) {
@@ -97,7 +117,6 @@ const Star = (props) => {
 
   let temperature = 6500;
   let spectraltype;
-
 
   if (props.starSystemData.hasOwnProperty("temperature")) {
     if (Array.isArray(props.starSystemData.temperature)) {
@@ -150,59 +169,68 @@ const Star = (props) => {
   // console.log("temperature", temperature);
   // console.log("chroma", color);
   const lightRef = useRef();
-
+  console.log(chroma.temperature(temperature));
 
   return (
     <group ref={group} name={props.starSystemData.name[0]}>
-
-      <Selection>
-        <EffectComposer>
-        <SelectiveBloom lights={lightRef} luminanceThreshold={0} luminanceSmoothing={0.9} height={400} />
-        {/* <Noise opacity={0.02} /> */}
+      <EffectComposer>
+        {/* <SelectiveBloom
+            lights={lightRef}
+            height={500}
+            intensity={2} // The bloom intensity.
+            luminanceThreshold={0} // luminance threshold. Raise this value to mask out darker elements in the scene.
+            luminanceSmoothing={0.9} // smoothness of the luminance threshold. Range is [0, 1]
+          /> */}
       </EffectComposer>
-        <Select enabled>
-          <mesh
-            {...props}
-            ref={mesh}
-            name={props.starSystemData.name[0]}
-            // scale={active ? 1.5 : 1}
-            // onClick={(event) => setActive(!active)}
-            onClick={(e) => {
-              props.setCameraPosition(props.position);
-              props.setFocus(mesh);
-              console.log("clicked mesh", mesh);
-              console.log("clicked mesh group", group);
-              // console.log("context from star", constants.distance.au);
-              console.log("star scale", scale);
-              console.log("temperature", temperature);
-              console.log("chroma", color);
-              console.log("spectraltype", spectraltypeFull);
-            }}
-            // onPointerOver={(event) => setHover(true)}
-            // onPointerOut={(event) => setHover(false)}
-          >
-            {useMemo(() => <sphereGeometry args={[scale, 256, 256]} />, [])}
-            {useMemo(() => <meshBasicMaterial
-              map={starNormalTexture}
-              color={hover ? "#CCAAAA" : color}
-            />, [])}
-          </mesh>
-          <pointLight ref={lightRef}
-            position={props.position}
-            color={color}
-            intensity={0.7}
-            distance={1000}
-            castShadow
-          />
+      <Select enabled>
+        <mesh
+          {...props}
+          ref={mesh}
+          name={props.starSystemData.name[0]}
+          // scale={active ? 1.5 : 1}
+          // onClick={(event) => setActive(!active)}
+          onClick={(e) => {
+            props.setCameraPosition(props.position);
+            props.setFocus(mesh);
+            console.log("clicked mesh", mesh);
+            console.log("clicked mesh group", group);
+            // console.log("context from star", constants.distance.au);
+            console.log("star scale", scale);
+            console.log("temperature", temperature);
+            console.log("chroma", color);
+            console.log("spectraltype", spectraltypeFull);
+          }}
+          // onPointerOver={(event) => setHover(true)}
+          // onPointerOut={(event) => setHover(false)}
+        >
+          <sphereGeometry args={[scale, 256, 256]} />
+          <LayerMaterial ref={layerMaterial} color={color}>
+            <Fresnel
+              mode="softlight"
+              color="white"
+              intensity={1.25}
+              power={2}
+              bias={0.15}
+            />
+            {/* <Noise ref={noise2} mapping={"local"} scale={1} type={"curl"} mode={"multiply"} alpha={0.2} /> */}
+            <Noise ref={noise} mapping={"local"} scale={5} type={"perlin"} mode={"multiply"} alpha={0.35} />
+            {/* <Noise ref={noise2} mapping={"local"} scale={3} type={"perlin"} mode={"miltiply"} alpha={0.3} /> */}
 
-        </Select>
-        <Select>
-         {useMemo(() => Planets, [Planets])}
-        </Select>
-      </Selection>  
+            {/* <Noise ref={noise2} mapping={"local"} scale={2000} type={"perlin"} mode={"multiply"} alpha={.5} /> */}
 
 
-        
+          </LayerMaterial>
+        </mesh>
+      </Select>
+      <Select>{useMemo(() => Planets, [Planets])}</Select>
+      <pointLight
+        ref={lightRef}
+        position={props.position}
+        color={color}
+        intensity={0.7}
+        distance={1000}
+        castShadow
+      />
     </group>
   );
 };
