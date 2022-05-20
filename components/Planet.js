@@ -34,6 +34,9 @@ const Planet = (props) => {
     if (props.planetDetails.radius.hasOwnProperty("_")) {
       radius = parseFloat(props.planetDetails.radius._);
     }
+    else{
+      radius = parseFloat(props.planetDetails.radius);
+    }
   }
   let mass;
   if (props.planetDetails.hasOwnProperty("mass")) {

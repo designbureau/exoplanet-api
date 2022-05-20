@@ -40,6 +40,8 @@ const Star = (props) => {
   useFrame((state, delta) => {
     mesh.current.rotation.y += 0.00015;
     noise.current.scale += Math.sin(delta * 0.5) * .1;
+    // noise2.current.scale = noise2.current.scale * Math.cos(delta * 0.5) * .01;
+
     // noise2.current.scale += Math.sin(delta * 0.05) * 0.005;
     // noise.current.scale = scale + (Math.random() * 1 - 2 ) / 100;
     // noise.current.scale = Math.sin(delta) * 1.5;
@@ -165,6 +167,9 @@ const Star = (props) => {
   }
 
   let color = chroma.temperature(temperature).hex("rgb");
+  let color_light = chroma.temperature(temperature + ((temperature / 100) * 50)).hex("rgb");
+  // let color_light = "white";
+
   // color.convertGammaToLinear( 2.2 );
   // console.log("temperature", temperature);
   // console.log("chroma", color);
@@ -207,14 +212,14 @@ const Star = (props) => {
           <LayerMaterial ref={layerMaterial} color={color}>
             <Fresnel
               mode="softlight"
-              color="white"
-              intensity={1.25}
+              color={color_light}
+              intensity={1.75}
               power={2}
-              bias={0.15}
+              bias={0.1}
             />
             {/* <Noise ref={noise2} mapping={"local"} scale={1} type={"curl"} mode={"multiply"} alpha={0.2} /> */}
-            <Noise ref={noise} mapping={"local"} scale={5} type={"perlin"} mode={"multiply"} alpha={0.35} />
-            {/* <Noise ref={noise2} mapping={"local"} scale={3} type={"perlin"} mode={"miltiply"} alpha={0.3} /> */}
+            <Noise ref={noise} mapping={"local"} scale={scale * (scale / 25)} type={"perlin"} mode={"multiply"} alpha={0.25} />
+            {/* <Noise ref={noise2} mapping={"local"} scale={0.001} type={"curl"} mode={"miltiply"} alpha={0.25} /> */}
 
             {/* <Noise ref={noise2} mapping={"local"} scale={2000} type={"perlin"} mode={"multiply"} alpha={.5} /> */}
 
