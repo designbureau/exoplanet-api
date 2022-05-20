@@ -62,7 +62,7 @@ const Planet = (props) => {
 
   // scale = scale / constants.mass.jupiter;
 
-  const planetTexture = PlanetTexture(mass, radius);
+  const planetTexture = PlanetTexture(mass, radius, props.name);
 
   // props.refs.current.push(mesh);
 
