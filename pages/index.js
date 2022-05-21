@@ -15,6 +15,7 @@ export default function Home() {
   const [cameraPosition, setCameraPosition] = useState([0, 0, 5]);
   const [cursor, setCursor] = useState("default");
   const [focus, setFocus] = useState();
+  const [controlPosition, setControlPosition] = useState();
 
   const refs = useRef(new Array());
 
@@ -42,7 +43,7 @@ export default function Home() {
             </Selection>
             </EnvContext.Provider>
             {/* <PerspectiveCamera fov={50} aspect={1.7} near={0.1} far={100000000} /> */}
-            <Controls cameraPosition={cameraPosition} focus={focus} />
+            <Controls cameraPosition={cameraPosition} focus={focus} setControlPosition={setControlPosition} />
           </Canvas>
         
       </div>

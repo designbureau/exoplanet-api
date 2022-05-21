@@ -68,13 +68,13 @@ const PlanetTexture = (mass, radius, name) => {
   if (scale > 0.05 && scale <= 0.2) {
     material = venusNormalTexture;
   }
-  if (scale > 0.2 && scale <= 0.5 || name === "Uranus") {
+  if (scale > 0.2 && scale <= 0.5) {
     material = uranusNormalTexture;
   }
-  if (scale > 0.5 && scale < 1  || name === "Neptune") {
+  if (scale > 0.5 && scale < 1) {
     material = neptuneNormalTexture;
   }
-  if (scale >= 1 || name === "Jupiter") {
+  if (scale >= 1) {
     material = jupiterNormalTexture;
   }
 
@@ -98,6 +98,9 @@ const PlanetTexture = (mass, radius, name) => {
   }
   if(name === "Earth"){
     material = earthNormalTexture;
+  }
+  if (name === "Jupiter") {
+    material = jupiterNormalTexture;
   }
 
 

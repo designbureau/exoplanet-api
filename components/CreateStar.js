@@ -7,9 +7,9 @@ const CreateStar = (data, setCameraPosition, setFocus, refs) => {
 
     console.log(i);
 
-    let x = Math.random() * 100 - 1;
-    let y = Math.random() * 100 - 1;
-    let z = Math.random() * 100 - 1;
+    let x = Math.random() * 500 - 1;
+    let y = Math.random() * 500 - 1;
+    let z = Math.random() * 500 - 1;
 
     // if (i === 0) {
     //   x = 0;

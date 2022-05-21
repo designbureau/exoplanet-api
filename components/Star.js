@@ -21,6 +21,7 @@ import {
   Displace,
   Gradient,
 } from "lamina";
+import { Billboard } from "@react-three/drei";
 
 const Star = (props) => {
   const constants = useContext(EnvContext);
@@ -33,18 +34,10 @@ const Star = (props) => {
   const noise2 = useRef();
   const camera = useThree((state) => state.camera);
 
-  // Set up state for the hover and active state
-  // const [hover, setHover] = useState(false);
-  // const [active, setActive] = useState(false)
-  // Subscribe this component to the render-loop, rotate the mesh every frame
   useFrame((state, delta) => {
     mesh.current.rotation.y += 0.00015;
-    noise.current.scale += Math.sin(delta * 0.5) * .1;
-    // noise2.current.scale = noise2.current.scale * Math.cos(delta * 0.5) * .01;
-
-    // noise2.current.scale += Math.sin(delta * 0.05) * 0.005;
-    // noise.current.scale = scale + (Math.random() * 1 - 2 ) / 100;
-    // noise.current.scale = Math.sin(delta) * 1.5;
+    noise.current.scale += Math.sin(delta * 0.5) * 0.1;
+    glow.current.quaternion.setFromRotationMatrix(camera.matrix);
   });
   // Return view, these are regular three.js elements expressed in JSX
   const starNormalTexture = useLoader(
@@ -82,11 +75,9 @@ const Star = (props) => {
   // console.log("star mesh", mesh);
   // console.log("star position", props.position);
   // console.log(props);
-
   // {items.map(item => (
   //  <p key={item} ref={(element) => itemEls.current.push(element)}>{item}</p>
   // console.log("starrefs", props.starRefs);
-
   // props.refs.current.push(mesh);
 
   let radius;
@@ -122,7 +113,6 @@ const Star = (props) => {
 
   if (props.starSystemData.hasOwnProperty("temperature")) {
     if (Array.isArray(props.starSystemData.temperature)) {
-      // console.log("is array");
       if (props.starSystemData.temperature[0].hasOwnProperty("_")) {
         temperature = parseFloat(props.starSystemData.temperature[0]._);
       }
@@ -132,7 +122,6 @@ const Star = (props) => {
     }
   } else if (props.starSystemData.hasOwnProperty("spectraltype")) {
     spectraltype = props.starSystemData.spectraltype[0][0];
-    // console.log("spectraltype", spectraltype);
     switch (spectraltype) {
       case "M":
         temperature = 3000;
@@ -167,14 +156,12 @@ const Star = (props) => {
   }
 
   let color = chroma.temperature(temperature).hex("rgb");
-  let color_light = chroma.temperature(temperature + ((temperature / 100) * 50)).hex("rgb");
-  // let color_light = "white";
+  let color_light = chroma
+    .temperature(temperature + (temperature / 100) * 50)
+    .hex("rgb");
 
-  // color.convertGammaToLinear( 2.2 );
-  // console.log("temperature", temperature);
-  // console.log("chroma", color);
   const lightRef = useRef();
-  console.log(chroma.temperature(temperature));
+  // console.log(chroma.temperature(temperature));
 
   return (
     <group ref={group} name={props.starSystemData.name[0]}>
@@ -197,6 +184,7 @@ const Star = (props) => {
           onClick={(e) => {
             props.setCameraPosition(props.position);
             props.setFocus(mesh);
+            // setCurrentFocus(mesh);
             console.log("clicked mesh", mesh);
             console.log("clicked mesh group", group);
             // console.log("context from star", constants.distance.au);
@@ -218,16 +206,74 @@ const Star = (props) => {
               bias={0.1}
             />
             {/* <Noise ref={noise2} mapping={"local"} scale={1} type={"curl"} mode={"multiply"} alpha={0.2} /> */}
-            <Noise ref={noise} mapping={"local"} scale={scale * (scale / 25)} type={"perlin"} mode={"multiply"} alpha={0.25} />
-            {/* <Noise ref={noise2} mapping={"local"} scale={0.001} type={"curl"} mode={"miltiply"} alpha={0.25} /> */}
-
-            {/* <Noise ref={noise2} mapping={"local"} scale={2000} type={"perlin"} mode={"multiply"} alpha={.5} /> */}
-
-
+            <Noise
+              ref={noise}
+              mapping={"local"}
+              scale={scale * (scale / 25)}
+              type={"perlin"}
+              mode={"multiply"}
+              alpha={0.25}
+            />
           </LayerMaterial>
         </mesh>
       </Select>
       <Select>{useMemo(() => Planets, [Planets])}</Select>
+      <sprite
+        position={[
+          props.position[0],
+          props.position[1],
+          props.position[2] + 0.1,
+        ]}
+        ref={glow}
+      >
+        <circleGeometry args={[2 * scale, 128]} />
+        <LayerMaterial
+          transparent
+          depthWrite={false}
+          blending={THREE.CustomBlending}
+          blendEquation={THREE.AddEquation}
+          blendSrc={THREE.SrcAlphaFactor}
+          blendDst={THREE.DstAlphaFactor}
+        >
+          <Depth
+            colorA={color}
+            colorB="black"
+            alpha={1}
+            mode="normal"
+            near={-2 * scale}
+            far={1.5 * scale}
+            origin={[0, 0, 0]}
+          />
+          <Depth
+            colorA={color}
+            colorB="black"
+            alpha={0.5}
+            mode="add"
+            near={-40 * scale}
+            far={1.5 * 1.2 * scale}
+            origin={[0, 0, 0]}
+          />
+          <Depth
+            colorA={color}
+            colorB="black"
+            alpha={1}
+            mode="add"
+            near={-15 * scale}
+            far={1.5 * 0.7 * scale}
+            origin={[0, 0, 0]}
+          />
+          <Depth
+            colorA={color}
+            colorB="black"
+            alpha={1}
+            mode="add"
+            near={-10 * scale}
+            far={1.5 * 0.68 * scale}
+            origin={[0, 0, 0]}
+          />
+        </LayerMaterial>
+      </sprite>
+
       <pointLight
         ref={lightRef}
         position={props.position}
