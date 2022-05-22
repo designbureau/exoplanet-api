@@ -32,11 +32,19 @@ const Star = (props) => {
   const group = useRef();
   const noise = useRef();
   const noise2 = useRef();
+  const noise3 = useRef();
+  const displace = useRef();
   const camera = useThree((state) => state.camera);
 
   useFrame((state, delta) => {
     mesh.current.rotation.y += 0.00015;
-    noise.current.scale += Math.sin(delta * 0.5) * 0.1;
+    noise.current.scale += Math.sin(delta * 0.025);
+    noise2.current.scale += Math.sin(delta * 0.03);
+    noise3.current.scale += Math.sin(delta * 0.025);
+    displace.current.scale += Math.sin(delta * 0.05);
+
+    mesh.current.rotation.x += 0.00005;
+
     glow.current.quaternion.setFromRotationMatrix(camera.matrix);
   });
   // Return view, these are regular three.js elements expressed in JSX
@@ -46,7 +54,7 @@ const Star = (props) => {
   );
   starNormalTexture.encoding = THREE.sRGBEncoding;
 
-  console.log("star system props", props.starSystemData);
+  // console.log("star system props", props.starSystemData);
 
   //TODO: nest planet refs in array under star. Forwardrefs?
   const planetsArray = [];
@@ -159,6 +167,10 @@ const Star = (props) => {
   let color_light = chroma
     .temperature(temperature + (temperature / 100) * 50)
     .hex("rgb");
+  let color_dark = chroma
+    .temperature(temperature - (temperature / 100) * 50)
+    .hex("rgb");
+  console.log("light", color_light, "dark", color_dark);
 
   const lightRef = useRef();
   // console.log(chroma.temperature(temperature));
@@ -201,19 +213,36 @@ const Star = (props) => {
             <Fresnel
               mode="softlight"
               color={color_light}
-              intensity={1.75}
-              power={2}
-              bias={0.1}
+              intensity={3.5}
+              power={1.8}
+              bias={0.01}
             />
-            {/* <Noise ref={noise2} mapping={"local"} scale={1} type={"curl"} mode={"multiply"} alpha={0.2} /> */}
             <Noise
               ref={noise}
               mapping={"local"}
-              scale={scale * (scale / 25)}
+              scale={scale * 0.7}
+              type={"perlin"}
+              mode={"multiply"}
+              alpha={0.5}
+            />
+            <Noise
+              ref={noise3}
+              mapping={"local"}
+              type={"perlin"}
+              mode={"subtract"}
+              scale={scale * 0.08}
+              alpha={0.1}
+            />
+            <Noise
+              ref={noise2}
+              mapping={"local"}
+              scale={scale * 0.1}
               type={"perlin"}
               mode={"multiply"}
               alpha={0.25}
             />
+            <Displace ref={displace} strength={0.1} scale={scale * 0.7} type={"perlin"} />
+
           </LayerMaterial>
         </mesh>
       </Select>
@@ -226,7 +255,7 @@ const Star = (props) => {
         ]}
         ref={glow}
       >
-        <circleGeometry args={[2 * scale, 128]} />
+        <circleGeometry args={[1.55 * scale, 128]} />
         <LayerMaterial
           transparent
           depthWrite={false}
@@ -237,14 +266,14 @@ const Star = (props) => {
         >
           <Depth
             colorA={color}
-            colorB="black"
+            colorB={"black"}
             alpha={1}
             mode="normal"
             near={-2 * scale}
             far={1.5 * scale}
             origin={[0, 0, 0]}
           />
-          <Depth
+          {/* <Depth
             colorA={color}
             colorB="black"
             alpha={0.5}
@@ -252,8 +281,8 @@ const Star = (props) => {
             near={-40 * scale}
             far={1.5 * 1.2 * scale}
             origin={[0, 0, 0]}
-          />
-          <Depth
+          /> */}
+          {/* <Depth
             colorA={color}
             colorB="black"
             alpha={1}
@@ -270,7 +299,7 @@ const Star = (props) => {
             near={-10 * scale}
             far={1.5 * 0.68 * scale}
             origin={[0, 0, 0]}
-          />
+          /> */}
         </LayerMaterial>
       </sprite>
 

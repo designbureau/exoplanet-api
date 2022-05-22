@@ -18,6 +18,7 @@ export default function Home() {
   const [controlPosition, setControlPosition] = useState();
 
   const refs = useRef(new Array());
+  // console.log("current control position", controlPosition);
 
 
   return (
@@ -43,7 +44,7 @@ export default function Home() {
             </Selection>
             </EnvContext.Provider>
             {/* <PerspectiveCamera fov={50} aspect={1.7} near={0.1} far={100000000} /> */}
-            <Controls cameraPosition={cameraPosition} focus={focus} setControlPosition={setControlPosition} />
+            <Controls cameraPosition={cameraPosition} focus={focus}/>
           </Canvas>
         
       </div>

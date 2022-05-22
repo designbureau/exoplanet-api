@@ -7,7 +7,7 @@ import { useFrame, useThree, extend } from "@react-three/fiber";
 CameraControls.install({ THREE })
 extend({ CameraControls })
 
-const Controls = ({cameraPosition, focus}) => {
+const Controls = ({cameraPosition, focus, setControlPosition}) => {
 
   let width = window.innerWidth;
   let height = window.innerHeight;
@@ -19,7 +19,7 @@ const Controls = ({cameraPosition, focus}) => {
   camera.far = 100000;
   // camera.isOrthographicCamera = true;
   camera.aspect = width/height;
-  console.log(camera);
+  // console.log(camera);
 
   let radius = 1
   focus? radius = focus.current.geometry.parameters.radius : 1
@@ -28,6 +28,8 @@ const Controls = ({cameraPosition, focus}) => {
 
   focus? controls.fitToBox(focus.current, true) : controls.dollyTo(1.5, true)
   controls.setTarget(cameraPosition[0], cameraPosition[1], cameraPosition[2], true)
+  let currentPosition = controls.getPosition();
+  // setControlPosition(currentPosition);
 
   return useFrame((state, delta) => {
     return controls.update(delta)
