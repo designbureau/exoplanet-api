@@ -45,6 +45,7 @@ const Star = (props) => {
     noiseSpot2.current.scale += Math.sin(delta * 0.00125);
     noiseSpot3.current.scale += Math.sin(delta * 0.00125);
     // displace.current.scale += Math.sin(delta * 0.05);
+    // camera.updateProjectionMatrix();
     glow.current.quaternion.setFromRotationMatrix(camera.matrix);
 
   });
@@ -210,6 +211,14 @@ const Star = (props) => {
   
   return (
     <group ref={group} name={props.starSystemData.name[0]}>
+      <pointLight
+        ref={lightRef}
+        position={props.position}
+        color={color}
+        intensity={0.7}
+        distance={1000}
+        castShadow
+      />
         <mesh
           {...props}
           ref={mesh}
@@ -287,6 +296,15 @@ const Star = (props) => {
               type={"perlin"}
               mode={"softlight"}
               alpha={0.25}
+            />
+            <Noise
+              ref={noiseSpot3}
+              mapping={"local"}
+              scale={transformScale * .00001}
+              type={"perlin"}
+              mode={"overlay"}
+              alpha={0.5}
+              colorD={color}
             />
             
 
@@ -366,18 +384,10 @@ const Star = (props) => {
             far={1.85 * scale}
             origin={[0, 0, 0]}
           />
-          
         </LayerMaterial>
       </sprite>
 
-      <pointLight
-        ref={lightRef}
-        position={props.position}
-        color={color}
-        intensity={0.7}
-        distance={1000}
-        castShadow
-      />
+      
     </group>
   );
 };
