@@ -26,6 +26,8 @@ const Star = (props) => {
   const noise2 = useRef();
   const noise3 = useRef();
   const displace = useRef();
+  const noiseSpot = useRef();
+  const noiseSpot2 = useRef();
   // const camera = useThree((state) => state.camera);
   const lightRef = useRef();
 
@@ -34,10 +36,12 @@ const Star = (props) => {
 
 
   useFrame((state, delta) => {
-    mesh.current.rotation.y += 0.00015;
+    mesh.current.rotation.y += 0.00005;
     noise.current.scale += Math.sin(delta * 0.025);
     noise2.current.scale += Math.sin(delta * 0.03);
     noise3.current.scale += Math.sin(delta * 0.025);
+    noiseSpot.current.scale += Math.sin(delta * 0.00125);
+    noiseSpot2.current.scale += Math.sin(delta * 0.00125);
     // displace.current.scale += Math.sin(delta * 0.05);
   });
   // Return view, these are regular three.js elements expressed in JSX
@@ -256,6 +260,32 @@ const Star = (props) => {
               mode={"multiply"}
               alpha={0.25}
             />
+             <Noise
+              ref={noiseSpot}
+              mapping={"local"}
+              scale={transformScale * .01}
+              type={"perlin"}
+              mode={"multiply"}
+              alpha={0.75}
+            />
+             <Noise
+              ref={noiseSpot2}
+              mapping={"local"}
+              scale={transformScale * .1}
+              type={"perlin"}
+              mode={"subtract"}
+              alpha={0.2}
+            />
+             <Noise
+              ref={noiseSpot2}
+              mapping={"local"}
+              scale={transformScale * .0001}
+              type={"perlin"}
+              mode={"softlight"}
+              alpha={0.35}
+            />
+            
+
             <Displace ref={displace} strength={0.025} scale={transformScale} type={"perlin"} />
           </LayerMaterial>
         </mesh>
