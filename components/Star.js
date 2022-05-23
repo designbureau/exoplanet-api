@@ -266,7 +266,7 @@ const Star = (props) => {
               scale={transformScale * .01}
               type={"perlin"}
               mode={"multiply"}
-              alpha={0.75}
+              alpha={0.5}
             />
              <Noise
               ref={noiseSpot2}
@@ -274,7 +274,7 @@ const Star = (props) => {
               scale={transformScale * .1}
               type={"perlin"}
               mode={"subtract"}
-              alpha={0.2}
+              alpha={0.1}
             />
              <Noise
               ref={noiseSpot2}
@@ -282,7 +282,7 @@ const Star = (props) => {
               scale={transformScale * .0001}
               type={"perlin"}
               mode={"softlight"}
-              alpha={0.35}
+              alpha={0.25}
             />
             
 
