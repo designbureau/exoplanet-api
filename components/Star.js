@@ -52,9 +52,34 @@ const Star = (props) => {
   //TODO: nest planet refs in array under star. Forwardrefs?
   const planetsArray = [];
 
+
+  // const arrLength = arr.length;
+  //   const [elRefs, setElRefs] = React.useState([]);
+    
+  //   React.useEffect(() => {
+  //     // add or remove refs
+  //     setElRefs((elRefs) =>
+  //       Array(arrLength)
+  //         .fill()
+  //         .map((_, i) => elRefs[i] || createRef()),
+  //     );
+  //   }, [arrLength]);
+    
+  //   return (
+  //     <div>
+  //       {arr.map((el, i) => (
+  //         <div ref={elRefs[i]} style={...}>
+  //           ...
+  //         </div>
+  //       ))}
+  //     </div>
+  //   );
+
+  const arrLength = props.starSystemData.planet ? props.starSystemData.planet.length : 0;
+  console.log(arrLength);
+
   const Planets =
-    props.starSystemData.planet &&
-    props.starSystemData.planet.map((planet) => {
+    props.starSystemData.planet && props.starSystemData.planet.map((planet) => {
       let x = Math.random() * 50 - 1;
       let y = Math.random() * 50 - 1;
       let z = Math.random() * 50 - 1;

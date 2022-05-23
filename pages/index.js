@@ -16,7 +16,7 @@ export default function Home() {
   // const [controlPosition, setControlPosition] = useState();
 
   const refs = useRef(new Array());
-  // console.log("refs", refs);
+  console.log("refs", refs);
 
   return (
     <>

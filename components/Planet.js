@@ -6,12 +6,12 @@ import PlanetTexture from "./PlanetTextures";
 
 const Planet = (props) => {
   // This reference will give us direct access to the mesh
-  const mesh = useRef();
+  const meshRef = useRef();
   // Set up state for the hover and active state
   // const [hover, setHover] = useState(false);
   // const [active, setActive] = useState(false);
   // Subscribe this component to the render-loop, rotate the mesh every frame
-  useFrame((state, delta) => (mesh.current.rotation.y += 0.001));
+  useFrame((state, delta) => (meshRef.current.rotation.y += 0.001));
   // Return view, these are regular three.js elements expressed in JSX
   // const planetNormalTexture = useLoader(TextureLoader, "/textures/8k_jupiter.jpeg");
 
@@ -64,7 +64,7 @@ const Planet = (props) => {
 
   const planetTexture = PlanetTexture(mass, radius, props.name);
 
-  // props.refs.current.push(mesh);
+  // props.refs.push(meshRef);
 
   return (
    
@@ -80,14 +80,14 @@ const Planet = (props) => {
       <Select>
       <mesh
       {...props}
-      ref={mesh}
+      ref={meshRef}
       name={props.name}
       // scale={active ? 1.5 : 1}
       // onClick={(event) => setActive(!active)}
       onClick={(e) => {
         props.setCameraPosition(props.position);
-        props.setFocus(mesh);
-        console.log("clicked mesh", mesh);
+        props.setFocus(meshRef);
+        console.log("clicked mesh", meshRef);
         // console.log("context from planet", constants.distance.au);
         // console.log("planet scale", scale);
       }}
