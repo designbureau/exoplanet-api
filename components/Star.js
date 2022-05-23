@@ -28,7 +28,8 @@ const Star = (props) => {
   const displace = useRef();
   const noiseSpot = useRef();
   const noiseSpot2 = useRef();
-  // const camera = useThree((state) => state.camera);
+  const noiseSpot3 = useRef();
+  const camera = useThree((state) => state.camera);
   const lightRef = useRef();
 
 
@@ -42,7 +43,10 @@ const Star = (props) => {
     noise3.current.scale += Math.sin(delta * 0.025);
     noiseSpot.current.scale += Math.sin(delta * 0.00125);
     noiseSpot2.current.scale += Math.sin(delta * 0.00125);
+    noiseSpot3.current.scale += Math.sin(delta * 0.00125);
     // displace.current.scale += Math.sin(delta * 0.05);
+    glow.current.quaternion.setFromRotationMatrix(camera.matrix);
+
   });
   // Return view, these are regular three.js elements expressed in JSX
   const starNormalTexture = useLoader(
@@ -277,7 +281,7 @@ const Star = (props) => {
               alpha={0.1}
             />
              <Noise
-              ref={noiseSpot2}
+              ref={noiseSpot3}
               mapping={"local"}
               scale={transformScale * .0001}
               type={"perlin"}
@@ -290,7 +294,7 @@ const Star = (props) => {
           </LayerMaterial>
         </mesh>
       {useMemo(() => Planets, [Planets])}
-      {/* <sprite
+      <sprite
         position={[
           props.position[0],
           props.position[1],
@@ -298,7 +302,7 @@ const Star = (props) => {
         ]}
         ref={glow}
       >
-        <circleGeometry args={[.8 * scale, 128]} />
+        <circleGeometry args={[2 * scale, 128]} />
         <LayerMaterial
           transparent
           depthWrite={false}
@@ -307,18 +311,64 @@ const Star = (props) => {
           blendSrc={THREE.SrcAlphaFactor}
           blendDst={THREE.DstAlphaFactor}
         >
-          //<Displace ref={displace} strength={10} scale={scale * 0.7} type={"perlin"} />
+          {/* //<Displace ref={displace} strength={10} scale={scale * 0.7} type={"perlin"} /> */}
           <Depth
             colorA={color}
             colorB={"black"}
             alpha={1}
             mode="normal"
-            near={-2 * scale}
+            near={-5 * scale}
             far={1.5 * scale}
             origin={[0, 0, 0]}
           />
+          <Depth
+            colorA={color}
+            colorB={"black"}
+            alpha={1}
+            mode="add"
+            near={-1 * scale}
+            far={1.125 * scale}
+            origin={[0, 0, 0]}
+          />
+          <Depth
+            colorA={color}
+            colorB={"black"}
+            alpha={0.45}
+            mode="add"
+            near={-1 * scale}
+            far={1.15 * scale}
+            origin={[0, 0, 0]}
+          />
+          <Depth
+            colorA={color}
+            colorB={"black"}
+            alpha={0.35}
+            mode="add"
+            near={-1 * scale}
+            far={1.25 * scale}
+            origin={[0, 0, 0]}
+          />
+          <Depth
+            colorA={color}
+            colorB={"black"}
+            alpha={0.25}
+            mode="add"
+            near={-1 * scale}
+            far={1.35 * scale}
+            origin={[0, 0, 0]}
+          />
+          <Depth
+            colorA={color}
+            colorB={"black"}
+            alpha={0.005}
+            mode="softlight"
+            near={-1 * scale}
+            far={1.85 * scale}
+            origin={[0, 0, 0]}
+          />
+          
         </LayerMaterial>
-      </sprite> */}
+      </sprite>
 
       <pointLight
         ref={lightRef}
