@@ -41,11 +41,11 @@ const Star = (props) => {
     noise.current.scale += Math.sin(delta * 0.025);
     noise2.current.scale += Math.sin(delta * 0.03);
     noise3.current.scale += Math.sin(delta * 0.025);
-    displace.current.scale += Math.sin(delta * 0.05);
+    // displace.current.scale += Math.sin(delta * 0.05);
 
     mesh.current.rotation.x += 0.00005;
 
-    glow.current.quaternion.setFromRotationMatrix(camera.matrix);
+    // glow.current.quaternion.setFromRotationMatrix(camera.matrix);
   });
   // Return view, these are regular three.js elements expressed in JSX
   const starNormalTexture = useLoader(
@@ -175,6 +175,14 @@ const Star = (props) => {
   const lightRef = useRef();
   // console.log(chroma.temperature(temperature));
 
+  // const SphereGeometry = useMemo((scale) => , []);
+
+  let transformScale = Math.log(scale) + 20;
+  // console.log(transformScale);
+  // if( scale < 2){
+  //   transformScale = scale * 50;
+  // }
+
   return (
     <group ref={group} name={props.starSystemData.name[0]}>
       <EffectComposer>
@@ -220,7 +228,7 @@ const Star = (props) => {
             <Noise
               ref={noise}
               mapping={"local"}
-              scale={scale * 0.7}
+              scale={transformScale * 0.7}
               type={"perlin"}
               mode={"multiply"}
               alpha={0.5}
@@ -230,24 +238,23 @@ const Star = (props) => {
               mapping={"local"}
               type={"perlin"}
               mode={"subtract"}
-              scale={scale * 0.08}
+              scale={transformScale * 0.08}
               alpha={0.1}
             />
             <Noise
               ref={noise2}
               mapping={"local"}
-              scale={scale * 0.1}
+              scale={transformScale * 0.1}
               type={"perlin"}
               mode={"multiply"}
               alpha={0.25}
             />
-            <Displace ref={displace} strength={0.1} scale={scale * 0.7} type={"perlin"} />
-
+            {/* <Displace ref={displsace} strength={0.1} scale={transformScale * 0.7} type={"perlin"} /> */}
           </LayerMaterial>
         </mesh>
       </Select>
       <Select>{useMemo(() => Planets, [Planets])}</Select>
-      <sprite
+      {/* <sprite
         position={[
           props.position[0],
           props.position[1],
@@ -255,7 +262,7 @@ const Star = (props) => {
         ]}
         ref={glow}
       >
-        <circleGeometry args={[1.55 * scale, 128]} />
+        <circleGeometry args={[.8 * scale, 128]} />
         <LayerMaterial
           transparent
           depthWrite={false}
@@ -264,6 +271,7 @@ const Star = (props) => {
           blendSrc={THREE.SrcAlphaFactor}
           blendDst={THREE.DstAlphaFactor}
         >
+          //<Displace ref={displace} strength={10} scale={scale * 0.7} type={"perlin"} />
           <Depth
             colorA={color}
             colorB={"black"}
@@ -273,35 +281,8 @@ const Star = (props) => {
             far={1.5 * scale}
             origin={[0, 0, 0]}
           />
-          {/* <Depth
-            colorA={color}
-            colorB="black"
-            alpha={0.5}
-            mode="add"
-            near={-40 * scale}
-            far={1.5 * 1.2 * scale}
-            origin={[0, 0, 0]}
-          /> */}
-          {/* <Depth
-            colorA={color}
-            colorB="black"
-            alpha={1}
-            mode="add"
-            near={-15 * scale}
-            far={1.5 * 0.7 * scale}
-            origin={[0, 0, 0]}
-          />
-          <Depth
-            colorA={color}
-            colorB="black"
-            alpha={1}
-            mode="add"
-            near={-10 * scale}
-            far={1.5 * 0.68 * scale}
-            origin={[0, 0, 0]}
-          /> */}
         </LayerMaterial>
-      </sprite>
+      </sprite> */}
 
       <pointLight
         ref={lightRef}
