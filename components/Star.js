@@ -1,12 +1,11 @@
 import * as THREE from "three";
 import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
-import { useRef, useState, useMemo, useContext } from "react";
+import { forwardRef, useRef, useState, useMemo, useContext } from "react";
 import Planet from "./Planet";
 import { EnvContext } from "./EnvContext";
 import chroma from "chroma-js";
 import { Color, Noise, Texture } from "lamina";
-// import { Billboard } from "@react-three/drei";
 import {
   LayerMaterial,
   Depth,
@@ -14,7 +13,7 @@ import {
   Displace,
   Gradient,
 } from "lamina";
-import { Billboard } from "@react-three/drei";
+// import { Billboard } from "@react-three/drei";
 
 const Star = (props) => {
   const constants = useContext(EnvContext);
@@ -27,7 +26,12 @@ const Star = (props) => {
   const noise2 = useRef();
   const noise3 = useRef();
   const displace = useRef();
-  const camera = useThree((state) => state.camera);
+  // const camera = useThree((state) => state.camera);
+  const lightRef = useRef();
+
+
+  // props.refs.push(group);
+
 
   useFrame((state, delta) => {
     mesh.current.rotation.y += 0.00015;
@@ -35,10 +39,6 @@ const Star = (props) => {
     noise2.current.scale += Math.sin(delta * 0.03);
     noise3.current.scale += Math.sin(delta * 0.025);
     // displace.current.scale += Math.sin(delta * 0.05);
-
-    mesh.current.rotation.x += 0.00005;
-
-    // glow.current.quaternion.setFromRotationMatrix(camera.matrix);
   });
   // Return view, these are regular three.js elements expressed in JSX
   const starNormalTexture = useLoader(
@@ -163,9 +163,8 @@ const Star = (props) => {
   let color_dark = chroma
     .temperature(temperature - (temperature / 100) * 50)
     .hex("rgb");
-  console.log("light", color_light, "dark", color_dark);
+  // console.log("light", color_light, "dark", color_dark);
 
-  const lightRef = useRef();
   // console.log(chroma.temperature(temperature));
 
   // const SphereGeometry = useMemo((scale) => , []);
@@ -175,7 +174,7 @@ const Star = (props) => {
   // if( scale < 2){
   //   transformScale = scale * 50;
   // }
-
+  
   return (
     <group ref={group} name={props.starSystemData.name[0]}>
         <mesh
@@ -189,12 +188,12 @@ const Star = (props) => {
             props.setFocus(mesh);
             // setCurrentFocus(mesh);
             console.log("clicked mesh", mesh);
-            console.log("clicked mesh group", group);
-            // console.log("context from star", constants.distance.au);
-            console.log("star scale", scale);
-            console.log("temperature", temperature);
-            console.log("chroma", color);
-            console.log("spectraltype", spectraltypeFull);
+            // console.log("clicked mesh group", group);
+            // // console.log("context from star", constants.distance.au);
+            // console.log("star scale", scale);
+            // console.log("temperature", temperature);
+            // console.log("chroma", color);
+            // console.log("spectraltype", spectraltypeFull);
           }}
           // onPointerOver={(event) => setHover(true)}
           // onPointerOut={(event) => setHover(false)}
@@ -232,7 +231,7 @@ const Star = (props) => {
               mode={"multiply"}
               alpha={0.25}
             />
-            {/* <Displace ref={displsace} strength={0.1} scale={transformScale * 0.7} type={"perlin"} /> */}
+            <Displace ref={displace} strength={0.025} scale={transformScale} type={"perlin"} />
           </LayerMaterial>
         </mesh>
       {useMemo(() => Planets, [Planets])}

@@ -32,7 +32,7 @@ const CreateBinary = (systemData, setCameraPosition, setFocus, refs) => {
   let Planet = systemData.planet && CreatePlanet(systemData.planet, setCameraPosition, setFocus, refs);
 
   let Binary = systemData.binary && systemData.binary.map((binary) => {
-    console.log("Binary", binary);
+    // console.log("Binary", binary);
     return CreateBinary(binary, setCameraPosition, setFocus, refs);
   });
 

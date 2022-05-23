@@ -14,16 +14,21 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
   const camera = useThree((state) => state.camera)
   const gl = useThree((state) => state.gl)
   const controls = useMemo(() => new CameraControls(camera, gl.domElement,), [])
-  camera.near = 0.1;
-  camera.fov = 50;
-  camera.far = 100000;
+  // controls.near = radius + .1
+
+  // camera.fov = 50;
   // camera.isOrthographicCamera = true;
-  camera.aspect = width/height;
+  // camera.aspect = width/height;
   // console.log(camera);
 
   let radius = 1
   focus? radius = focus.current.geometry.parameters.radius : 1
+
   controls.minDistance = radius + .1
+  controls.near = radius + .1
+  controls.far = 1000000;
+  controls.fov = 50;
+  controls.aspect = width/height;
 
 
   focus? controls.fitToBox(focus.current, true) : controls.dollyTo(1.5, true)

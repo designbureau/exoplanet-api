@@ -1,7 +1,7 @@
 // import Head from "next/head";
 import Nav from "../components/Nav";
 import SystemNav from "../components/SystemNav";
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, forwardRef } from "react";
 import { Canvas, useFrame, useThree, extend } from "@react-three/fiber";
 import SkyBox from "../components/SkyBox";
 import CreateSystem from "../components/CreateSystem";
@@ -16,7 +16,7 @@ export default function Home() {
   // const [controlPosition, setControlPosition] = useState();
 
   const refs = useRef(new Array());
-
+  // console.log("refs", refs);
 
   return (
     <>

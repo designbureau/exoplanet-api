@@ -18,7 +18,7 @@ const Planet = (props) => {
   const constants = useContext(EnvContext);
 
   // console.log(mesh);
-  console.log("planet details", props.planetDetails);
+  // console.log("planet details", props.planetDetails);
 
   // let radius = props.planetDetail.radius._ ? props.planetDetail.radius[0]._ : 0.5;
 
@@ -27,7 +27,7 @@ const Planet = (props) => {
   // }
   // console.log(props.refs)
 
-  mesh.current && props.refs.current.push(mesh);
+  // mesh.current && props.refs.current.push(mesh);
 
   let radius;
   if (props.planetDetails.hasOwnProperty("radius")) {
@@ -88,8 +88,8 @@ const Planet = (props) => {
         props.setCameraPosition(props.position);
         props.setFocus(mesh);
         console.log("clicked mesh", mesh);
-        console.log("context from planet", constants.distance.au);
-        console.log("planet scale", scale);
+        // console.log("context from planet", constants.distance.au);
+        // console.log("planet scale", scale);
       }}
       // castShadow={true}
       // receiveShadow={true}
