@@ -5,18 +5,11 @@ import { useRef, useState, useMemo, useContext } from "react";
 import Planet from "./Planet";
 import { EnvContext } from "./EnvContext";
 import chroma from "chroma-js";
-import {
-  EffectComposer,
-  SelectiveBloom,
-  Selection,
-  Select,
-} from "@react-three/postprocessing";
 import { Color, Noise, Texture } from "lamina";
 // import { Billboard } from "@react-three/drei";
 import {
   LayerMaterial,
   Depth,
-  Base,
   Fresnel,
   Displace,
   Gradient,
@@ -185,16 +178,6 @@ const Star = (props) => {
 
   return (
     <group ref={group} name={props.starSystemData.name[0]}>
-      <EffectComposer>
-        {/* <SelectiveBloom
-            lights={lightRef}
-            height={500}
-            intensity={2} // The bloom intensity.
-            luminanceThreshold={0} // luminance threshold. Raise this value to mask out darker elements in the scene.
-            luminanceSmoothing={0.9} // smoothness of the luminance threshold. Range is [0, 1]
-          /> */}
-      </EffectComposer>
-      <Select enabled>
         <mesh
           {...props}
           ref={mesh}
@@ -252,8 +235,7 @@ const Star = (props) => {
             {/* <Displace ref={displsace} strength={0.1} scale={transformScale * 0.7} type={"perlin"} /> */}
           </LayerMaterial>
         </mesh>
-      </Select>
-      <Select>{useMemo(() => Planets, [Planets])}</Select>
+      {useMemo(() => Planets, [Planets])}
       {/* <sprite
         position={[
           props.position[0],
