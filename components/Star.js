@@ -300,10 +300,10 @@ const Star = (props) => {
             <Noise
               ref={noiseSpot3}
               mapping={"local"}
-              scale={transformScale * .00001}
+              scale={transformScale * .0001}
               type={"perlin"}
               mode={"overlay"}
-              alpha={0.5}
+              alpha={0.75}
               colorD={color}
             />
             
