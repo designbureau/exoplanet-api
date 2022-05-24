@@ -15,7 +15,7 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
   const gl = useThree((state) => state.gl)
   const controls = useMemo(() => new CameraControls(camera, gl.domElement,), [])
 
-  let radius = 1
+  let radius;
   focus && focus? radius = focus.current.geometry.parameters.radius : 1
 
   camera.far = 1000000000;
@@ -23,6 +23,7 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
   // camera.aspect = width/height;
   camera.updateProjectionMatrix();
   controls.minDistance = radius + .2;
+  // console.log({width, height})
 
 
   focus && focus? controls.fitToBox(focus.current, true) : controls.dollyTo(1.5, true)
