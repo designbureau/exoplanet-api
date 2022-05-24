@@ -23,7 +23,7 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
   camera.aspect = width/height;
   camera.updateProjectionMatrix();
   controls.minDistance = radius + .2;
-  // controls.aspect = width/height;
+
 
   focus && focus? controls.fitToBox(focus.current, true) : controls.dollyTo(1.5, true)
   controls.setTarget(cameraPosition[0], cameraPosition[1], cameraPosition[2], true)

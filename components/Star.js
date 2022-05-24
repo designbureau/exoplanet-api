@@ -219,7 +219,7 @@ const Star = (props) => {
         distance={1000}
         castShadow
       />
-        <mesh
+        {useMemo(() => <group><mesh
           {...props}
           ref={mesh}
           name={props.starSystemData.name[0]}
@@ -306,87 +306,85 @@ const Star = (props) => {
               alpha={0.75}
               colorD={color}
             />
-            
-
             <Displace ref={displace} strength={0.025} scale={transformScale} type={"perlin"} />
           </LayerMaterial>
         </mesh>
-      {useMemo(() => Planets, [Planets])}
-      <sprite
-        position={[
-          props.position[0],
-          props.position[1],
-          props.position[2] + 0.1,
-        ]}
-        ref={glow}
-      >
-        <circleGeometry args={[2 * scale, 128]} />
-        <LayerMaterial
-          transparent
-          depthWrite={false}
-          blending={THREE.CustomBlending}
-          blendEquation={THREE.AddEquation}
-          blendSrc={THREE.SrcAlphaFactor}
-          blendDst={THREE.DstAlphaFactor}
+        <sprite
+          position={[
+            props.position[0],
+            props.position[1],
+            props.position[2] + 0.1,
+          ]}
+          ref={glow}
         >
-          {/* //<Displace ref={displace} strength={10} scale={scale * 0.7} type={"perlin"} /> */}
-          <Depth
-            colorA={color}
-            colorB={"black"}
-            alpha={1}
-            mode="normal"
-            near={-5 * scale}
-            far={1.5 * scale}
-            origin={[0, 0, 0]}
-          />
-          <Depth
-            colorA={color}
-            colorB={"black"}
-            alpha={1}
-            mode="add"
-            near={-1 * scale}
-            far={1.125 * scale}
-            origin={[0, 0, 0]}
-          />
-          <Depth
-            colorA={color}
-            colorB={"black"}
-            alpha={0.45}
-            mode="add"
-            near={-1 * scale}
-            far={1.15 * scale}
-            origin={[0, 0, 0]}
-          />
-          <Depth
-            colorA={color}
-            colorB={"black"}
-            alpha={0.35}
-            mode="add"
-            near={-1 * scale}
-            far={1.25 * scale}
-            origin={[0, 0, 0]}
-          />
-          <Depth
-            colorA={color}
-            colorB={"black"}
-            alpha={0.25}
-            mode="add"
-            near={-1 * scale}
-            far={1.35 * scale}
-            origin={[0, 0, 0]}
-          />
-          <Depth
-            colorA={color}
-            colorB={"black"}
-            alpha={0.005}
-            mode="softlight"
-            near={-1 * scale}
-            far={1.85 * scale}
-            origin={[0, 0, 0]}
-          />
-        </LayerMaterial>
-      </sprite>
+          <circleGeometry args={[2 * scale, 128]} />
+          <LayerMaterial
+            transparent
+            depthWrite={false}
+            blending={THREE.CustomBlending}
+            blendEquation={THREE.AddEquation}
+            blendSrc={THREE.SrcAlphaFactor}
+            blendDst={THREE.DstAlphaFactor}
+          >
+            {/* //<Displace ref={displace} strength={10} scale={scale * 0.7} type={"perlin"} /> */}
+            <Depth
+              colorA={color}
+              colorB={"black"}
+              alpha={1}
+              mode="normal"
+              near={-5 * scale}
+              far={1.5 * scale}
+              origin={[0, 0, 0]}
+            />
+            <Depth
+              colorA={color}
+              colorB={"black"}
+              alpha={1}
+              mode="add"
+              near={-1 * scale}
+              far={1.125 * scale}
+              origin={[0, 0, 0]}
+            />
+            <Depth
+              colorA={color}
+              colorB={"black"}
+              alpha={0.45}
+              mode="add"
+              near={-1 * scale}
+              far={1.15 * scale}
+              origin={[0, 0, 0]}
+            />
+            <Depth
+              colorA={color}
+              colorB={"black"}
+              alpha={0.35}
+              mode="add"
+              near={-1 * scale}
+              far={1.25 * scale}
+              origin={[0, 0, 0]}
+            />
+            <Depth
+              colorA={color}
+              colorB={"black"}
+              alpha={0.25}
+              mode="add"
+              near={-1 * scale}
+              far={1.35 * scale}
+              origin={[0, 0, 0]}
+            />
+            <Depth
+              colorA={color}
+              colorB={"black"}
+              alpha={0.005}
+              mode="softlight"
+              near={-1 * scale}
+              far={1.85 * scale}
+              origin={[0, 0, 0]}
+            />
+          </LayerMaterial>
+        </sprite></group>, [props, scale, displace, transformScale, noise, noise2, noise3, noiseSpot, noiseSpot2, noiseSpot3, color, color_light, layerMaterial])}
 
+      {useMemo(() => Planets, [Planets])}
       
     </group>
   );
