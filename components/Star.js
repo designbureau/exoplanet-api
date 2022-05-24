@@ -5,7 +5,7 @@ import { forwardRef, useRef, useState, useMemo, useContext } from "react";
 import Planet from "./Planet";
 import { EnvContext } from "./EnvContext";
 import chroma from "chroma-js";
-import { Color, Noise, Texture } from "lamina";
+import {, Noise, } from "lamina";
 import {
   LayerMaterial,
   Depth,

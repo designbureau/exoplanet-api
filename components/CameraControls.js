@@ -20,7 +20,7 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
 
   camera.far = 1000000000;
   camera.fov = 50;
-  camera.aspect = width/height;
+  // camera.aspect = width/height;
   camera.updateProjectionMatrix();
   controls.minDistance = radius + .2;
 
