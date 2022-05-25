@@ -6,13 +6,13 @@ const SkyBox = () => {
   const { scene } = useThree();
   const loader = new CubeTextureLoader();
   // The CubeTextureLoader load method takes an array of urls representing all 6 sides of the cube.
-  // const texture = loader
-  //   .setPath("/textures/cubemaps/nasa/8k/compressed/")
-  //   .load(["px.jpg", "nx.jpg", "py.jpg", "ny.jpg", "pz.jpg", "nz.jpg"]);
+   const texture = loader
+    .setPath("/textures/cubemaps/nasa/8k/compressed/")
+    .load(["px.jpg", "nx.jpg", "py.jpg", "ny.jpg", "pz.jpg", "nz.jpg"]);
 
-  const texture = loader
-  .setPath("/textures/cubemaps/nasa/8k/")
-  .load(["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"]);
+  //const texture = loader
+  //.setPath("/textures/cubemaps/nasa/8k/")
+  //.load(["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"]);
 
   // Set the scene background property to the resulting texture.
   scene.background = texture;
