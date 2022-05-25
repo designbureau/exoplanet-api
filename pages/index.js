@@ -7,6 +7,7 @@ import SkyBox from "../components/SkyBox";
 import CreateSystem from "../components/CreateSystem";
 import Controls from '../components/CameraControls';
 import { EnvContext, Constants } from "../components/EnvContext";
+import { Perf } from 'r3f-perf';
 
 export default function Home() {
   const [systemData, setSystemData] = useState(null);
@@ -36,6 +37,7 @@ export default function Home() {
               />)}
             </EnvContext.Provider>
             <Controls cameraPosition={cameraPosition} focus={focus}/>
+            <Perf />
           </Canvas>
       </div>
     </>
