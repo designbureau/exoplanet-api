@@ -29,6 +29,7 @@ const Star = (props) => {
   const noiseSpot = useRef();
   const noiseSpot2 = useRef();
   const noiseSpot3 = useRef();
+  const noiseSpot4 = useRef();
   const camera = useThree((state) => state.camera);
   const lightRef = useRef();
 
@@ -38,12 +39,13 @@ const Star = (props) => {
 
   useFrame((state, delta) => {
     mesh.current.rotation.y += 0.00005;
-    noise.current.scale += Math.sin(delta * 0.025);
-    noise2.current.scale += Math.sin(delta * 0.03);
-    noise3.current.scale += Math.sin(delta * 0.025);
-    noiseSpot.current.scale += Math.sin(delta * 0.00125);
-    noiseSpot2.current.scale += Math.sin(delta * 0.00125);
-    noiseSpot3.current.scale += Math.sin(delta * 0.00125);
+    // noise.current.scale += Math.sin(delta * 0.025);
+    // noise2.current.scale += Math.sin(delta * 0.03);
+    // noise3.current.scale += Math.sin(delta * 0.025);
+    noiseSpot.current.scale += Math.sin(delta * 0.025);
+    // noiseSpot2.current.scale += Math.sin(delta * 0.00125);
+    // noiseSpot3.current.scale += Math.sin(delta * 0.00125);
+    // noiseSpot4.current.scale += Math.sin(delta * 0.00125);
     // displace.current.scale += Math.sin(delta * 0.05);
     // camera.updateProjectionMatrix();
     glow.current.quaternion.setFromRotationMatrix(camera.matrix);
@@ -219,7 +221,9 @@ const Star = (props) => {
         distance={1000}
         castShadow
       />
-        {useMemo(() => <group><mesh
+        {useMemo(() => 
+        <group>
+          <mesh
           {...props}
           ref={mesh}
           name={props.starSystemData.name[0]}
@@ -298,7 +302,7 @@ const Star = (props) => {
               alpha={0.25}
             />
             <Noise
-              ref={noiseSpot3}
+              ref={noiseSpot4}
               mapping={"local"}
               scale={transformScale * .0001}
               type={"perlin"}
@@ -326,7 +330,6 @@ const Star = (props) => {
             blendSrc={THREE.SrcAlphaFactor}
             blendDst={THREE.DstAlphaFactor}
           >
-            {/* //<Displace ref={displace} strength={10} scale={scale * 0.7} type={"perlin"} /> */}
             <Depth
               colorA={color}
               colorB={"black"}
