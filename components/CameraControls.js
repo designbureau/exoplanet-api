@@ -15,8 +15,8 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
   const gl = useThree((state) => state.gl)
   const controls = useMemo(() => new CameraControls(camera, gl.domElement,), [])
 
-  let radius;
-  focus && focus? radius = focus.current.geometry.parameters.radius : 1
+  let radius = 1;
+  focus && focus? radius = focus.current.geometry.parameters.radius : 1;
 
   camera.far = 1000000000;
   camera.fov = 50;
