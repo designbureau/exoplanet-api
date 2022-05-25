@@ -1,5 +1,5 @@
 import Star from "./Star";
-const CreateStar = (data, setCameraPosition, setFocus, refs) => {
+const CreateStar = ({data, setCameraPosition, setFocus, refs}) => {
   
 
   

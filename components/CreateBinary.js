@@ -28,12 +28,12 @@ const CreateBinary = (systemData, setCameraPosition, setFocus, refs) => {
 //  <p key={item} ref={(element) => itemEls.current.push(element)}>{item}</p>
 
 
-  let Star = systemData.star && CreateStar(systemData.star, setCameraPosition, setFocus, refs);
-  let Planet = systemData.planet && CreatePlanet(systemData.planet, setCameraPosition, setFocus, refs);
+  let Star = systemData.star && <CreateStar data={systemData.star} setCameraPosition={setCameraPosition}  setFocus={setFocus} refs={refs}/>
+  let Planet = systemData.planet && <CreatePlanet data={systemData.planet} setCameraPosition={setCameraPosition} setFocus={setFocus} refs={refs} />
 
-  let Binary = systemData.binary && systemData.binary.map((binary) => {
+  let Binary = systemData.binary && systemData.binary.map((binary, i) => {
     // console.log("Binary", binary);
-    return CreateBinary(binary, setCameraPosition, setFocus, refs);
+    return <CreateBinary key={i} systemData={binary} setCameraPosition={setCameraPosition} setFocus={setFocus} refs={refs}/>
   });
 
   // console.log("data", systemData);
