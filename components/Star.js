@@ -382,7 +382,7 @@ const Star = (props) => {
               origin={[0, 0, 0]}
             />
           </LayerMaterial>
-        </sprite></group>, [props, scale, color, color_light, transformScale])}
+        </sprite></group>)}
 
       {useMemo(() => Planets, [Planets])}
       
