@@ -33,7 +33,10 @@ const CreateBinary = (systemData, setCameraPosition, setFocus, refs) => {
 
   let Binary = systemData.binary && systemData.binary.map((binary, i) => {
     // console.log("Binary", binary);
-    return <CreateBinary key={i} systemData={binary} setCameraPosition={setCameraPosition} setFocus={setFocus} refs={refs}/>
+
+    return CreateBinary(binary, setCameraPosition, setFocus, refs);
+
+    // return <CreateBinary key={i} systemData={binary} setCameraPosition={setCameraPosition} setFocus={setFocus} refs={refs}/>
   });
 
   // console.log("data", systemData);

@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
-import { forwardRef, useRef, useState, useMemo, useContext } from "react";
+import { forwardRef, useRef, createRef, useState, useMemo, useContext } from "react";
 import Planet from "./Planet";
 import { EnvContext } from "./EnvContext";
 import chroma from "chroma-js";
@@ -15,10 +15,13 @@ import {
 } from "lamina";
 // import { Billboard } from "@react-three/drei";
 
-const Star = (props) => {
+const ref = createRef();
+
+
+const Star = forwardRef((props, ref) => {
   const constants = useContext(EnvContext);
   // This reference will give us direct access to the mesh
-  const mesh = useRef();
+  const meshRef = useRef(ref);
   const layerMaterial = useRef();
   const glow = useRef();
   const group = useRef();
@@ -38,7 +41,7 @@ const Star = (props) => {
 
 
   useFrame((state, delta) => {
-    mesh.current.rotation.y += 0.00005;
+    meshRef.current.rotation.y += 0.00005;
     // noise.current.scale += Math.sin(delta * 0.025);
     // noise2.current.scale += Math.sin(delta * 0.03);
     // noise3.current.scale += Math.sin(delta * 0.025);
@@ -225,15 +228,15 @@ const Star = (props) => {
         <group>
           <mesh
           {...props}
-          ref={mesh}
+          ref={meshRef}
           name={props.starSystemData.name[0]}
           // scale={active ? 1.5 : 1}
           // onClick={(event) => setActive(!active)}
           onClick={(e) => {
             props.setCameraPosition(props.position);
-            props.setFocus(mesh);
+            props.setFocus(meshRef);
             // setCurrentFocus(mesh);
-            console.log("clicked mesh", mesh);
+            console.log("clicked mesh", meshRef);
             // console.log("clicked mesh group", group);
             // // console.log("context from star", constants.distance.au);
             // console.log("star scale", scale);
@@ -391,6 +394,6 @@ const Star = (props) => {
       
     </group>
   );
-};
+});
 
 export default Star;
