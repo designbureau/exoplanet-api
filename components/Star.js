@@ -18,7 +18,7 @@ import {
 const ref = createRef();
 
 
-const Star = forwardRef((props, ref) => {
+const Star = forwardRef(function Star(props, ref) {
   const constants = useContext(EnvContext);
   // This reference will give us direct access to the mesh
   const meshRef = useRef(ref);
@@ -101,7 +101,7 @@ const Star = forwardRef((props, ref) => {
       return (
         <Planet
           key={planet.name[0]}
-          position={[x, y, z]}
+          // position={[x, y, z]}
           name={planet.name[0]}
           setCameraPosition={props.setCameraPosition}
           setFocus={props.setFocus}

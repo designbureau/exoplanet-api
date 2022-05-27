@@ -176,7 +176,7 @@ ul.subMenu {
 
 .systemNav {
   position: fixed;
-  top: 0;
+  bottom: 0;
   right: 0;
   background: rgb(var(--background-darker));
   border: 1px solid rgb(var(--border));

@@ -31,8 +31,17 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
   let currentPosition = controls.getPosition();
   // setControlPosition(currentPosition);
 
+  focus && console.log(focus);
   return useFrame((state, delta) => {
+    // controls.setTarget(focus.current.position);
+    // focus && camera.setDistance(1.5);
+    // focus && controls.setLookAt(focus.current);
+    // focus && camera.minDistance(1)
+    focus && controls.setTarget(focus.current.position.x, focus.current.position.y, focus.current.position.z, true);
+
+
     return controls.update(delta)
+
   })
 }
 
