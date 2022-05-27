@@ -1,9 +1,10 @@
+import * as THREE from "three";
+// import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import { useFrame } from "@react-three/fiber";
-import { Select, Selection, EffectComposer, SelectiveBloom } from "@react-three/postprocessing";
 import { useRef, useState, useContext } from "react";
 import { EnvContext } from "./EnvContext";
 import PlanetTexture from "./PlanetTextures";
-import { getEllipse } from "./HelperFunctions";
+import { getEllipse, getPeriapsis } from "./HelperFunctions";
 
 const Planet = (props) => {
   // This reference will give us direct access to the mesh
@@ -19,21 +20,57 @@ const Planet = (props) => {
   const inclination = props.planetDetails.inclination[0];
   const periastron = props.planetDetails.periastron[0];
   const ellipse = getEllipse(semimajoraxis, eccentricity);
-  const speed = 100;
+  const speed = 10;
+
+  const periapsis = getPeriapsis(semimajoraxis, eccentricity) - semimajoraxis;
 
 
-  console.log({semimajoraxis})
-  console.log({ellipse});
+  // console.log({semimajoraxis})
+  // console.log({ellipse});
 
-  useFrame((state, delta) => {
-    
+  //Orbits
+  const curve = new THREE.EllipseCurve(
+    0,
+    0, // ax, aY
+    ellipse.xRadius,
+    ellipse.yRadius, // xRadius, yRadius
+    0,
+    2 * Math.PI, // aStartAngle, aEndAngle
+    false, // aClockwise
+    0 // aRotation
+  );
+
+  console.log({ curve });
+
+
+  const orbitRef = useRef();
+
+  const points = curve.getPoints(1000);
+  const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+  // orbitEllipse.name = name + " orbit";
+
+  // orbitRef.current.rotation = inclination / 90;
+
+  // let orbitsGroup = new THREE.Group();
+  // orbitsGroup.add(planetMesh, orbitEllipse);
+  // orbitsGroup.rotation.x = inclination / 90;
+
+  // orbitsGroup.position.x = periapsis;
+  // console.log("periapsis", periapsis);
+
+  // meshRef.position.x = ellipse.xRadius;
+  // const elapsedTime = clock.getElapsedTime();
+
+  useFrame((state, delta, clock) => {
     meshRef.current.rotation.y += 0.001;
-    
-    meshRef.current.position.x += ellipse.xRadius * Math.cos((period) * speed);
-    meshRef.current.position.y += ellipse.yRadius * Math.sin((period) * speed);
+
+
+
+    // meshRef.current.position.x += ellipse.xRadius * Math.cos(period * speed);
+    // meshRef.current.position.y += ellipse.yRadius * Math.sin(period * speed);
     // console.log(meshRef.current.position.x);
     // planet.mesh.rotation.y = Math.PI * 0.005 * elapsedTime;
-
   });
   // Return view, these are regular three.js elements expressed in JSX
   // const planetNormalTexture = useLoader(TextureLoader, "/textures/8k_jupiter.jpeg");
@@ -56,8 +93,7 @@ const Planet = (props) => {
   if (props.planetDetails.hasOwnProperty("radius")) {
     if (props.planetDetails.radius.hasOwnProperty("_")) {
       radius = parseFloat(props.planetDetails.radius._);
-    }
-    else{
+    } else {
       radius = parseFloat(props.planetDetails.radius);
     }
   }
@@ -89,51 +125,55 @@ const Planet = (props) => {
 
   // props.refs.push(meshRef);
 
-
   let position = [semimajoraxis, 0, 0];
 
   // console.log(meshRef.position)
 
   return (
-   
-    <Selection>
-       {/* <EffectComposer>
-          <SelectiveBloom
-            height={600}
-            intensity={1} // The bloom intensity.
-            luminanceThreshold={0} // luminance threshold. Raise this value to mask out darker elements in the scene.
-            luminanceSmoothing={0.1} // smoothness of the luminance threshold. Range is [0, 1]
-          />
-        </EffectComposer> */}
-      <Select>
+    <group>
+      <line ref={orbitRef} geometry={geometry} rotation={inclination / 90}>
+        <lineBasicMaterial
+          attach="material"
+          color={"#ffffff"}
+          linewidth={10}
+          opacity={0.25}
+          transparent={true}
+          // rotation={inclination / 90}
+          // position={[periapsis, 0, 0]}
+        />
+      </line>
+
       <mesh
-      position={position}
-      {...props}
-      ref={meshRef}
-      name={props.name}
-      // scale={active ? 1.5 : 1}
-      // onClick={(event) => setActive(!active)}
-      onClick={(e) => {
-        props.setCameraPosition([meshRef.current.position.x,meshRef.current.position.y,meshRef.current.position.z]);
-        props.setFocus(meshRef);
-        console.log("clicked mesh", meshRef);
-        console.log(meshRef.current.position);
-        // console.log("context from planet", constants.distance.au);
-        // console.log("planet scale", scale);
-      }}
-      // castShadow={true}
-      // receiveShadow={true}
-      // onPointerOver={(event) => setHover(true)}
-      // onPointerOut={(event) => setHover(false)}
-    >
-      <sphereGeometry args={[scale, 256, 256]} />
-      <meshStandardMaterial
-        map={planetTexture}
-        // color={hover ? "#FFEEEE" : "white"}
-      />
-    </mesh>
-      </Select>
-    </Selection>
+        position={position}
+        {...props}
+        ref={meshRef}
+        name={props.name}
+        // scale={active ? 1.5 : 1}
+        // onClick={(event) => setActive(!active)}
+        onClick={(e) => {
+          props.setCameraPosition([
+            meshRef.current.position.x,
+            meshRef.current.position.y,
+            meshRef.current.position.z,
+          ]);
+          props.setFocus(meshRef);
+          console.log("clicked mesh", meshRef);
+          console.log(meshRef.current.position);
+          // console.log("context from planet", constants.distance.au);
+          // console.log("planet scale", scale);
+        }}
+        // castShadow={true}
+        // receiveShadow={true}
+        // onPointerOver={(event) => setHover(true)}
+        // onPointerOut={(event) => setHover(false)}
+      >
+        <sphereGeometry args={[scale, 256, 256]} />
+        <meshStandardMaterial
+          map={planetTexture}
+          // color={hover ? "#FFEEEE" : "white"}
+        />
+      </mesh>
+    </group>
   );
 };
 
