@@ -14,7 +14,7 @@ const Planet = (props) => {
   // const [active, setActive] = useState(false);
   // Subscribe this component to the render-loop, rotate the mesh every frame
 
-  const semimajoraxis = props.planetDetails.semimajoraxis[0] * 0.001;
+  const semimajoraxis = props.planetDetails.semimajoraxis[0] * 200;
   const period = props.planetDetails.period[0];
   const eccentricity = props.planetDetails.eccentricity[0];
   const inclination = props.planetDetails.inclination[0];
@@ -43,6 +43,7 @@ const Planet = (props) => {
   console.log({ curve });
 
 
+
   const orbitRef = useRef();
 
   const points = curve.getPoints(1000);
@@ -62,9 +63,17 @@ const Planet = (props) => {
   // meshRef.position.x = ellipse.xRadius;
   // const elapsedTime = clock.getElapsedTime();
 
-  useFrame((state, delta, clock) => {
+  useFrame((state, delta) => {
+
+    const elapsedTime = state.clock.getElapsedTime();
+
     meshRef.current.rotation.y += 0.001;
 
+
+    meshRef.current.position.x = ellipse.xRadius * Math.cos((elapsedTime / period) * speed);
+    meshRef.current.position.y = ellipse.yRadius * Math.sin((elapsedTime / period) * speed);
+
+    // console.log( meshRef.current.position.x);
 
 
     // meshRef.current.position.x += ellipse.xRadius * Math.cos(period * speed);
@@ -119,27 +128,37 @@ const Planet = (props) => {
     scale = mass;
   }
 
+  //TODO: remove exaggeration
+  scale = scale * 10;
+
   // scale = scale / constants.mass.jupiter;
 
   const planetTexture = PlanetTexture(mass, radius, props.name);
 
   // props.refs.push(meshRef);
 
-  let position = [semimajoraxis, 0, 0];
+  let position = [0, 0, 0];
+
+
 
   // console.log(meshRef.position)
 
   return (
-    <group>
-      <line ref={orbitRef} geometry={geometry} rotation={inclination / 90}>
+    <group 
+    // position={[periapsis, 0, 0]}
+    >
+      <line ref={orbitRef}
+        geometry={geometry}
+      //  rotation={inclination / 90}
+      >
         <lineBasicMaterial
           attach="material"
           color={"#ffffff"}
           linewidth={10}
           opacity={0.25}
           transparent={true}
-          // rotation={inclination / 90}
-          // position={[periapsis, 0, 0]}
+          rotation={inclination / 90}
+        // position={[periapsis, 0, 0]}
         />
       </line>
 
@@ -162,15 +181,15 @@ const Planet = (props) => {
           // console.log("context from planet", constants.distance.au);
           // console.log("planet scale", scale);
         }}
-        // castShadow={true}
-        // receiveShadow={true}
-        // onPointerOver={(event) => setHover(true)}
-        // onPointerOut={(event) => setHover(false)}
+      // castShadow={true}
+      // receiveShadow={true}
+      // onPointerOver={(event) => setHover(true)}
+      // onPointerOut={(event) => setHover(false)}
       >
         <sphereGeometry args={[scale, 256, 256]} />
         <meshStandardMaterial
           map={planetTexture}
-          // color={hover ? "#FFEEEE" : "white"}
+        // color={hover ? "#FFEEEE" : "white"}
         />
       </mesh>
     </group>

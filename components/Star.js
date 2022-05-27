@@ -37,8 +37,6 @@ const Star = forwardRef(function Star(props, ref) {
   const lightRef = useRef();
 
 
-  // props.refs.push(group);
-
 
   useFrame((state, delta) => {
     meshRef.current.rotation.y += 0.00005;
