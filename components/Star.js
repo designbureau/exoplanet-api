@@ -219,7 +219,7 @@ const Star = forwardRef(function Star(props, ref) {
         position={props.position}
         color={color}
         intensity={0.7}
-        distance={1000}
+        distance={10000}
         castShadow
       />
         {useMemo(() => 

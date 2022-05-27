@@ -131,6 +131,11 @@ const Planet = (props) => {
   //TODO: remove exaggeration
   scale = scale * 10;
 
+
+
+  // meshRef.rotation.y = Math.PI * 180;
+
+
   // scale = scale / constants.mass.jupiter;
 
   const planetTexture = PlanetTexture(mass, radius, props.name);
@@ -146,6 +151,8 @@ const Planet = (props) => {
   return (
     <group 
     // position={[periapsis, 0, 0]}
+    //  rotation={inclination / 90}
+
     >
       <line ref={orbitRef}
         geometry={geometry}
@@ -157,7 +164,6 @@ const Planet = (props) => {
           linewidth={10}
           opacity={0.25}
           transparent={true}
-          rotation={inclination / 90}
         // position={[periapsis, 0, 0]}
         />
       </line>
@@ -167,6 +173,7 @@ const Planet = (props) => {
         {...props}
         ref={meshRef}
         name={props.name}
+        // rotateY={Math.PI * 90}
         // scale={active ? 1.5 : 1}
         // onClick={(event) => setActive(!active)}
         onClick={(e) => {
