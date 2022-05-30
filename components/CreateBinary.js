@@ -27,26 +27,34 @@ const CreateBinary = (systemData, setCameraPosition, setFocus, refs) => {
 // {items.map(item => (
 //  <p key={item} ref={(element) => itemEls.current.push(element)}>{item}</p>
 
+  // let system = {};
+
 
   let Star = systemData.star && <CreateStar data={systemData.star} setCameraPosition={setCameraPosition}  setFocus={setFocus} refs={refs}/>
   let Planet = systemData.planet && <CreatePlanet data={systemData.planet} setCameraPosition={setCameraPosition} setFocus={setFocus} refs={refs} />
 
   let Binary = systemData.binary && systemData.binary.map((binary, i) => {
-    // console.log("Binary", binary);
-
-    return (<group key={i}>{CreateBinary(binary, setCameraPosition, setFocus, refs)}</group>)
-
-    // return <CreateBinary key={i} systemData={binary} setCameraPosition={setCameraPosition} setFocus={setFocus} refs={refs}/>
+    return CreateBinary(binary, setCameraPosition, setFocus, refs);
   });
 
   // console.log("data", systemData);
 
+
+
+  let x = Math.random() * 500 - 1;
+  let y = Math.random() * 500 - 1;
+  let z = Math.random() * 500 - 1;   
+ 
+
+
   return (
-    <>
+    <group 
+    // position={[x,y,z]}
+    >
       {Binary}
       {Star}
       {Planet}
-    </>
+    </group>
   );
 };
 

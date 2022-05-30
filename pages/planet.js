@@ -4,41 +4,38 @@ import SystemNav from "../components/SystemNav";
 import { useRef, useState, useMemo, forwardRef } from "react";
 import { Canvas, useFrame, useThree, extend } from "@react-three/fiber";
 import SkyBox from "../components/SkyBox";
-import CreateSystem from "../components/CreateSystem";
+import NewSystemNav from "../components/NewSystemNav";
+import RenderPlanet from "../components/RenderPlanet";
 import Controls from '../components/CameraControls';
 import { EnvContext, Constants } from "../components/EnvContext";
-import { Perf } from 'r3f-perf';
+import JsonFind from "json-find";
 
 export default function Home() {
   const [systemData, setSystemData] = useState(null);
-  const [cameraPosition, setCameraPosition] = useState([0, 0, 5]);
-  const [cursor, setCursor] = useState("default");
+  const [cameraPosition, setCameraPosition] = useState([0, 0, 0]);
   const [focus, setFocus] = useState();
-  // const [controlPosition, setControlPosition] = useState();
 
-  const refs = useRef(new Array());
-  // const refs = {};
-  // console.log("refs", refs);
+
+    const data = systemData && JsonFind(systemData);
+    const planets = data && data.checkKey("planet");
 
   return (
     <>
       <Nav setSystemData={setSystemData} />
-      {systemData && <SystemNav systemData={systemData} />}
-      <div id="canvas-container" style={{cursor:cursor}}>
+      <div id="canvas-container">
           <Canvas
             dpr={[1, 2]}
           >
+            <ambientLight intensity={0.02}/>
+            <directionalLight intensity={0.5} position={[2, 0, 5]} />
             <EnvContext.Provider value={Constants}>
               {useMemo(() => <SkyBox />,[])}
-              {systemData && (<CreateSystem
+              {systemData && (<NewSystemNav
                 systemData={systemData}
-                setCameraPosition={setCameraPosition}
-                setFocus={setFocus}
-                refs={refs}
               />)}
+              <RenderPlanet planet={planets && planets[0]} />
             </EnvContext.Provider>
             <Controls cameraPosition={cameraPosition} focus={focus}/>
-            <Perf />
           </Canvas>
       </div>
     </>

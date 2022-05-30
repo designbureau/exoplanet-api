@@ -16,7 +16,7 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
   const controls = useMemo(() => new CameraControls(camera, gl.domElement,), [])
 
   let radius = 1;
-  focus && focus? radius = focus.current.geometry.parameters.radius : 1;
+  focus && focus.current? radius = focus.current.geometry.parameters.radius : 1;
 
   camera.far = 1000000000;
   camera.fov = 50;
@@ -28,7 +28,7 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
 
   focus && focus? controls.fitToBox(focus.current, true) : controls.dollyTo(1.5, true)
   controls.setTarget(cameraPosition[0], cameraPosition[1], cameraPosition[2], true)
-  let currentPosition = controls.getPosition();
+  // let currentPosition = controls.getPosition();
   // setControlPosition(currentPosition);
 
   focus && console.log(focus);
@@ -37,7 +37,7 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
     // focus && camera.setDistance(1.5);
     // focus && controls.setLookAt(focus.current);
     // focus && camera.minDistance(1)
-    focus && controls.setTarget(focus.current.position.x, focus.current.position.y, focus.current.position.z, true);
+    focus && focus.current? controls.setTarget(focus.current.position.x, focus.current.position.y, focus.current.position.z, true) : "";
 
 
     return controls.update(delta)

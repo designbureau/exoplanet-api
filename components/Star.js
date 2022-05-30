@@ -5,8 +5,8 @@ import { forwardRef, useRef, createRef, useState, useMemo, useContext } from "re
 import Planet from "./Planet";
 import { EnvContext } from "./EnvContext";
 import chroma from "chroma-js";
-import {Noise} from "lamina";
 import {
+  Noise
   LayerMaterial,
   Depth,
   Fresnel,
@@ -15,13 +15,17 @@ import {
 } from "lamina";
 // import { Billboard } from "@react-three/drei";
 
-const ref = createRef();
+// const ref = createRef();
 
 
-const Star = forwardRef(function Star(props, ref) {
+// const Star = forwardRef(function Star(props, ref) {
+
+const Star = (props) => {
+
   const constants = useContext(EnvContext);
-  // This reference will give us direct access to the mesh
-  const meshRef = useRef(ref);
+  const starRef = useRef();
+  // const starRef = useRef(ref);
+
   const layerMaterial = useRef();
   const glow = useRef();
   const group = useRef();
@@ -39,7 +43,7 @@ const Star = forwardRef(function Star(props, ref) {
 
 
   useFrame((state, delta) => {
-    meshRef.current.rotation.y += 0.00005;
+    starRef.current.rotation.y += 0.00005;
     // noise.current.scale += Math.sin(delta * 0.025);
     // noise2.current.scale += Math.sin(delta * 0.03);
     // noise3.current.scale += Math.sin(delta * 0.025);
@@ -53,48 +57,24 @@ const Star = forwardRef(function Star(props, ref) {
 
   });
   // Return view, these are regular three.js elements expressed in JSX
-  const starNormalTexture = useLoader(
-    TextureLoader,
-    "/textures/8k_sun_bw2.jpg"
-  );
-  starNormalTexture.encoding = THREE.sRGBEncoding;
+  // const starNormalTexture = useLoader(
+  //   TextureLoader,
+  //   "/textures/8k_sun_bw2.jpg"
+  // );
+  // starNormalTexture.encoding = THREE.sRGBEncoding;
 
   // console.log("star system props", props.starSystemData);
 
-  //TODO: nest planet refs in array under star. Forwardrefs?
-  const planetsArray = [];
+  const planetElements = useRef(new Array())
 
-
-  // const arrLength = arr.length;
-  //   const [elRefs, setElRefs] = React.useState([]);
-    
-  //   React.useEffect(() => {
-  //     // add or remove refs
-  //     setElRefs((elRefs) =>
-  //       Array(arrLength)
-  //         .fill()
-  //         .map((_, i) => elRefs[i] || createRef()),
-  //     );
-  //   }, [arrLength]);
-    
-  //   return (
-  //     <div>
-  //       {arr.map((el, i) => (
-  //         <div ref={elRefs[i]} style={...}>
-  //           ...
-  //         </div>
-  //       ))}
-  //     </div>
-  //   );
-
-  const arrLength = props.starSystemData.planet ? props.starSystemData.planet.length : 0;
-  console.log(arrLength);
+  // const arrLength = props.starSystemData.planet ? props.starSystemData.planet.length : 0;
+  // console.log(arrLength);
 
   const Planets =
     props.starSystemData.planet && props.starSystemData.planet.map((planet) => {
-      let x = Math.random() * 50 - 1;
-      let y = Math.random() * 50 - 1;
-      let z = Math.random() * 50 - 1;
+      // let x = Math.random() * 50 - 1;
+      // let y = Math.random() * 50 - 1;
+      // let z = Math.random() * 50 - 1;
 
       return (
         <Planet
@@ -104,19 +84,29 @@ const Star = forwardRef(function Star(props, ref) {
           setCameraPosition={props.setCameraPosition}
           setFocus={props.setFocus}
           planetDetails={planet}
-          refs={props.refs}
+          refs={planetElements}
         />
       );
     });
 
+    const system = {};
+
+    system.star = starRef;
+    system.planets = planetElements;
+
+    props.refs.system = system;
+
+
+    // console.log({system});
+
+
+
+    
+    // console.log({planetElements});
   // console.log("group mesh", group);
   // console.log("star mesh", mesh);
   // console.log("star position", props.position);
   // console.log(props);
-  // {items.map(item => (
-  //  <p key={item} ref={(element) => itemEls.current.push(element)}>{item}</p>
-  // console.log("starrefs", props.starRefs);
-  // props.refs.current.push(mesh);
 
   let radius;
   if (props.starSystemData.hasOwnProperty("radius")) {
@@ -213,28 +203,29 @@ const Star = forwardRef(function Star(props, ref) {
   // }
   
   return (
-    <group ref={group} name={props.starSystemData.name[0]}>
+    <group ref={group} name={props.starSystemData.name[0]} >
       <pointLight
         ref={lightRef}
-        position={props.position}
+        
         color={color}
         intensity={0.7}
-        distance={1000}
+        distance={10000}
         castShadow
       />
         {useMemo(() => 
         <group>
           <mesh
-          {...props}
-          ref={meshRef}
+          // {...props}
+          position={props.position}
+          ref={starRef}
           name={props.starSystemData.name[0]}
           // scale={active ? 1.5 : 1}
           // onClick={(event) => setActive(!active)}
           onClick={(e) => {
             props.setCameraPosition(props.position);
-            props.setFocus(meshRef);
+            props.setFocus(starRef);
             // setCurrentFocus(mesh);
-            console.log("clicked mesh", meshRef);
+            console.log("clicked mesh", starRef);
             // console.log("clicked mesh group", group);
             // // console.log("context from star", constants.distance.au);
             // console.log("star scale", scale);
@@ -392,6 +383,6 @@ const Star = forwardRef(function Star(props, ref) {
       
     </group>
   );
-});
+};
 
 export default Star;

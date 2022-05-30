@@ -5,22 +5,18 @@ const CreateStar = ({ data, setCameraPosition, setFocus, refs }) => {
 
   const Stars = data.map((star, i) => {
 
-    // console.log(i);
+    console.log({i});
 
-    let x = Math.random() * 500 - 1;
-    let y = Math.random() * 500 - 1;
-    let z = Math.random() * 500 - 1;
+    let x = 0;
+    let y = 0;
+    let z = 0;
 
-    // if (i === 0) {
-    //   x = 0;
-    //   y = 0;
-    //   z = 0;
-    // }
-
-
-    x = 0;
-    y = 0;
-    z = 0;
+    if(i > 0){
+        x = Math.random() * 500 - 1;
+        y = Math.random() * 500 - 1;
+        z = Math.random() * 500 - 1;
+    }     
+   
 
     // console.log("star", star.name[0]);
     return <Star

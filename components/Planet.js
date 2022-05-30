@@ -8,19 +8,28 @@ import { getEllipse, getPeriapsis } from "./HelperFunctions";
 
 const Planet = (props) => {
   // This reference will give us direct access to the mesh
-  const meshRef = useRef();
+
+
+  // const getRef = (element) => (itemsEls.current.push(element))
+
+  const planetRef = useRef();
+  props.refs.current.push(planetRef);
+
   // Set up state for the hover and active state
   // const [hover, setHover] = useState(false);
   // const [active, setActive] = useState(false);
   // Subscribe this component to the render-loop, rotate the mesh every frame
 
-  const semimajoraxis = props.planetDetails.semimajoraxis[0] * 200;
-  const period = props.planetDetails.period[0];
-  const eccentricity = props.planetDetails.eccentricity[0];
-  const inclination = props.planetDetails.inclination[0];
-  const periastron = props.planetDetails.periastron[0];
+  const au = 200;
+  let semimajoraxis = props.planetDetails.semimajoraxis? props.planetDetails.semimajoraxis[0] : 10;
+  semimajoraxis = semimajoraxis * au;
+
+  const period = props.planetDetails.period? props.planetDetails.period[0] : 365;
+  const eccentricity = props.planetDetails.eccentricity? props.planetDetails.eccentricity[0] : 0;
+  const inclination = props.planetDetails.inclination? props.planetDetails.inclination[0] : 0;
+  const periastron = props.planetDetails.periastron? props.planetDetails.periastron[0]: 0;
   const ellipse = getEllipse(semimajoraxis, eccentricity);
-  const speed = 10;
+  const speed = 1;
 
   const periapsis = getPeriapsis(semimajoraxis, eccentricity) - semimajoraxis;
 
@@ -40,7 +49,7 @@ const Planet = (props) => {
     0 // aRotation
   );
 
-  console.log({ curve });
+  // console.log({ curve });
 
 
 
@@ -60,25 +69,25 @@ const Planet = (props) => {
   // orbitsGroup.position.x = periapsis;
   // console.log("periapsis", periapsis);
 
-  // meshRef.position.x = ellipse.xRadius;
+  // planetRef.position.x = ellipse.xRadius;
   // const elapsedTime = clock.getElapsedTime();
 
   useFrame((state, delta) => {
 
     const elapsedTime = state.clock.getElapsedTime();
+    
+    planetRef.current.rotation.x = Math.PI * 0.5;
+    planetRef.current.rotation.y += 0.001;
 
-    meshRef.current.rotation.y += 0.001;
+    planetRef.current.position.x = ellipse.xRadius * Math.cos((elapsedTime / period) * speed);
+    planetRef.current.position.y = ellipse.yRadius * Math.sin((elapsedTime / period) * speed);
+
+    // console.log( planetRef.current.position.x);
 
 
-    meshRef.current.position.x = ellipse.xRadius * Math.cos((elapsedTime / period) * speed);
-    meshRef.current.position.y = ellipse.yRadius * Math.sin((elapsedTime / period) * speed);
-
-    // console.log( meshRef.current.position.x);
-
-
-    // meshRef.current.position.x += ellipse.xRadius * Math.cos(period * speed);
-    // meshRef.current.position.y += ellipse.yRadius * Math.sin(period * speed);
-    // console.log(meshRef.current.position.x);
+    // planetRef.current.position.x += ellipse.xRadius * Math.cos(period * speed);
+    // planetRef.current.position.y += ellipse.yRadius * Math.sin(period * speed);
+    // console.log(planetRef.current.position.x);
     // planet.mesh.rotation.y = Math.PI * 0.005 * elapsedTime;
   });
   // Return view, these are regular three.js elements expressed in JSX
@@ -135,49 +144,52 @@ const Planet = (props) => {
 
   const planetTexture = PlanetTexture(mass, radius, props.name);
 
-  // props.refs.push(meshRef);
+  // props.refs.push(planetRef);
 
   let position = [0, 0, 0];
 
 
 
-  // console.log(meshRef.position)
+  // console.log(planetRef.position)
 
   return (
     <group 
     // position={[periapsis, 0, 0]}
+    
     >
       <line ref={orbitRef}
         geometry={geometry}
       //  rotation={inclination / 90}
+      // position={[periapsis, 0, 0]}
       >
         <lineBasicMaterial
           attach="material"
           color={"#ffffff"}
-          linewidth={10}
+          // linewidth={1}
           opacity={0.25}
           transparent={true}
           rotation={inclination / 90}
-        // position={[periapsis, 0, 0]}
         />
       </line>
 
       <mesh
         position={position}
+        // position={[periapsis, 0, 0]}
         {...props}
-        ref={meshRef}
+        ref={planetRef}
         name={props.name}
+        // rotateX={Math.PI * 180}
         // scale={active ? 1.5 : 1}
         // onClick={(event) => setActive(!active)}
         onClick={(e) => {
           props.setCameraPosition([
-            meshRef.current.position.x,
-            meshRef.current.position.y,
-            meshRef.current.position.z,
+            planetRef.current.position.x,
+            planetRef.current.position.y,
+            planetRef.current.position.z,
           ]);
-          props.setFocus(meshRef);
-          console.log("clicked mesh", meshRef);
-          console.log(meshRef.current.position);
+          props.setFocus(planetRef);
+          console.log("clicked mesh", planetRef);
+          console.log(planetRef.current.position);
           // console.log("context from planet", constants.distance.au);
           // console.log("planet scale", scale);
         }}
