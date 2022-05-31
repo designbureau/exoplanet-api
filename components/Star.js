@@ -6,7 +6,7 @@ import Planet from "./Planet";
 import { EnvContext } from "./EnvContext";
 import chroma from "chroma-js";
 import {
-  Noise
+  Noise,
   LayerMaterial,
   Depth,
   Fresnel,
@@ -201,9 +201,10 @@ const Star = (props) => {
   // if( scale < 2){
   //   transformScale = scale * 50;
   // }
-  
-  return (
-    <group ref={group} name={props.starSystemData.name[0]} >
+  let worldPosition = new THREE.Vector3();
+
+
+  return useMemo(() => (<group ref={group} name={props.starSystemData.name[0]} position={props.position}>
       <pointLight
         ref={lightRef}
         
@@ -212,20 +213,31 @@ const Star = (props) => {
         distance={10000}
         castShadow
       />
-        {useMemo(() => 
+        
         <group>
           <mesh
           // {...props}
-          position={props.position}
+          
           ref={starRef}
           name={props.starSystemData.name[0]}
           // scale={active ? 1.5 : 1}
           // onClick={(event) => setActive(!active)}
           onClick={(e) => {
-            props.setCameraPosition(props.position);
-            props.setFocus(starRef);
+            
             // setCurrentFocus(mesh);
+
+            
             console.log("clicked mesh", starRef);
+            // console.log("current pos", e.object.position)
+            // console.log({vector})
+            // console.log("world position", vector);
+
+            let vector = new THREE.Vector3();
+            e.object.getWorldPosition(vector);
+            props.setCameraPosition([vector.x, vector.y , vector.z]);
+            props.setFocus(starRef);
+            // console.log("mesh position", starRef.current.position);
+            // console.log("mesh world position", starRef.getWorldPosition());
             // console.log("clicked mesh group", group);
             // // console.log("context from star", constants.distance.au);
             // console.log("star scale", scale);
@@ -306,11 +318,11 @@ const Star = (props) => {
           </LayerMaterial>
         </mesh>
         <sprite
-          position={[
-            props.position[0],
-            props.position[1],
-            props.position[2] + 0.1,
-          ]}
+          // position={[
+          //   props.position[0],
+          //   props.position[1],
+          //   props.position[2] + 0.1,
+          // ]}
           ref={glow}
         >
           <circleGeometry args={[2 * scale, 128]} />
@@ -377,12 +389,12 @@ const Star = (props) => {
               origin={[0, 0, 0]}
             />
           </LayerMaterial>
-        </sprite></group>)}
+        </sprite></group>
 
-      {useMemo(() => Planets, [Planets])}
+      {Planets}
       
     </group>
-  );
+  ), [props]);
 };
 
 export default Star;

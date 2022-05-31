@@ -2,7 +2,7 @@ import CreateStar from "./CreateStar";
 import CreatePlanet from "./CreatePlanet";
 // import { useRef } from "react";
 
-const CreateBinary = (systemData, setCameraPosition, setFocus, refs) => {
+const CreateBinary = (systemData, setCameraPosition, setFocus, refs, isBinary) => {
   // return (
   //   <>
   //     {systemData.binary &&
@@ -33,23 +33,33 @@ const CreateBinary = (systemData, setCameraPosition, setFocus, refs) => {
   let Star = systemData.star && <CreateStar data={systemData.star} setCameraPosition={setCameraPosition}  setFocus={setFocus} refs={refs}/>
   let Planet = systemData.planet && <CreatePlanet data={systemData.planet} setCameraPosition={setCameraPosition} setFocus={setFocus} refs={refs} />
 
-  let Binary = systemData.binary && systemData.binary.map((binary, i) => {
-    return CreateBinary(binary, setCameraPosition, setFocus, refs);
-  });
-
-  // console.log("data", systemData);
-
 
 
   let x = Math.random() * 500 - 1;
   let y = Math.random() * 500 - 1;
   let z = Math.random() * 500 - 1;   
+
+  // systemData.binary && systemData.binary? x = systemData.binary.separation[1]._ : null;
+
+  systemData.binary && console.log(systemData.binary[0].separation[1]._);
+
+  let Binary;
+  isBinary && (
+  systemData.binary && (Binary = systemData.binary.map((binary, i) => {
+    return CreateBinary(binary, setCameraPosition, setFocus, refs, true);
+  })));
+
+  // console.log("data", systemData);
+
+
+
+
  
 
 
   return (
     <group 
-    // position={[x,y,z]}
+    position={[x,y,z]}
     >
       {Binary}
       {Star}

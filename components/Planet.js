@@ -182,16 +182,20 @@ const Planet = (props) => {
         // scale={active ? 1.5 : 1}
         // onClick={(event) => setActive(!active)}
         onClick={(e) => {
-          props.setCameraPosition([
-            planetRef.current.position.x,
-            planetRef.current.position.y,
-            planetRef.current.position.z,
-          ]);
+          // props.setCameraPosition([
+          //   planetRef.current.position.x,
+          //   planetRef.current.position.y,
+          //   planetRef.current.position.z,
+          // ]);
           props.setFocus(planetRef);
           console.log("clicked mesh", planetRef);
-          console.log(planetRef.current.position);
+          // console.log(planetRef.current.position);
           // console.log("context from planet", constants.distance.au);
           // console.log("planet scale", scale);
+          let vector = new THREE.Vector3();
+          e.object.getWorldPosition(vector);
+          props.setCameraPosition([vector.x, vector.y , vector.z]);
+          props.setFocus(planetRef);
         }}
       // castShadow={true}
       // receiveShadow={true}

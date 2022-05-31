@@ -25,9 +25,12 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
   controls.minDistance = radius + .2;
   // console.log({width, height})
 
+  console.log("camera position", {cameraPosition})
+  console.log("focus", {focus})
 
   focus && focus? controls.fitToBox(focus.current, true) : controls.dollyTo(1.5, true)
-  controls.setTarget(cameraPosition[0], cameraPosition[1], cameraPosition[2], true)
+  // controls.setTarget(cameraPosition[0], cameraPosition[1], cameraPosition[2], true)
+  controls.moveTo(cameraPosition[0], cameraPosition[1], cameraPosition[2], true);
   // let currentPosition = controls.getPosition();
   // setControlPosition(currentPosition);
 
@@ -37,7 +40,8 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
     // focus && camera.setDistance(1.5);
     // focus && controls.setLookAt(focus.current);
     // focus && camera.minDistance(1)
-    focus && focus.current? controls.setTarget(focus.current.position.x, focus.current.position.y, focus.current.position.z, true) : "";
+    // focus && focus.current? controls.setTarget(focus.current.position.x, focus.current.position.y, focus.current.position.z, true) : "";
+    controls.moveTo(cameraPosition[0], cameraPosition[1], cameraPosition[2], true);
 
 
     return controls.update(delta)
