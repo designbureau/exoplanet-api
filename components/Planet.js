@@ -20,22 +20,39 @@ const Planet = (props) => {
   // const [active, setActive] = useState(false);
   // Subscribe this component to the render-loop, rotate the mesh every frame
 
+  // TODO: replace random defaults
   const au = 200;
-  let semimajoraxis = props.planetDetails.semimajoraxis? props.planetDetails.semimajoraxis[0] : 10;
+
+  //Semimajoraxis
+  let semimajoraxis = 10;
+  if( props.planetDetails.semimajoraxis && props.planetDetails.semimajoraxis[0].hasOwnProperty("_")){
+    semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]._);
+  }
+  else if(props.planetDetails.semimajoraxis && props.planetDetails.semimajoraxis[0].length){
+    semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]);
+  }
   semimajoraxis = semimajoraxis * au;
 
-  const period = props.planetDetails.period? props.planetDetails.period[0] : 365;
-  const eccentricity = props.planetDetails.eccentricity? props.planetDetails.eccentricity[0] : 0;
-  const inclination = props.planetDetails.inclination? props.planetDetails.inclination[0] : 0;
-  const periastron = props.planetDetails.periastron? props.planetDetails.periastron[0]: 0;
+  //Period
+  const period = props.planetDetails.period? parseFloat(props.planetDetails.period[0]) : 365;
+
+  //Eccentricity
+  let eccentricity = 0;
+  if( props.planetDetails.eccentricity && props.planetDetails.eccentricity[0].hasOwnProperty("_")){
+    semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]._);
+  }
+  else if(props.planetDetails.semimajoraxis && props.planetDetails.eccentricity[0].length){
+    semimajoraxis = parseFloat(props.planetDetails.eccentricity[0]);
+  }
+
+  const inclination = props.planetDetails.inclination? parseFloat(props.planetDetails.inclination[0]) : 0;
+  const periastron = props.planetDetails.periastron? parseFloat(props.planetDetails.periastron[0]): 0;
   const ellipse = getEllipse(semimajoraxis, eccentricity);
   const speed = 1;
 
   const periapsis = getPeriapsis(semimajoraxis, eccentricity) - semimajoraxis;
 
-
-  // console.log({semimajoraxis})
-  // console.log({ellipse});
+  console.log({periapsis});
 
   //Orbits
   const curve = new THREE.EllipseCurve(
@@ -49,7 +66,6 @@ const Planet = (props) => {
     0 // aRotation
   );
 
-  // console.log({ curve });
 
 
 
@@ -58,6 +74,8 @@ const Planet = (props) => {
   const points = curve.getPoints(1000);
   const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
+  console.log({geometry});
+  geometry.name = props.name;
   // orbitEllipse.name = name + " orbit";
 
   // orbitRef.current.rotation = inclination / 90;
@@ -82,30 +100,11 @@ const Planet = (props) => {
     planetRef.current.position.x = ellipse.xRadius * Math.cos((elapsedTime / period) * speed);
     planetRef.current.position.y = ellipse.yRadius * Math.sin((elapsedTime / period) * speed);
 
-    // console.log( planetRef.current.position.x);
-
-
-    // planetRef.current.position.x += ellipse.xRadius * Math.cos(period * speed);
-    // planetRef.current.position.y += ellipse.yRadius * Math.sin(period * speed);
-    // console.log(planetRef.current.position.x);
-    // planet.mesh.rotation.y = Math.PI * 0.005 * elapsedTime;
   });
-  // Return view, these are regular three.js elements expressed in JSX
-  // const planetNormalTexture = useLoader(TextureLoader, "/textures/8k_jupiter.jpeg");
 
   const constants = useContext(EnvContext);
 
-  // console.log(mesh);
   console.log("planet details", props.planetDetails);
-
-  // let radius = props.planetDetail.radius._ ? props.planetDetail.radius[0]._ : 0.5;
-
-  // if(mesh){
-  //   props.refs.current.push(mesh);
-  // }
-  // console.log(props.refs)
-
-  // mesh.current && props.refs.current.push(mesh);
 
   let radius;
   if (props.planetDetails.hasOwnProperty("radius")) {
@@ -160,7 +159,6 @@ const Planet = (props) => {
       <line ref={orbitRef}
         geometry={geometry}
       //  rotation={inclination / 90}
-      // position={[periapsis, 0, 0]}
       >
         <lineBasicMaterial
           attach="material"
@@ -182,11 +180,6 @@ const Planet = (props) => {
         // scale={active ? 1.5 : 1}
         // onClick={(event) => setActive(!active)}
         onClick={(e) => {
-          // props.setCameraPosition([
-          //   planetRef.current.position.x,
-          //   planetRef.current.position.y,
-          //   planetRef.current.position.z,
-          // ]);
           props.setFocus(planetRef);
           console.log("clicked mesh", planetRef);
           // console.log(planetRef.current.position);
@@ -205,7 +198,6 @@ const Planet = (props) => {
         <sphereGeometry args={[scale, 256, 256]} />
         <meshStandardMaterial
           map={planetTexture}
-        // color={hover ? "#FFEEEE" : "white"}
         />
       </mesh>
     </group>

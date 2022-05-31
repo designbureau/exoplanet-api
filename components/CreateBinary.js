@@ -44,10 +44,10 @@ const CreateBinary = (systemData, setCameraPosition, setFocus, refs, isBinary) =
   systemData.binary && console.log(systemData.binary[0].separation[1]._);
 
   let Binary;
-  isBinary && (
+  
   systemData.binary && (Binary = systemData.binary.map((binary, i) => {
     return CreateBinary(binary, setCameraPosition, setFocus, refs, true);
-  })));
+  }));
 
   // console.log("data", systemData);
 
