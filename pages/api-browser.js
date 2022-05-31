@@ -73,7 +73,7 @@ export default function ApiBrowser() {
       <h3>Endpoints</h3>
       <ul className="pb-0 api-menu">
         <li><Link href="/api/systems/all">/api/systems/all</Link></li>
-        <li><Link href={`/api/systems/${systemData? systemData.name : "24 Boo"}`}>{`${systemData? "/api/systems/"+ encodeURIComponent(systemData.name) : "/api/systems/{system}" }`}</Link></li>
+        <li><Link href={`/api/systems/${systemData? systemData.name[0] : "24 Boo"}`}>{`${systemData? "/api/systems/"+ encodeURIComponent(systemData.name) : "/api/systems/{system}" }`}</Link></li>
       </ul>
       <ul className="navigation active relative mt-0">
       <li className="hasSubMenu">
