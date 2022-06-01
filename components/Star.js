@@ -204,7 +204,7 @@ const Star = (props) => {
   let worldPosition = new THREE.Vector3();
 
 
-  return useMemo(() => (<group ref={group} name={props.starSystemData.name[0]} position={props.position}>
+  return <group ref={group} name={props.starSystemData.name[0]} position={props.position}>
       <pointLight
         ref={lightRef}
         
@@ -394,7 +394,7 @@ const Star = (props) => {
       {Planets}
       
     </group>
-  ), [props]);
+
 };
 
 export default Star;

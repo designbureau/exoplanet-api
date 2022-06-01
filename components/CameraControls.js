@@ -34,6 +34,12 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
   // let currentPosition = controls.getPosition();
   // setControlPosition(currentPosition);
 
+  window.addEventListener("keydown", (e) => {
+    console.log(e);
+  });
+
+
+
   focus && console.log(focus);
   return useFrame((state, delta) => {
     // controls.setTarget(focus.current.position);
@@ -41,7 +47,7 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
     // focus && controls.setLookAt(focus.current);
     // focus && camera.minDistance(1)
     // focus && focus.current? controls.setTarget(focus.current.position.x, focus.current.position.y, focus.current.position.z, true) : "";
-    controls.moveTo(cameraPosition[0], cameraPosition[1], cameraPosition[2], true);
+    // controls.moveTo(cameraPosition[0], cameraPosition[1], cameraPosition[2], true);
 
 
     return controls.update(delta)
