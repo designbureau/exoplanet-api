@@ -41,7 +41,7 @@ export default function Home() {
                 refs={refs}
               />)}
             </EnvContext.Provider>
-            <Controls cameraPosition={cameraPosition} focus={focus} />
+            <Controls cameraPosition={cameraPosition} focus={focus} setFocus={setFocus}/>
             <Perf />
           </Canvas>
       </div>
