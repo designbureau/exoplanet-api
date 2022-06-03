@@ -189,6 +189,7 @@ const Planet = (props) => {
           e.object.getWorldPosition(vector);
           props.setCameraPosition([vector.x, vector.y , vector.z]);
           props.setFocus(planetRef);
+          e.stopPropagation();
         }}
       // castShadow={true}
       // receiveShadow={true}

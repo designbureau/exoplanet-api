@@ -2,12 +2,13 @@ import * as THREE from 'three'
 import CameraControls from "camera-controls";
 import { useRef, useState, useMemo, useEffect } from "react";
 import { useFrame, useThree, extend } from "@react-three/fiber";
+import { useKeyState } from "use-key-state";
 
 
 CameraControls.install({ THREE })
 extend({ CameraControls })
 
-const Controls = ({cameraPosition, focus, setControlPosition}) => {
+const Controls = ({cameraPosition, focus}) => {
 
   let width = window.innerWidth;
   let height = window.innerHeight;
@@ -25,8 +26,8 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
   controls.minDistance = radius + .2;
   // console.log({width, height})
 
-  console.log("camera position", {cameraPosition})
-  console.log("focus", {focus})
+  // console.log("camera position", {cameraPosition})
+  // console.log("focus", {focus})
 
   focus && focus? controls.fitToBox(focus.current, true) : controls.dollyTo(1.5, true)
   // controls.setTarget(cameraPosition[0], cameraPosition[1], cameraPosition[2], true)
@@ -34,11 +35,47 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
   // let currentPosition = controls.getPosition();
   // setControlPosition(currentPosition);
 
-  window.addEventListener("keydown", (e) => {
-    console.log(e);
-  });
+  // window.addEventListener("keydown", (e) => {
+  //   console.log(e);
+  //   e.stopPropagation();
+  // });
 
 
+  const { up, down, left, right } = useKeyState(
+    {
+      up: "up",
+      down: "down",
+      left: "left",
+      right: "right",
+    }
+  );
+
+  if(down.down){
+    console.log("down")
+
+  }
+  if(up.down){
+    console.log("up")
+  }
+  if(left.down){
+    console.log("left")
+    // controls.rotateAzimuthTo( 30 * THREE.MathUtils.DEG2RAD, true );
+
+  }
+  if(right.down){
+    console.log("right")
+    // let increment = controls.azimuthAngle();
+    // increment++;
+
+    // controls.azimuthAngle(increment);
+    // controls.rotateAzimuthTo( azimuthAngle += ((azimuthAngle + 25) * THREE.MathUtils.DEG2RAD), true );
+    // controls.rotateAzimuthTo( (azimuthAngle + increment) * THREE.MathUtils.DEG2RAD, true );
+
+    // console.log(increment);
+  }
+    
+  
+  // })
 
   focus && console.log(focus);
   return useFrame((state, delta) => {
@@ -48,7 +85,10 @@ const Controls = ({cameraPosition, focus, setControlPosition}) => {
     // focus && camera.minDistance(1)
     // focus && focus.current? controls.setTarget(focus.current.position.x, focus.current.position.y, focus.current.position.z, true) : "";
     // controls.moveTo(cameraPosition[0], cameraPosition[1], cameraPosition[2], true);
+    // focus && focus.current? controls.setTarget(focus.current.position.x, focus.current.position.y, focus.current.position.z, true) : "";
+    // controls.moveTo(focus.current.position, true);
 
+  // focus && focus? controls.fitToBox(focus.current, true) : controls.dollyTo(1.5, true)
 
     return controls.update(delta)
 

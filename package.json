@@ -23,6 +23,7 @@
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "three": "^0.140.0",
+    "use-key-state": "^0.1.9",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {

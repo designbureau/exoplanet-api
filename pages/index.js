@@ -1,13 +1,14 @@
 // import Head from "next/head";
 import Nav from "../components/Nav";
 import SystemNav from "../components/SystemNav";
-import { useRef, useState, useMemo, forwardRef } from "react";
+import { useRef, useState, useMemo, forwardRef, useEffect } from "react";
 import { Canvas, useFrame, useThree, extend } from "@react-three/fiber";
 import SkyBox from "../components/SkyBox";
 import CreateSystem from "../components/CreateSystem";
 import Controls from '../components/CameraControls';
 import { EnvContext, Constants } from "../components/EnvContext";
 import { Perf } from 'r3f-perf';
+import { useKeyState } from "use-key-state";
 
 export default function Home() {
   const [systemData, setSystemData] = useState(null);
@@ -19,6 +20,9 @@ export default function Home() {
   const refs = useRef(new Array());
   // const refs = {};
   // console.log("refs", refs);
+
+
+
 
   return (
     <>
@@ -37,7 +41,7 @@ export default function Home() {
                 refs={refs}
               />)}
             </EnvContext.Provider>
-            <Controls cameraPosition={cameraPosition} focus={focus}/>
+            <Controls cameraPosition={cameraPosition} focus={focus} />
             <Perf />
           </Canvas>
       </div>

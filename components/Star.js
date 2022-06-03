@@ -244,6 +244,7 @@ const Star = (props) => {
             // console.log("temperature", temperature);
             // console.log("chroma", color);
             // console.log("spectraltype", spectraltypeFull);
+            e.stopPropagation();
           }}
           // onPointerOver={(event) => setHover(true)}
           // onPointerOut={(event) => setHover(false)}
