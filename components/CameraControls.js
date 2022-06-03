@@ -47,38 +47,53 @@ const Controls = ({cameraPosition, focus}) => {
       down: "down",
       left: "left",
       right: "right",
-    }
+    },
   );
 
-  if(down.down){
-    console.log("down")
+  // if(down.down){
+  //   console.log("down")
 
-  }
-  if(up.down){
-    console.log("up")
-  }
-  if(left.down){
-    console.log("left")
-    // controls.rotateAzimuthTo( 30 * THREE.MathUtils.DEG2RAD, true );
+  // }
+  // if(up.down){
+  //   console.log("up")
+  // }
+  // if(left.down){
+  //   console.log("left")
+  //   // controls.rotateAzimuthTo( 30 * THREE.MathUtils.DEG2RAD, true );
 
-  }
-  if(right.down){
-    console.log("right")
-    // let increment = controls.azimuthAngle();
-    // increment++;
+  // }
+  // if(right.down){
+  //   console.log("right")
+  //   let increment = 0.0;
+  //   increment++;
+  //   console.log(increment);
 
-    // controls.azimuthAngle(increment);
-    // controls.rotateAzimuthTo( azimuthAngle += ((azimuthAngle + 25) * THREE.MathUtils.DEG2RAD), true );
-    // controls.rotateAzimuthTo( (azimuthAngle + increment) * THREE.MathUtils.DEG2RAD, true );
+  //   // controls.azimuthAngle(increment);
+  //   // controls.rotateAzimuthTo( azimuthAngle += ((azimuthAngle + 25) * THREE.MathUtils.DEG2RAD), true );
+  //   // controls.rotateAzimuthTo( (azimuthAngle + increment) * THREE.MathUtils.DEG2RAD, true );
 
-    // console.log(increment);
-  }
+  // }
     
   
   // })
 
   focus && console.log(focus);
+
+  let increment = 0.0;
+
   return useFrame((state, delta) => {
+
+
+
+    const elapsedTime = state.clock.getElapsedTime();
+
+
+    if(left.pressed){ controls.rotate( - 0.1 * THREE.MathUtils.DEG2RAD * elapsedTime, 0, true )}
+    if(right.pressed){ controls.rotate(   0.1 * THREE.MathUtils.DEG2RAD * elapsedTime, 0, true )}
+    if(up.pressed){ controls.rotate( 0, - 0.05 * THREE.MathUtils.DEG2RAD * elapsedTime, true )}
+    if(down.pressed){ controls.rotate( 0,   0.05 * THREE.MathUtils.DEG2RAD * elapsedTime, true )}
+
+
     // controls.setTarget(focus.current.position);
     // focus && camera.setDistance(1.5);
     // focus && controls.setLookAt(focus.current);
@@ -89,6 +104,7 @@ const Controls = ({cameraPosition, focus}) => {
     // controls.moveTo(focus.current.position, true);
 
   // focus && focus? controls.fitToBox(focus.current, true) : controls.dollyTo(1.5, true)
+
 
     return controls.update(delta)
 
