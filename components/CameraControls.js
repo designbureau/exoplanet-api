@@ -61,29 +61,29 @@ const Controls = ({ cameraPosition, focus, setFocus }) => {
     const elapsedTime = state.clock.getElapsedTime();
 
     if (keys.a.pressed) {
-      controls.truck(-0.05 * elapsedTime, 0, true);
+      controls.truck(-0.5 * delta*elapsedTime, 0, false);
     }
     if (keys.d.pressed) {
-      controls.truck(0.05 * elapsedTime, 0, true);
+      controls.truck(0.5 * delta*elapsedTime, 0, false);
     }
     if (keys.w.pressed) {
-      controls.dolly(0.05 * elapsedTime, true);
+      controls.dolly(0.25 * delta*elapsedTime, true);
     }
     if (keys.s.pressed) {
-      controls.dolly(-0.05 * elapsedTime, true);
+      controls.dolly(-0.25 * delta*elapsedTime, true);
     }
 
     if (keys.left.pressed) {
-      controls.rotate(-0.025 * THREE.MathUtils.DEG2RAD * elapsedTime, 0, true);
+      controls.rotate(-1 * THREE.MathUtils.DEG2RAD * delta*elapsedTime, 0, true);
     }
     if (keys.right.pressed) {
-      controls.rotate(0.025 * THREE.MathUtils.DEG2RAD * elapsedTime, 0, true);
+      controls.rotate(1 * THREE.MathUtils.DEG2RAD * delta*elapsedTime, 0, true);
     }
     if (keys.up.pressed) {
-      controls.rotate(0, -0.0125 * THREE.MathUtils.DEG2RAD * elapsedTime, true);
+      controls.rotate(0, -1 * THREE.MathUtils.DEG2RAD * delta*elapsedTime, true);
     }
     if (keys.down.pressed) {
-      controls.rotate(0, 0.0125 * THREE.MathUtils.DEG2RAD * elapsedTime, true);
+      controls.rotate(0, 1 * THREE.MathUtils.DEG2RAD * delta*elapsedTime, true);
     }
 
     // controls.setTarget(focus.current.position);
@@ -96,6 +96,7 @@ const Controls = ({ cameraPosition, focus, setFocus }) => {
     // controls.moveTo(focus.current.position, true);
 
     // focus && focus? controls.fitToBox(focus.current, true) : controls.dollyTo(1.5, true)
+    // controls.moveTo(focus.current.position.x, focus.current.position.y, focus.current.position.z, true)
 
     return controls.update(delta);
   });
