@@ -24,14 +24,24 @@ const Planet = (props) => {
   const au = 200;
 
   //Semimajoraxis
-  let semimajoraxis = 10;
-  if( props.planetDetails.semimajoraxis && props.planetDetails.semimajoraxis[0].hasOwnProperty("_")){
-    semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]._);
+
+  let semimajoraxis;
+  if(props.planetDetails.semimajoraxis && Array.isArray(props.planetDetails.semimajoraxis[0])){
+    if(props.planetDetails.semimajoraxis[0].hasOwnProperty("_")){
+      semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]._) * au;
+    }
+    else{
+      semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]) * au;
+    }
   }
-  else if(props.planetDetails.semimajoraxis && props.planetDetails.semimajoraxis[0].length){
-    semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]);
+  else if(props.planetDetails.semimajoraxis){
+    semimajoraxis = parseFloat(props.planetDetails.semimajoraxis) * au;
   }
-  semimajoraxis = semimajoraxis * au;
+  else{
+    semimajoraxis = 100;
+  }
+  // semimajoraxis = semimajoraxis * au;
+  console.log({semimajoraxis});
 
   //Period
   const period = props.planetDetails.period? parseFloat(props.planetDetails.period[0]) : 365;
@@ -39,10 +49,10 @@ const Planet = (props) => {
   //Eccentricity
   let eccentricity = 0;
   if( props.planetDetails.eccentricity && props.planetDetails.eccentricity[0].hasOwnProperty("_")){
-    semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]._);
+    eccentricity = parseFloat(props.planetDetails.eccentricity[0]._);
   }
   else if(props.planetDetails.semimajoraxis && props.planetDetails.eccentricity[0].length){
-    semimajoraxis = parseFloat(props.planetDetails.eccentricity[0]);
+    eccentricity = parseFloat(props.planetDetails.eccentricity[0]);
   }
 
   const inclination = props.planetDetails.inclination? parseFloat(props.planetDetails.inclination[0]) : 0;
@@ -147,9 +157,10 @@ const Planet = (props) => {
 
   let position = [0, 0, 0];
 
+  // console.log("planet details", props.planetDetails);
 
 
-  // console.log(planetRef.position)
+  console.log({planetRef})
 
   return (
     <group 

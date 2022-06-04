@@ -30,7 +30,7 @@ const CreateBinary = (systemData, setCameraPosition, setFocus, refs, isBinary) =
   // let system = {};
 
 
-  let Star = systemData.star && <CreateStar data={systemData.star} setCameraPosition={setCameraPosition}  setFocus={setFocus} refs={refs}/>
+  let Star = systemData.star && <CreateStar data={systemData.star} setCameraPosition={setCameraPosition} setFocus={setFocus} refs={refs}/>
   let Planet = systemData.planet && <CreatePlanet data={systemData.planet} setCameraPosition={setCameraPosition} setFocus={setFocus} refs={refs} />
 
 
