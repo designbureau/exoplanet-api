@@ -85,14 +85,14 @@ const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
 
     if (keys.left.pressed) {
       controls.rotate(
-        -1 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        -0.25 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
         0,
         true
       );
     }
     if (keys.right.pressed) {
       controls.rotate(
-        1 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        0.25 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
         0,
         true
       );
@@ -100,14 +100,14 @@ const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
     if (keys.up.pressed) {
       controls.rotate(
         0,
-        -1 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        -0.25 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
         true
       );
     }
     if (keys.down.pressed) {
       controls.rotate(
         0,
-        1 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        0.25 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
         true
       );
     }

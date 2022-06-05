@@ -21,7 +21,7 @@ const Planet = (props) => {
   // Subscribe this component to the render-loop, rotate the mesh every frame
 
   // TODO: replace random defaults
-  const au = 200;
+  const au = 1000;
 
   //Semimajoraxis
 
@@ -160,7 +160,7 @@ const Planet = (props) => {
   }
 
   //TODO: remove exaggeration
-  scale = scale * 2;
+  // scale = scale * 2;
 
   // scale = scale / constants.mass.jupiter;
 
