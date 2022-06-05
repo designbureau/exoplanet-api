@@ -15,7 +15,7 @@ const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
   const gl = useThree((state) => state.gl);
   const controls = useMemo(() => new CameraControls(camera, gl.domElement), []);
   const [keyDown, setKeyDown] = useState(false);
-  const [sensitivity, setSensitivity] = useState(1.0);
+  const [sensitivity, setSensitivity] = useState(5.0);
 
 
 
@@ -67,26 +67,30 @@ const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
     right: "right",
     plus: "plus",
     minus: "minus",
+    enter:"enter",
   });
 
   let vector = new THREE.Vector3();
 
   
 
-  if (keys.plus.down) {
-    setSensitivity(sensitivity + 0.1)
-    console.log(sensitivity);
-  }
-  if (keys.minus.down) {
-    setSensitivity(sensitivity - 0.1);
-    console.log(sensitivity);
-  }
-
+  
 
   return useFrame((state, delta) => {
     const elapsedTime = state.clock.getElapsedTime();
 
    
+    if (keys.plus.down) {
+      setSensitivity(sensitivity + 0.1)
+    }
+    if (keys.minus.down) {
+      setSensitivity(sensitivity - 0.1);
+    }
+    if (keys.enter.pressed) {
+      setKeyDown(false);
+    }
+  
+
     if (keys.a.pressed) {
       controls.truck((-0.5 * sensitivity) * delta * elapsedTime, 0, true);
       setKeyDown(true);
@@ -96,11 +100,11 @@ const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
       setKeyDown(true);
     }
     if (keys.w.pressed) {
-      controls.dolly((0.05 * sensitivity) * delta * elapsedTime, true);
+      controls.dolly((0.5 * sensitivity) * delta * elapsedTime, true);
       setKeyDown(true);
     }
     if (keys.s.pressed) {
-      controls.dolly((-0.05 * sensitivity) * delta * elapsedTime, true);
+      controls.dolly((-0.5 * sensitivity) * delta * elapsedTime, true);
       setKeyDown(true);
     }
 
@@ -137,28 +141,28 @@ const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
       setKeyDown(true);
     }
     if (keys.a.up) {
-      setKeyDown(false);
+      // setKeyDown(false);
     }
     if (keys.s.up) {
-      setKeyDown(false);
+      // setKeyDown(false);
     }
     if (keys.d.up) {
-      setKeyDown(false);
+      // setKeyDown(false);
     }
     if (keys.w.up) {
-      setKeyDown(false);
+      // setKeyDown(false);
     }
     if (keys.up.up) {
-      setKeyDown(false);
+      // setKeyDown(false);
     }
     if (keys.down.up) {
-      setKeyDown(false);
+      // setKeyDown(false);
     }
     if (keys.left.up) {
-      setKeyDown(false);
+      // setKeyDown(false);
     }
     if (keys.right.up) {
-      setKeyDown(false);
+      // setKeyDown(false);
     }
 
     if (focus && focus.current) {

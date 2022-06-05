@@ -47,7 +47,7 @@ export default function Home() {
             <Perf />
           </Canvas>
       </div>
-      <div className="controls-info">Controls: Move:w,a,s,d | Rotation:up,down,left,right | Sensitivity:+,- </div>
+      <div className="controls-info">Controls: Move:w,a,s,d | Rotation:up,down,left,right | Sensitivity:+,- | Reset target: enter</div>
     </>
   );
 }
