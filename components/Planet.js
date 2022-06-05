@@ -29,7 +29,6 @@ const Planet = (props) => {
   // if(props.planetDetails.semimajoraxis && Array.isArray(props.planetDetails.semimajoraxis[0])){
   if(props.planetDetails.semimajoraxis && props.planetDetails.semimajoraxis[0]){
     if(props.planetDetails.semimajoraxis[0]._){
-      console.log("here");
       semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]._)
     }
     else{
@@ -45,10 +44,19 @@ const Planet = (props) => {
   semimajoraxis = semimajoraxis * au;
 
   // semimajoraxis = semimajoraxis * au;
-  console.log(props.planetDetails.name[0], props.planetDetails.semimajoraxis);
+  console.log({semimajoraxis});
 
   //Period
-  const period = props.planetDetails.period? parseFloat(props.planetDetails.period[0]) : 365;
+  let period = 365;
+  if(props.planetDetails.period){
+    if(Array.isArray(props.planetDetails.period)){
+      period = parseFloat(props.planetDetails.period[0]._);
+    }
+    else{
+      period = parseFloat(props.planetDetails.period);
+    }
+  }
+
 
   //Eccentricity
   let eccentricity = 0;
@@ -58,6 +66,7 @@ const Planet = (props) => {
   else if(props.planetDetails.semimajoraxis && props.planetDetails.eccentricity[0].length){
     eccentricity = parseFloat(props.planetDetails.eccentricity[0]);
   }
+  console.log({eccentricity})
 
   const inclination = props.planetDetails.inclination? parseFloat(props.planetDetails.inclination[0]) : 0;
   const periastron = props.planetDetails.periastron? parseFloat(props.planetDetails.periastron[0]): 0;
@@ -81,7 +90,7 @@ const Planet = (props) => {
   );
 
 
-
+    console.log({ellipse});
 
   const orbitRef = useRef();
 
@@ -151,7 +160,7 @@ const Planet = (props) => {
   }
 
   //TODO: remove exaggeration
-  scale = scale * 10;
+  scale = scale * 2;
 
   // scale = scale / constants.mass.jupiter;
 
