@@ -16,6 +16,7 @@ export default function Home() {
   const [cursor, setCursor] = useState("default");
   const [focus, setFocus] = useState();
   // const [controlPosition, setControlPosition] = useState();
+  const [clicked, setClicked] = useState(false);
 
   const refs = useRef(new Array());
   // const refs = {};
@@ -38,10 +39,11 @@ export default function Home() {
                 systemData={systemData}
                 setCameraPosition={setCameraPosition}
                 setFocus={setFocus}
+                setClicked={setClicked}
                 refs={refs}
               />)}
             </EnvContext.Provider>
-            <Controls cameraPosition={cameraPosition} focus={focus} setFocus={setFocus}/>
+            <Controls cameraPosition={cameraPosition} focus={focus} setFocus={setFocus} clicked={clicked} setClicked={setClicked} />
             <Perf />
           </Canvas>
       </div>

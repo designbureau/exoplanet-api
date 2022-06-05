@@ -2,7 +2,7 @@ import CreateStar from "./CreateStar";
 import CreatePlanet from "./CreatePlanet";
 // import { useRef } from "react";
 
-const CreateBinary = (systemData, setCameraPosition, setFocus, refs, isBinary) => {
+const CreateBinary = (systemData, setCameraPosition, setFocus, setClicked, refs) => {
   // return (
   //   <>
   //     {systemData.binary &&
@@ -30,8 +30,8 @@ const CreateBinary = (systemData, setCameraPosition, setFocus, refs, isBinary) =
   // let system = {};
 
 
-  let Star = systemData.star && <CreateStar data={systemData.star} setCameraPosition={setCameraPosition} setFocus={setFocus} refs={refs}/>
-  let Planet = systemData.planet && <CreatePlanet data={systemData.planet} setCameraPosition={setCameraPosition} setFocus={setFocus} refs={refs} />
+  let Star = systemData.star && <CreateStar data={systemData.star} setCameraPosition={setCameraPosition} setFocus={setFocus} setClicked={setClicked} refs={refs}/>
+  let Planet = systemData.planet && <CreatePlanet data={systemData.planet} setCameraPosition={setCameraPosition} setFocus={setFocus} setClicked={setClicked} refs={refs} />
 
 
 
@@ -46,7 +46,7 @@ const CreateBinary = (systemData, setCameraPosition, setFocus, refs, isBinary) =
   let Binary;
   
   systemData.binary && (Binary = systemData.binary.map((binary, i) => {
-    return CreateBinary(binary, setCameraPosition, setFocus, refs, true);
+    return CreateBinary(binary, setCameraPosition, setFocus, setClicked, refs, true);
   }));
 
   // console.log("data", systemData);

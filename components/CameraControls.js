@@ -8,7 +8,7 @@ import CameraControls from "camera-controls";
 controls.install({ THREE });
 extend({ controls });
 
-const Controls = ({ cameraPosition, focus, setFocus }) => {
+const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
   let width = window.innerWidth;
   let height = window.innerHeight;
   const camera = useThree((state) => state.camera);
@@ -30,10 +30,20 @@ const Controls = ({ cameraPosition, focus, setFocus }) => {
   // console.log("camera position", {cameraPosition})
   // console.log("focus", {focus})
 
-  if(focus){
-    controls.fitToBox(focus.current, true);
-    focus = setFocus(null);
+  
+  if (focus) {
+    if(clicked){
+      console.log({clicked});
+      controls.fitToBox(focus.current, true);
+      clicked = setClicked(false);
+    }
+    // newFocus = structuredClone(focus);
+    // controls.fitToBox(focus.current, true);
+    // focus = setFocus(null);
   }
+
+  // console.log({focus})
+  // console.log({newFocus});
   // focus && focus
   //   ? controls.fitToBox(focus.current, true)
   //   : controls.dollyTo(1.5, true);
@@ -61,29 +71,45 @@ const Controls = ({ cameraPosition, focus, setFocus }) => {
     const elapsedTime = state.clock.getElapsedTime();
 
     if (keys.a.pressed) {
-      controls.truck(-0.5 * delta*elapsedTime, 0, false);
+      controls.truck(-0.5 * delta * elapsedTime, 0, false);
     }
     if (keys.d.pressed) {
-      controls.truck(0.5 * delta*elapsedTime, 0, false);
+      controls.truck(0.5 * delta * elapsedTime, 0, false);
     }
     if (keys.w.pressed) {
-      controls.dolly(0.25 * delta*elapsedTime, true);
+      controls.dolly(0.25 * delta * elapsedTime, false);
     }
     if (keys.s.pressed) {
-      controls.dolly(-0.25 * delta*elapsedTime, true);
+      controls.dolly(-0.25 * delta * elapsedTime, false);
     }
 
     if (keys.left.pressed) {
-      controls.rotate(-1 * THREE.MathUtils.DEG2RAD * delta*elapsedTime, 0, true);
+      controls.rotate(
+        -1 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        0,
+        true
+      );
     }
     if (keys.right.pressed) {
-      controls.rotate(1 * THREE.MathUtils.DEG2RAD * delta*elapsedTime, 0, true);
+      controls.rotate(
+        1 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        0,
+        true
+      );
     }
     if (keys.up.pressed) {
-      controls.rotate(0, -1 * THREE.MathUtils.DEG2RAD * delta*elapsedTime, true);
+      controls.rotate(
+        0,
+        -1 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        true
+      );
     }
     if (keys.down.pressed) {
-      controls.rotate(0, 1 * THREE.MathUtils.DEG2RAD * delta*elapsedTime, true);
+      controls.rotate(
+        0,
+        1 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        true
+      );
     }
 
     // controls.setTarget(focus.current.position);
@@ -97,7 +123,6 @@ const Controls = ({ cameraPosition, focus, setFocus }) => {
 
     // focus && focus? controls.fitToBox(focus.current, true) : controls.dollyTo(1.5, true)
     // controls.moveTo(focus.current.position.x, focus.current.position.y, focus.current.position.z, true)
-
     return controls.update(delta);
   });
 };

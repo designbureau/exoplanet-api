@@ -83,6 +83,7 @@ const Star = (props) => {
           name={planet.name[0]}
           setCameraPosition={props.setCameraPosition}
           setFocus={props.setFocus}
+          setClicked={props.setClicked}
           planetDetails={planet}
           refs={planetElements}
         />
@@ -236,6 +237,8 @@ const Star = (props) => {
             e.object.getWorldPosition(vector);
             props.setCameraPosition([vector.x, vector.y , vector.z]);
             props.setFocus(starRef);
+            props.setClicked(true);
+
             // console.log("mesh position", starRef.current.position);
             // console.log("mesh world position", starRef.getWorldPosition());
             // console.log("clicked mesh group", group);
