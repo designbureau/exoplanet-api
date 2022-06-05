@@ -35,9 +35,9 @@ const CreateBinary = (systemData, setCameraPosition, setFocus, setClicked, refs)
 
 
 
-  let x = Math.random() * 500 - 1;
-  let y = Math.random() * 500 - 1;
-  let z = Math.random() * 500 - 1;   
+  let x = Math.random() * 1000 - 1;
+  let y = Math.random() * 1000 - 1;
+  let z = Math.random() * 1000 - 1;   
 
   // systemData.binary && systemData.binary? x = systemData.binary.separation[1]._ : null;
 

@@ -67,32 +67,35 @@ const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
     right: "right",
   });
 
+  let vector = new THREE.Vector3();
+
+
   return useFrame((state, delta) => {
     const elapsedTime = state.clock.getElapsedTime();
 
     if (keys.a.pressed) {
-      controls.truck(-0.5 * delta * elapsedTime, 0, false);
+      controls.truck(-0.025 * delta * elapsedTime, 0, false);
     }
     if (keys.d.pressed) {
-      controls.truck(0.5 * delta * elapsedTime, 0, false);
+      controls.truck(0.025 * delta * elapsedTime, 0, false);
     }
     if (keys.w.pressed) {
-      controls.dolly(0.125 * delta * elapsedTime, true);
+      controls.dolly(0.025 * delta * elapsedTime, true);
     }
     if (keys.s.pressed) {
-      controls.dolly(-0.125 * delta * elapsedTime, true);
+      controls.dolly(-0.025 * delta * elapsedTime, true);
     }
 
     if (keys.left.pressed) {
       controls.rotate(
-        -0.125 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        -0.05 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
         0,
         true
       );
     }
     if (keys.right.pressed) {
       controls.rotate(
-        0.125 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        0.05 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
         0,
         true
       );
@@ -100,24 +103,39 @@ const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
     if (keys.up.pressed) {
       controls.rotate(
         0,
-        -0.125 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        -0.05 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
         true
       );
     }
     if (keys.down.pressed) {
       controls.rotate(
         0,
-        0.125 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        0.05 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
         true
       );
     }
 
-    // controls.setTarget(focus.current.position);
+    if(focus && focus.current){
+      focus.current.getWorldPosition(vector);
+      // controls.setTarget(vector.x,vector.y,vector.z);
+      controls.moveTo(vector.x,vector.y,vector.z, false);
+
+      // console.log({vector});
+      // props.setCameraPosition([vector.x, vector.y , vector.z]);
+    }
+    
+
+    // focus && focus.current? controls.moveTo(
+    //   focus.current.position.x,
+    //   focus.current.position.y,
+    //   focus.current.position.z,
+    //   true
+    // ): "";
+
     // focus && camera.setDistance(1.5);
-    // focus && controls.setLookAt(focus.current);
+    // focus && controls.setLookAt(focus.current.position.x,focus.current.position.z,focus.current.position.z);
     // focus && camera.minDistance(1)
     // focus && focus.current? controls.setTarget(focus.current.position.x, focus.current.position.y, focus.current.position.z, true) : "";
-    // controls.moveTo(cameraPosition[0], cameraPosition[1], cameraPosition[2], true);
     // focus && focus.current? controls.setTarget(focus.current.position.x, focus.current.position.y, focus.current.position.z, true) : "";
     // controls.moveTo(focus.current.position, true);
 

@@ -71,7 +71,7 @@ const Planet = (props) => {
   const inclination = props.planetDetails.inclination? parseFloat(props.planetDetails.inclination[0]) : 0;
   const periastron = props.planetDetails.periastron? parseFloat(props.planetDetails.periastron[0]): 0;
   const ellipse = getEllipse(semimajoraxis, eccentricity);
-  const speed = 0.01;
+  const speed = 0.005;
 
   const periapsis = getPeriapsis(semimajoraxis, eccentricity) - semimajoraxis;
 
