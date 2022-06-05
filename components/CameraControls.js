@@ -77,22 +77,22 @@ const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
       controls.truck(0.5 * delta * elapsedTime, 0, false);
     }
     if (keys.w.pressed) {
-      controls.dolly(0.25 * delta * elapsedTime, true);
+      controls.dolly(0.125 * delta * elapsedTime, true);
     }
     if (keys.s.pressed) {
-      controls.dolly(-0.25 * delta * elapsedTime, true);
+      controls.dolly(-0.125 * delta * elapsedTime, true);
     }
 
     if (keys.left.pressed) {
       controls.rotate(
-        -0.25 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        -0.125 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
         0,
         true
       );
     }
     if (keys.right.pressed) {
       controls.rotate(
-        0.25 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        0.125 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
         0,
         true
       );
@@ -100,14 +100,14 @@ const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
     if (keys.up.pressed) {
       controls.rotate(
         0,
-        -0.25 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        -0.125 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
         true
       );
     }
     if (keys.down.pressed) {
       controls.rotate(
         0,
-        0.25 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        0.125 * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
         true
       );
     }
