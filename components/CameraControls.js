@@ -77,10 +77,10 @@ const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
       controls.truck(0.5 * delta * elapsedTime, 0, false);
     }
     if (keys.w.pressed) {
-      controls.dolly(0.25 * delta * elapsedTime, false);
+      controls.dolly(0.25 * delta * elapsedTime, true);
     }
     if (keys.s.pressed) {
-      controls.dolly(-0.25 * delta * elapsedTime, false);
+      controls.dolly(-0.25 * delta * elapsedTime, true);
     }
 
     if (keys.left.pressed) {

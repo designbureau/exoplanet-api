@@ -26,22 +26,26 @@ const Planet = (props) => {
   //Semimajoraxis
 
   let semimajoraxis;
-  if(props.planetDetails.semimajoraxis && Array.isArray(props.planetDetails.semimajoraxis[0])){
-    if(props.planetDetails.semimajoraxis[0].hasOwnProperty("_")){
-      semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]._) * au;
+  // if(props.planetDetails.semimajoraxis && Array.isArray(props.planetDetails.semimajoraxis[0])){
+  if(props.planetDetails.semimajoraxis && props.planetDetails.semimajoraxis[0]){
+    if(props.planetDetails.semimajoraxis[0]._){
+      console.log("here");
+      semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]._)
     }
     else{
-      semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]) * au;
+      semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]);
     }
   }
   else if(props.planetDetails.semimajoraxis){
-    semimajoraxis = parseFloat(props.planetDetails.semimajoraxis) * au;
+    semimajoraxis = parseFloat(props.planetDetails.semimajoraxis);
   }
   else{
     semimajoraxis = 100;
   }
+  semimajoraxis = semimajoraxis * au;
+
   // semimajoraxis = semimajoraxis * au;
-  console.log({semimajoraxis});
+  console.log(props.planetDetails.name[0], props.planetDetails.semimajoraxis);
 
   //Period
   const period = props.planetDetails.period? parseFloat(props.planetDetails.period[0]) : 365;
