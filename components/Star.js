@@ -95,7 +95,7 @@ const Star = (props) => {
     system.star = starRef;
     system.planets = planetElements;
 
-    props.refs.system = system;
+    props.refs.current.system = system;
 
 
     // console.log({system});
@@ -318,7 +318,7 @@ const Star = (props) => {
               alpha={0.75}
               colorD={color}
             />
-            <Displace ref={displace} strength={0.025} scale={transformScale} type={"perlin"} />
+            <Displace ref={displace} strength={0.0125} scale={transformScale} type={"perlin"} />
           </LayerMaterial>
         </mesh>
         <sprite

@@ -73,11 +73,20 @@ const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
   let vector = new THREE.Vector3();
 
   
+  // if(keyDown){
+  //   controls.infinityDolly = true;
+  //   controls.dollyToCursor = true;
+  // }
+  // if(!keyDown){
+  //   controls.infinityDolly = false;
+  //   controls.dollyToCursor = false;
+  // }
 
   
 
   return useFrame((state, delta) => {
     const elapsedTime = state.clock.getElapsedTime();
+
 
    
     if (keys.plus.down) {
@@ -89,7 +98,6 @@ const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
     if (keys.enter.pressed) {
       setKeyDown(false);
     }
-  
 
     if (keys.a.pressed) {
       controls.truck((-0.5 * sensitivity) * delta * elapsedTime, 0, true);

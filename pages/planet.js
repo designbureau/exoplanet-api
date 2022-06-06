@@ -1,10 +1,9 @@
 // import Head from "next/head";
 import Nav from "../components/Nav";
-import SystemNav from "../components/SystemNav";
+import CatalogueNav from "../components/CatalogueNav";
 import { useRef, useState, useMemo, forwardRef } from "react";
 import { Canvas, useFrame, useThree, extend } from "@react-three/fiber";
 import SkyBox from "../components/SkyBox";
-import NewSystemNav from "../components/NewSystemNav";
 import RenderPlanet from "../components/RenderPlanet";
 import Controls from '../components/CameraControls';
 import { EnvContext, Constants } from "../components/EnvContext";

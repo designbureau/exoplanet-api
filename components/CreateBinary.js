@@ -41,12 +41,12 @@ const CreateBinary = (systemData, setCameraPosition, setFocus, setClicked, refs)
 
   // systemData.binary && systemData.binary? x = systemData.binary.separation[1]._ : null;
 
-  systemData.binary && console.log(systemData.binary[0].separation[1]._);
+  // systemData.binary && console.log(systemData.binary[0].separation[1]._);
 
   let Binary;
   
   systemData.binary && (Binary = systemData.binary.map((binary, i) => {
-    return CreateBinary(binary, setCameraPosition, setFocus, setClicked, refs, true);
+    return CreateBinary(binary, setCameraPosition, setFocus, setClicked, refs);
   }));
 
   // console.log("data", systemData);

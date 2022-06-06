@@ -22,13 +22,13 @@ export default function Home() {
   // const refs = {};
   // console.log("refs", refs);
 
-
+  // console.log("index", {refs});
 
 
   return (
     <>
       <Nav setSystemData={setSystemData} />
-      {systemData && <SystemNav systemData={systemData} />}
+      {systemData && <SystemNav refs={refs} />}
       <div id="canvas-container" style={{cursor:cursor}}>
           <Canvas
             dpr={[1, 2]}

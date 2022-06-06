@@ -13,7 +13,9 @@ const Planet = (props) => {
   // const getRef = (element) => (itemsEls.current.push(element))
 
   const planetRef = useRef();
-  props.refs.current.push(planetRef);
+    props.refs.current.push(planetRef);
+
+
 
   // Set up state for the hover and active state
   // const [hover, setHover] = useState(false);
@@ -44,7 +46,7 @@ const Planet = (props) => {
   semimajoraxis = semimajoraxis * au;
 
   // semimajoraxis = semimajoraxis * au;
-  console.log({semimajoraxis});
+  // console.log({semimajoraxis});
 
   //Period
   let period = 365;
@@ -66,7 +68,7 @@ const Planet = (props) => {
   else if(props.planetDetails.semimajoraxis && props.planetDetails.eccentricity[0].length){
     eccentricity = parseFloat(props.planetDetails.eccentricity[0]);
   }
-  console.log({eccentricity})
+  // console.log({eccentricity})
 
   const inclination = props.planetDetails.inclination? parseFloat(props.planetDetails.inclination[0]) : 0;
   const periastron = props.planetDetails.periastron? parseFloat(props.planetDetails.periastron[0]): 0;
@@ -75,7 +77,7 @@ const Planet = (props) => {
 
   const periapsis = getPeriapsis(semimajoraxis, eccentricity) - semimajoraxis;
 
-  console.log({periapsis});
+  // console.log({periapsis});
 
   //Orbits
   const curve = new THREE.EllipseCurve(
@@ -90,14 +92,14 @@ const Planet = (props) => {
   );
 
 
-    console.log({ellipse});
+    // console.log({ellipse});
 
   const orbitRef = useRef();
 
   const points = curve.getPoints(1000);
   const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
-  console.log({geometry});
+  // console.log({geometry});
   geometry.name = props.name;
   // orbitEllipse.name = name + " orbit";
 
@@ -160,7 +162,7 @@ const Planet = (props) => {
   }
 
   //TODO: remove exaggeration
-  scale = scale * 10;
+  // scale = scale * 10;
 
   // scale = scale / constants.mass.jupiter;
 
@@ -173,7 +175,7 @@ const Planet = (props) => {
   // console.log("planet details", props.planetDetails);
 
 
-  console.log({planetRef})
+  // console.log({planetRef})
 
   return (
     <group 
