@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <>
       <Nav setSystemData={setSystemData} />
-      {systemData && <SystemNav refs={refs} />}
+      {systemData && (<SystemNav refs={refs} setFocus={setFocus} setClicked={setClicked} />)}
       <div id="canvas-container" style={{cursor:cursor}}>
           <Canvas
             dpr={[1, 2]}

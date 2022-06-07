@@ -1,28 +1,46 @@
-const SystemNav = ({ refs }) => {
-
-  {refs.current && console.log("refs lekker", refs.current)}
+const SystemNav = ({ refs, setFocus, setClicked }) => {
+  // {refs.current && console.log("refs lekker", refs.current)}
 
   return (
     <nav className="systemNav">
       <ul>
-
-
-      {refs.current &&
-        refs.current.map((system, i) => {
-          return (
-          <li key={i}>
-            {system.star.current && system.star.current.name}
-            <ul>
-              {system.planets.current &&
-                system.planets.current.map((planet, i) => {
-                  return planet.current && (<li key={i}>{planet.current.name }</li>);
-                })}
-            </ul>
-          </li>
-          );
-        })}
-
-
+        {refs.current &&
+          refs.current.map((system, i) => {
+            return (
+              <li key={i}>
+                {system.star.current && (
+                  <span
+                    onClick={() => {
+                      setFocus(system.star);
+                      console.log("meep");
+                      setClicked(true);
+                    }}
+                  >
+                    {system.star.current.name}
+                  </span>
+                )}
+                <ul>
+                  {system.planets.current &&
+                    system.planets.current.map((planet, i) => {
+                      return (
+                        planet.current && (
+                          <li
+                            key={i}
+                            onClick={() => {
+                              setFocus(planet);
+                              setClicked(true);
+                              console.log("meep meep");
+                            }}
+                          >
+                            {planet.current.name}
+                          </li>
+                        )
+                      );
+                    })}
+                </ul>
+              </li>
+            );
+          })}
       </ul>
     </nav>
   );
