@@ -95,7 +95,8 @@ const Star = (props) => {
     system.star = starRef;
     system.planets = planetElements;
 
-    props.refs.current.system = system;
+    // props.refs.current.system = system;
+    props.refs.current.push(system);
 
 
     // console.log({system});

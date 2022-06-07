@@ -1,11 +1,13 @@
 import Star from "./Star";
+import { useRef } from "react";
+
 const CreateStar = ({ data, setCameraPosition, setFocus, setClicked, refs }) => {
 
-
+  // const starElements = useRef(new Array())
 
   const Stars = data.map((star, i) => {
 
-    console.log({i});
+    // console.log({i});
 
     let x = 0;
     let y = 0;
@@ -29,6 +31,9 @@ const CreateStar = ({ data, setCameraPosition, setFocus, setClicked, refs }) => 
       refs={refs}
     />
   });
+
+  // refs.current.push(starElements);
+
 
   return Stars;
 };
