@@ -25,10 +25,11 @@ const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
     : 1;
 
   camera.far = 1000000000;
+  camera.near = 0.001;
   camera.fov = 50;
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
-  controls.minDistance = radius + 0.2;
+  controls.minDistance = radius + (radius * 0.2);
   // console.log({width, height})
 
   // console.log("camera position", {cameraPosition})

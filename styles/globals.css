@@ -189,6 +189,16 @@ ul.subMenu {
   /* list-style:disc; */
 }
 
+.systemNav li{
+  cursor: pointer;
+  opacity:0.9;
+}
+
+.systemNav li:hover, 
+.systemNav li:active{
+  opacity:1;
+}
+
 .text-white {
   color: white;
 }

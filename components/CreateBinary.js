@@ -45,7 +45,7 @@ const CreateBinary = (systemData, setCameraPosition, setFocus, setClicked, refs,
 
   let Binary;
   
-  if(systemData.binary === null) return;
+  // if(systemData.binary === null) return;
 
 
   systemData.binary && (Binary = systemData.binary.map((binary, i) => {
