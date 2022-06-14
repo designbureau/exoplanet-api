@@ -19,15 +19,27 @@ export default function Home() {
   const [clicked, setClicked] = useState(false);
 
   const refs = useRef(new Array());
+
+  const [viewState, setViewState] = useState({
+    clicked: false,
+    focus: null
+  });
+
+
+  const [refsArray, setRefsArray] = useState(new Array());
+
+
+
   // const refs = {};
-  // console.log("refs", refs);
+  console.log("refs", refs);
 
   // console.log("index", {refs});
 
 
+
   return (
     <>
-      <Nav setSystemData={setSystemData} />
+      <Nav setSystemData={setSystemData} refs={refs} />
       {systemData && (<SystemNav refs={refs} setFocus={setFocus} setClicked={setClicked} />)}
       <div id="canvas-container" style={{cursor:cursor}}>
           <Canvas
@@ -40,6 +52,9 @@ export default function Home() {
                 setCameraPosition={setCameraPosition}
                 setFocus={setFocus}
                 setClicked={setClicked}
+                setViewState={setViewState}
+                viewState={viewState}
+                setRefsArray={setRefsArray}
                 refs={refs}
               />)}
             </EnvContext.Provider>

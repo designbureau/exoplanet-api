@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
-import { forwardRef, useRef, createRef, useState, useMemo, useContext } from "react";
+import { forwardRef, useRef, createRef, useState, useMemo, useContext, useEffect, useLayoutEffect } from "react";
 import Planet from "./Planet";
 import { EnvContext } from "./EnvContext";
 import chroma from "chroma-js";
@@ -39,7 +39,6 @@ const Star = (props) => {
   const noiseSpot4 = useRef();
   const camera = useThree((state) => state.camera);
   const lightRef = useRef();
-
 
 
   useFrame((state, delta) => {
@@ -85,20 +84,53 @@ const Star = (props) => {
           setFocus={props.setFocus}
           setClicked={props.setClicked}
           planetDetails={planet}
+          setViewState={props.setViewState}
+          setRefsArray={props.setRefsArray}
           refs={planetElements}
         />
       );
     });
 
-    const system = {};
 
-    system.star = starRef;
-    system.planets = planetElements;
+
 
     // props.refs.current.system = system;
-    props.refs.current.push(system);
+
+      const system = {};
+      system.star = starRef;
+      system.planets = planetElements;
+      props.refs.current.push(system);
+      console.log("ref added");
 
 
+      // Push element at end of object of arrays
+      // let specificArrayInObject = theObject.array.slice();
+      // specificArrayInObject.push(newValue);
+      // const newObj = { ...theObject, [event.target.name]: specificArrayInObject };
+      // theObject(newObj);
+
+      //TODO: refactor this so its updating the array correctly.
+      props.setRefsArray(system);
+
+
+    // let specificArrayInObject = props.viewState.refs.slice();
+    //   specificArrayInObject.push(system);
+    //   const newObj = { ...viewState, refs: specificArrayInObject };
+    //   props.setViewState(newObj);
+
+      // props.setViewState(viewState => ({...viewState, refs: system}) );
+      // props.setRefsArray(refsArray => [...refsArray, { system }]);
+
+      // props.setRefsArray();
+
+  
+      
+
+
+
+    //   useLayoutEffect(() => {
+
+    // },[props.refs]);
     // console.log({system});
 
 
@@ -239,7 +271,10 @@ const Star = (props) => {
             props.setCameraPosition([vector.x, vector.y , vector.z]);
             props.setFocus(starRef);
             props.setClicked(true);
-
+            props.setViewState({
+              focus: starRef,
+              clicked: true
+            });
             // console.log("mesh position", starRef.current.position);
             // console.log("mesh world position", starRef.getWorldPosition());
             // console.log("clicked mesh group", group);

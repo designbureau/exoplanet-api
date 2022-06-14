@@ -1,11 +1,11 @@
 import CreateBinary from "./CreateBinary";
 import { useMemo } from "react";
 
-const CreateSystem =  ({systemData, setCameraPosition, setFocus, setClicked, refs}) => {
+const CreateSystem =  ({systemData, setCameraPosition, setFocus, setClicked, refs, setViewState, viewState, setRefsArray}) => {
   // return CreateBinary(systemData, setCameraPosition);
 
-  let isBinary = systemData.binary && systemData.binary? true : false;
-  return useMemo(() => CreateBinary(systemData, setCameraPosition, setFocus, setClicked, refs), [systemData, setCameraPosition, setFocus, setClicked, refs])
+  // let isBinary = systemData.binary && systemData.binary? true : false;
+  return useMemo(() => CreateBinary(systemData, setCameraPosition, setFocus, setClicked, refs, setViewState, setRefsArray), [systemData, setCameraPosition, setFocus, setClicked, refs, setViewState, setRefsArray]);
 
 }
 

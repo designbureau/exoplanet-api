@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-const Nav = ({setSystemData}) => {
+const Nav = ({setSystemData, refs}) => {
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [navActive, setNavActive] = useState(false);
@@ -23,6 +23,7 @@ const Nav = ({setSystemData}) => {
 
   const navHandler = () => {
     setNavActive(!navActive);
+    refs.current = new Array();
   }
 
   const clickHandler = (system) => {

@@ -1,7 +1,7 @@
 import * as THREE from "three";
 // import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import { useFrame } from "@react-three/fiber";
-import { useRef, useState, useContext } from "react";
+import { useRef, useState, useContext, useEffect, useLayoutEffect } from "react";
 import { EnvContext } from "./EnvContext";
 import PlanetTexture from "./PlanetTextures";
 import { getEllipse, getPeriapsis } from "./HelperFunctions";
@@ -13,7 +13,9 @@ const Planet = (props) => {
   // const getRef = (element) => (itemsEls.current.push(element))
 
   const planetRef = useRef();
-    props.refs.current.push(planetRef);
+  props.refs.current.push(planetRef);
+
+  // props.setViewState(refs => ({ ...refs.current, planetRef}));
 
 
 
@@ -206,17 +208,25 @@ const Planet = (props) => {
         // scale={active ? 1.5 : 1}
         // onClick={(event) => setActive(!active)}
         onClick={(e) => {
-          props.setFocus(planetRef);
           console.log("clicked mesh", planetRef);
           // console.log(planetRef.current.position);
           // console.log("context from planet", constants.distance.au);
           // console.log("planet scale", scale);
           let vector = new THREE.Vector3();
           e.object.getWorldPosition(vector);
-          props.setCameraPosition([vector.x, vector.y , vector.z]);
+
+          // props.setCameraPosition([vector.x, vector.y , vector.z]);
           props.setFocus(planetRef);
-          props.setClicked(true)
+          props.setClicked(true);
+          props.setViewState({
+            focus: planetRef,
+            clicked: true
+          });
+
+    
+
           e.stopPropagation();
+          
         }}
       // castShadow={true}
       // receiveShadow={true}

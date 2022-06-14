@@ -1,7 +1,7 @@
 import Star from "./Star";
 import { useRef } from "react";
 
-const CreateStar = ({ data, setCameraPosition, setFocus, setClicked, refs }) => {
+const CreateStar = ({ data, setCameraPosition, setFocus, setClicked, refs, setViewState, setRefsArray }) => {
 
   // const starElements = useRef(new Array())
 
@@ -28,6 +28,8 @@ const CreateStar = ({ data, setCameraPosition, setFocus, setClicked, refs }) => 
       setCameraPosition={setCameraPosition}
       setFocus={setFocus}
       setClicked={setClicked}
+      setViewState={setViewState}
+      setRefsArray={setRefsArray}
       refs={refs}
     />
   });
