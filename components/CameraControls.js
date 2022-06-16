@@ -8,7 +8,7 @@ import CameraControls from "camera-controls";
 controls.install({ THREE });
 extend({ controls });
 
-const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
+const Controls = ({focus, setFocus, clicked, setClicked }) => {
   let width = window.innerWidth;
   let height = window.innerHeight;
   const camera = useThree((state) => state.camera);
@@ -32,7 +32,6 @@ const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
   controls.minDistance = radius + (radius * 0.2);
   // console.log({width, height})
 
-  // console.log("camera position", {cameraPosition})
   // console.log("focus", {focus})
 
   if (focus) {
@@ -42,20 +41,6 @@ const Controls = ({ cameraPosition, focus, setFocus, clicked, setClicked }) => {
       clicked = setClicked(false);
     }
   }
-
-  // console.log({focus})
-  // console.log({newFocus});
-  // focus && focus
-  //   ? controls.fitToBox(focus.current, true)
-  //   : controls.dollyTo(1.5, true);
-  // controls.setTarget(cameraPosition[0], cameraPosition[1], cameraPosition[2], true)
-
-  // controls.moveTo(
-  //   cameraPosition[0],
-  //   cameraPosition[1],
-  //   cameraPosition[2],
-  //   true
-  // );
 
   const { ...keys } = useKeyState({
     w: "w",

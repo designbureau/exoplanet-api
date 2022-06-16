@@ -215,7 +215,6 @@ const Planet = (props) => {
           let vector = new THREE.Vector3();
           e.object.getWorldPosition(vector);
 
-          // props.setCameraPosition([vector.x, vector.y , vector.z]);
           props.setFocus(planetRef);
           props.setClicked(true);
           props.setViewState({

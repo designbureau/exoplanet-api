@@ -2,7 +2,7 @@ import CreateStar from "./CreateStar";
 import CreatePlanet from "./CreatePlanet";
 // import { useRef } from "react";
 
-const CreateBinary = (systemData, setCameraPosition, setFocus, setClicked, refs, setViewState, setRefsArray) => {
+const CreateBinary = (systemData, setFocus, setClicked, refs, setViewState, setRefsArray) => {
   // return (
   //   <>
   //     {systemData.binary &&
@@ -30,8 +30,8 @@ const CreateBinary = (systemData, setCameraPosition, setFocus, setClicked, refs,
   // let system = {};
 
 
-  let Star = systemData.star && <CreateStar data={systemData.star} setCameraPosition={setCameraPosition} setFocus={setFocus} setClicked={setClicked} refs={refs} setViewState={setViewState} setRefsArray={setRefsArray}  />
-  let Planet = systemData.planet && <CreatePlanet data={systemData.planet} setCameraPosition={setCameraPosition} setFocus={setFocus} setClicked={setClicked} refs={refs} setViewState={setViewState} setRefsArray={setRefsArray} />
+  let Star = systemData.star && <CreateStar data={systemData.star} setFocus={setFocus} setClicked={setClicked} refs={refs} setViewState={setViewState} setRefsArray={setRefsArray}  />
+  let Planet = systemData.planet && <CreatePlanet data={systemData.planet} setFocus={setFocus} setClicked={setClicked} refs={refs} setViewState={setViewState} setRefsArray={setRefsArray} />
 
 
 
@@ -49,7 +49,7 @@ const CreateBinary = (systemData, setCameraPosition, setFocus, setClicked, refs,
 
 
   systemData.binary && (Binary = systemData.binary.map((binary, i) => {
-    return CreateBinary(binary, setCameraPosition, setFocus, setClicked, refs, setViewState, setRefsArray );
+    return CreateBinary(binary, setFocus, setClicked, refs, setViewState, setRefsArray );
   }));
 
 

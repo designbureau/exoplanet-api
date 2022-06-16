@@ -12,10 +12,8 @@ import { useKeyState } from "use-key-state";
 
 export default function Home() {
   const [systemData, setSystemData] = useState(null);
-  const [cameraPosition, setCameraPosition] = useState([0, 0, 5]);
   const [cursor, setCursor] = useState("default");
   const [focus, setFocus] = useState();
-  // const [controlPosition, setControlPosition] = useState();
   const [clicked, setClicked] = useState(false);
 
   const refs = useRef(new Array());
@@ -49,7 +47,6 @@ export default function Home() {
               {useMemo(() => <SkyBox />,[])}
               {systemData && (<CreateSystem
                 systemData={systemData}
-                setCameraPosition={setCameraPosition}
                 setFocus={setFocus}
                 setClicked={setClicked}
                 setViewState={setViewState}
@@ -58,7 +55,7 @@ export default function Home() {
                 refs={refs}
               />)}
             </EnvContext.Provider>
-            <Controls cameraPosition={cameraPosition} focus={focus} setFocus={setFocus} clicked={clicked} setClicked={setClicked} />
+            <Controls focus={focus} setFocus={setFocus} clicked={clicked} setClicked={setClicked} />
             <Perf />
           </Canvas>
       </div>

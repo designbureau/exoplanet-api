@@ -11,7 +11,6 @@ import JsonFind from "json-find";
 
 export default function Home() {
   const [systemData, setSystemData] = useState(null);
-  const [cameraPosition, setCameraPosition] = useState([0, 0, 0]);
   const [focus, setFocus] = useState();
 
 
@@ -34,7 +33,7 @@ export default function Home() {
               />)}
               <RenderPlanet planet={planets && planets[0]} />
             </EnvContext.Provider>
-            <Controls cameraPosition={cameraPosition} focus={focus}/>
+            <Controls focus={focus}/>
           </Canvas>
       </div>
     </>

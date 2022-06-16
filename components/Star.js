@@ -80,7 +80,6 @@ const Star = (props) => {
           key={planet.name[0]}
           // position={[x, y, z]}
           name={planet.name[0]}
-          setCameraPosition={props.setCameraPosition}
           setFocus={props.setFocus}
           setClicked={props.setClicked}
           planetDetails={planet}
@@ -268,7 +267,6 @@ const Star = (props) => {
 
             let vector = new THREE.Vector3();
             e.object.getWorldPosition(vector);
-            props.setCameraPosition([vector.x, vector.y , vector.z]);
             props.setFocus(starRef);
             props.setClicked(true);
             props.setViewState({
