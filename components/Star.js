@@ -95,11 +95,14 @@ const Star = (props) => {
 
     // props.refs.current.system = system;
 
-      const system = {};
-      system.star = starRef;
-      system.planets = planetElements;
-      props.refs.current.push(system);
-      console.log("ref added");
+
+   
+
+      // const system = {};
+      // system.star = starRef;
+      // system.planets = planetElements;
+      // props.refs.current.push(system);
+      // console.log("ref added");
 
 
       // Push element at end of object of arrays
@@ -109,7 +112,18 @@ const Star = (props) => {
       // theObject(newObj);
 
       //TODO: refactor this so its updating the array correctly.
-      props.setRefsArray(system);
+      // props.setRefsArray(system);
+
+      useEffect(() => {
+
+        const system = {};
+        system.star = starRef;
+        system.planets = planetElements;
+        props.refs.current.push(system);
+        console.log("ref added");
+        props.setRefsArray(system);
+
+      }, [props]);
 
 
     // let specificArrayInObject = props.viewState.refs.slice();

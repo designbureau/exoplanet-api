@@ -13,7 +13,9 @@ const Planet = (props) => {
   // const getRef = (element) => (itemsEls.current.push(element))
 
   const planetRef = useRef();
-  props.refs.current.push(planetRef);
+  useEffect(() => {
+    props.refs.current.push(planetRef);
+  }, [props.refs]);
 
   // props.setViewState(refs => ({ ...refs.current, planetRef}));
 
@@ -131,7 +133,7 @@ const Planet = (props) => {
 
   const constants = useContext(EnvContext);
 
-  console.log("planet details", props.planetDetails);
+  // console.log("planet details", props.planetDetails);
 
   let radius;
   if (props.planetDetails.hasOwnProperty("radius")) {
