@@ -12,7 +12,6 @@ const SystemNav = ({ refs, setFocus, setClicked }) => {
                   <span
                     onClick={() => {
                       setFocus(system.star);
-                      console.log("meep");
                       setClicked(true);
                     }}
                   >
@@ -29,7 +28,6 @@ const SystemNav = ({ refs, setFocus, setClicked }) => {
                             onClick={() => {
                               setFocus(planet);
                               setClicked(true);
-                              console.log("meep meep");
                             }}
                           >
                             {planet.current.name}
