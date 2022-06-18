@@ -29,39 +29,57 @@ const Planet = (props) => {
   // TODO: replace random defaults
   const au = 1000;
 
-  //Semimajoraxis
 
+  console.log("planet details", props.planetDetails);
+
+
+  //Semimajoraxis
   let semimajoraxis;
   // if(props.planetDetails.semimajoraxis && Array.isArray(props.planetDetails.semimajoraxis[0])){
-  if(props.planetDetails.semimajoraxis && props.planetDetails.semimajoraxis[0]){
-    if(props.planetDetails.semimajoraxis[0]._){
-      semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]._)
+  if(props.planetDetails.hasOwnProperty("semimajoraxis")){
+    if(props.planetDetails.semimajoraxis && props.planetDetails.semimajoraxis[0]){
+      if(props.planetDetails.semimajoraxis[0]._){
+        semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]._)
+      }
+      else{
+        semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]);
+      }
+    }
+    else if(props.planetDetails.semimajoraxis){
+      semimajoraxis = parseFloat(props.planetDetails.semimajoraxis);
     }
     else{
-      semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]);
+      semimajoraxis = 10;
     }
   }
-  else if(props.planetDetails.semimajoraxis){
-    semimajoraxis = parseFloat(props.planetDetails.semimajoraxis);
-  }
   else{
-    semimajoraxis = 100;
+    semimajoraxis = 10;
   }
   semimajoraxis = semimajoraxis * au;
 
   // semimajoraxis = semimajoraxis * au;
-  // console.log({semimajoraxis});
+  console.log({semimajoraxis});
 
   //Period
-  let period = 365;
-  if(props.planetDetails.period){
+  let period;
+  if(props.planetDetails.hasOwnProperty("period")){
     if(Array.isArray(props.planetDetails.period)){
-      period = parseFloat(props.planetDetails.period[0]._);
+      if(props.planetDetails.period[0].hasOwnProperty("_")){
+        period = parseFloat(props.planetDetails.period[0]._);
+      }
+      else{
+        period = parseFloat(props.planetDetails.period[0]);
+      }
     }
     else{
       period = parseFloat(props.planetDetails.period);
     }
   }
+  else{
+    period = 365;
+  }
+
+  console.log({period});
 
 
   //Eccentricity
@@ -72,7 +90,7 @@ const Planet = (props) => {
   else if(props.planetDetails.semimajoraxis && props.planetDetails.eccentricity[0].length){
     eccentricity = parseFloat(props.planetDetails.eccentricity[0]);
   }
-  // console.log({eccentricity})
+  console.log({eccentricity})
 
   const inclination = props.planetDetails.inclination? parseFloat(props.planetDetails.inclination[0]) : 0;
   const periastron = props.planetDetails.periastron? parseFloat(props.planetDetails.periastron[0]): 0;
@@ -81,7 +99,7 @@ const Planet = (props) => {
 
   const periapsis = getPeriapsis(semimajoraxis, eccentricity) - semimajoraxis;
 
-  // console.log({periapsis});
+  console.log({periapsis});
 
   //Orbits
   const curve = new THREE.EllipseCurve(
@@ -133,7 +151,6 @@ const Planet = (props) => {
 
   const constants = useContext(EnvContext);
 
-  // console.log("planet details", props.planetDetails);
 
   let radius;
   if (props.planetDetails.hasOwnProperty("radius")) {
