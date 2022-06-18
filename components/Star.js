@@ -257,8 +257,7 @@ const Star = (props) => {
         
         color={color}
         intensity={0.7}
-        distance={10000}
-        castShadow
+        distance={1000000}
       />
         
         <group>

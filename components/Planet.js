@@ -62,10 +62,19 @@ const Planet = (props) => {
 
   //Period
   let period;
+
   if(props.planetDetails.hasOwnProperty("period")){
     if(Array.isArray(props.planetDetails.period)){
       if(props.planetDetails.period[0].hasOwnProperty("_")){
         period = parseFloat(props.planetDetails.period[0]._);
+      }
+      else if(props.planetDetails.period[0].hasOwnProperty("$")){
+        if(props.planetDetails.period[0].$.hasOwnProperty("upperlimit")){
+          period = parseFloat(props.planetDetails.period[0].$.upperlimit);
+        }
+        else if(props.planetDetails.period[0].$.hasOwnProperty("lowerlimit")){
+          period = parseFloat(props.planetDetails.period[0].$.lowerlimit);
+        }
       }
       else{
         period = parseFloat(props.planetDetails.period[0]);
