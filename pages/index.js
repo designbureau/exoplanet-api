@@ -29,6 +29,7 @@ export default function Home() {
       console.log(focus);
       if (focus === null || focus.current === null) {
         setFocus(refs.current[0].star);
+        setClicked(true);
       }
     }
   }
