@@ -1,37 +1,40 @@
 import Star from "./Star";
-const CreateStar = ({ data, setCameraPosition, setFocus, refs }) => {
+import { useRef } from "react";
 
+const CreateStar = ({ data, setFocus, setClicked, refs, setViewState, setRefsArray }) => {
 
+  // const starElements = useRef(new Array())
 
   const Stars = data.map((star, i) => {
 
-    // console.log(i);
+    // console.log({i});
 
-    let x = Math.random() * 500 - 1;
-    let y = Math.random() * 500 - 1;
-    let z = Math.random() * 500 - 1;
+    let x = 0;
+    let y = 0;
+    let z = 0;
 
-    // if (i === 0) {
-    //   x = 0;
-    //   y = 0;
-    //   z = 0;
-    // }
-
-
-    x = 0;
-    y = 0;
-    z = 0;
+    if(i > 0){
+        x = Math.random() * 500 - 1;
+        y = Math.random() * 500 - 1;
+        z = Math.random() * 500 - 1;
+    }     
+   
 
     // console.log("star", star.name[0]);
     return <Star
       key={star.name[0]}
       position={[x, y, z]}
       starSystemData={star}
-      setCameraPosition={setCameraPosition}
       setFocus={setFocus}
+      setClicked={setClicked}
+      setViewState={setViewState}
+      setRefsArray={setRefsArray}
       refs={refs}
     />
   });
+
+  // refs.current.push(starElements);
+
 
   return Stars;
 };

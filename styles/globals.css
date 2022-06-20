@@ -101,7 +101,7 @@ a:hover {
   max-width: clamp(200px, calc(100vw - 60px), 300px);
 }
 
-.relative{
+.relative {
   position: relative;
 }
 
@@ -184,22 +184,49 @@ ul.subMenu {
   z-index: 99;
 }
 
-
-.text-white{
-  color:white;
+.systemNav ul{
+  margin-left:10px;
+  /* list-style:disc; */
 }
 
-.pb-0{
-  padding-bottom:0;
+.systemNav li{
+  cursor: pointer;
+  opacity:0.9;
 }
-.mt-0{
-  margin-top:0;
+
+.systemNav li:hover, 
+.systemNav li:active{
+  opacity:1;
+}
+
+.text-white {
+  color: white;
+}
+
+.pb-0 {
+  padding-bottom: 0;
+}
+.mt-0 {
+  margin-top: 0;
 }
 
 .api-menu li a {
-  color:var(--text);
+  color: var(--text);
 }
 
-.api-menu li a:hover, .api-menu li a:focus{
-  color:var(--white);
+.api-menu li a:hover,
+.api-menu li a:focus {
+  color: var(--white);
+}
+
+.controls-info {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  color: var(--white);
+  background: rgba(var(--background-darker), 0.9);
+  font-size: 9px;
+  text-transform: uppercase;
+  padding:0.5em;
+  border-radius:0 3px 0 0;
 }

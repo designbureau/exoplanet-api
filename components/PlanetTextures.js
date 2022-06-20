@@ -1,5 +1,5 @@
 import { TextureLoader } from "three/src/loaders/TextureLoader";
-import { useLoader } from '@react-three/fiber'
+import { useLoader } from "@react-three/fiber";
 
 // Gas Giant
 // A giant planet composed mainly of gas
@@ -14,6 +14,7 @@ import { useLoader } from '@react-three/fiber'
 // A rocky world outside our solar system.
 
 const PlanetTexture = (mass, radius, name) => {
+  const plutoNormalTexture = useLoader(TextureLoader, "/textures/pluto2.jpeg");
 
   const mercuryNormalTexture = useLoader(
     TextureLoader,
@@ -23,10 +24,7 @@ const PlanetTexture = (mass, radius, name) => {
     TextureLoader,
     "/textures/4k_venus_atmosphere.jpeg"
   );
-  const marsNormalTexture = useLoader(
-    TextureLoader,
-    "/textures/8k_mars.jpeg"
-  );
+  const marsNormalTexture = useLoader(TextureLoader, "/textures/8k_mars.jpeg");
   const earthNormalTexture = useLoader(
     TextureLoader,
     "/textures/8k_earth_daymap.jpeg"
@@ -44,8 +42,6 @@ const PlanetTexture = (mass, radius, name) => {
     "/textures/th_saturn.png"
   );
 
-  
-
   const jupiterNormalTexture = useLoader(
     TextureLoader,
     "/textures/8k_jupiter.jpeg"
@@ -53,15 +49,14 @@ const PlanetTexture = (mass, radius, name) => {
 
   // const jupiterMaterial = proceduralMaterialGenerator();
 
-    let scale = 0.5;
+  let scale = 0.5;
 
-    if(radius){
-        scale = radius;
-    }
-    if(mass){
-        scale = mass;
-    }
-
+  if (radius) {
+    scale = radius;
+  }
+  if (mass) {
+    scale = mass;
+  }
 
   let material = mercuryNormalTexture;
 
@@ -78,34 +73,35 @@ const PlanetTexture = (mass, radius, name) => {
     material = jupiterNormalTexture;
   }
 
-  if(name === "Venus"){
+  if (name === "Pluto") {
+    material = plutoNormalTexture;
+  }
+  if (name === "Venus") {
     material = venusNormalTexture;
   }
-  if(name === "Venus"){
+  if (name === "Venus") {
     material = venusNormalTexture;
   }
-  if(name === "Neptune"){
+  if (name === "Neptune") {
     material = neptuneNormalTexture;
   }
-  if(name === "Saturn"){
+  if (name === "Saturn") {
     material = saturnNormalTexture;
   }
-  if(name === "Uranus"){
+  if (name === "Uranus") {
     material = uranusNormalTexture;
   }
-  if(name === "Mars"){
+  if (name === "Mars") {
     material = marsNormalTexture;
   }
-  if(name === "Earth"){
+  if (name === "Earth") {
     material = earthNormalTexture;
   }
   if (name === "Jupiter") {
     material = jupiterNormalTexture;
   }
 
-
   return material;
 };
-
 
 export default PlanetTexture;

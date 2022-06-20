@@ -12,14 +12,18 @@
     "@react-three/drei": "^9.7.1",
     "@react-three/fiber": "^8.0.13",
     "@react-three/postprocessing": "^2.3.2",
+    "babel-plugin-glsl": "^1.0.0",
     "camera-controls": "github:yomotsu/camera-controls",
     "chroma-js": "^2.4.2",
+    "glslify": "^7.1.1",
+    "json-find": "^2.0.8",
     "lamina": "^1.1.19",
     "next": "12.1.5",
     "r3f-perf": "^6.2.6",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "three": "^0.140.0",
+    "use-key-state": "^0.1.9",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {

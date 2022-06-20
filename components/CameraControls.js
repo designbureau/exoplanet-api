@@ -1,48 +1,173 @@
-import * as THREE from 'three'
-import CameraControls from "camera-controls";
+import * as THREE from "three";
+import controls from "camera-controls";
 import { useRef, useState, useMemo, useEffect } from "react";
 import { useFrame, useThree, extend } from "@react-three/fiber";
+import { useKeyState } from "use-key-state";
+import CameraControls from "camera-controls";
 
+controls.install({ THREE });
+extend({ controls });
 
-CameraControls.install({ THREE })
-extend({ CameraControls })
-
-const Controls = ({cameraPosition, focus, setControlPosition}) => {
-
+const Controls = ({focus, setFocus, clicked, setClicked }) => {
   let width = window.innerWidth;
   let height = window.innerHeight;
-  const camera = useThree((state) => state.camera)
-  const gl = useThree((state) => state.gl)
-  const controls = useMemo(() => new CameraControls(camera, gl.domElement,), [])
+  const camera = useThree((state) => state.camera);
+  const gl = useThree((state) => state.gl);
+  const controls = useMemo(() => new CameraControls(camera, gl.domElement), []);
+  const [keyDown, setKeyDown] = useState(false);
+  const [sensitivity, setSensitivity] = useState(5.0);
+
+
 
   let radius = 1;
-  focus && focus? radius = focus.current.geometry.parameters.radius : 1;
+  focus && focus.current
+    ? (radius = focus.current.geometry.parameters.radius)
+    : 1;
 
   camera.far = 1000000000;
+  camera.near = 0.001;
   camera.fov = 50;
-  camera.aspect = width/height;
+  camera.aspect = width / height;
   camera.updateProjectionMatrix();
-  controls.minDistance = radius + .2;
+  controls.minDistance = radius + (radius * 0.2);
+
   // console.log({width, height})
 
+  // console.log("focus", {focus})
 
-  focus && focus? controls.fitToBox(focus.current, true) : controls.dollyTo(1.5, true)
-  controls.setTarget(cameraPosition[0], cameraPosition[1], cameraPosition[2], true)
-  let currentPosition = controls.getPosition();
-  // setControlPosition(currentPosition);
+  if (focus) {
+    if (clicked) {
+      console.log({ clicked });
+      controls.fitToBox(focus.current, true);
+      clicked = setClicked(false);
+    }
+  }
 
-  focus && console.log(focus);
+  const { ...keys } = useKeyState({
+    w: "w",
+    a: "a",
+    s: "s",
+    d: "d",
+    up: "up",
+    down: "down",
+    left: "left",
+    right: "right",
+    plus: "plus",
+    minus: "minus",
+    enter:"enter",
+  });
+
+  let vector = new THREE.Vector3();
+
+  
+  // if(keyDown){
+  //   controls.infinityDolly = true;
+  //   controls.dollyToCursor = true;
+  // }
+  // if(!keyDown){
+  //   controls.infinityDolly = false;
+  //   controls.dollyToCursor = false;
+  // }
+
+  
+
   return useFrame((state, delta) => {
-    // controls.setTarget(focus.current.position);
-    // focus && camera.setDistance(1.5);
-    // focus && controls.setLookAt(focus.current);
-    // focus && camera.minDistance(1)
-    focus && controls.setTarget(focus.current.position.x, focus.current.position.y, focus.current.position.z, true);
+    const elapsedTime = state.clock.getElapsedTime();
 
 
-    return controls.update(delta)
+   
+    if (keys.plus.down) {
+      setSensitivity(sensitivity + 0.1)
+    }
+    if (keys.minus.down) {
+      setSensitivity(sensitivity - 0.1);
+    }
+    if (keys.enter.pressed) {
+      setKeyDown(false);
+    }
 
-  })
-}
+    if (keys.a.pressed) {
+      controls.truck((-0.5 * sensitivity) * delta * elapsedTime, 0, true);
+      setKeyDown(true);
+    }
+    if (keys.d.pressed) {
+      controls.truck((0.5 * sensitivity) * delta * elapsedTime, 0, true);
+      setKeyDown(true);
+    }
+    if (keys.w.pressed) {
+      controls.dolly((0.5 * sensitivity) * delta * elapsedTime, true);
+      setKeyDown(true);
+    }
+    if (keys.s.pressed) {
+      controls.dolly((-0.5 * sensitivity) * delta * elapsedTime, true);
+      setKeyDown(true);
+    }
+
+    if (keys.left.pressed) {
+      controls.rotate(
+        -0.05 * sensitivity * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        0,
+        true
+      );
+      setKeyDown(true);
+    }
+    if (keys.right.pressed) {
+      controls.rotate(
+        0.05 * sensitivity * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        0,
+        true
+      );
+      setKeyDown(true);
+    }
+    if (keys.up.pressed) {
+      controls.rotate(
+        0,
+        -0.05 * sensitivity * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        true
+      );
+      setKeyDown(true);
+    }
+    if (keys.down.pressed) {
+      controls.rotate(
+        0,
+        0.05 * sensitivity * THREE.MathUtils.DEG2RAD * delta * elapsedTime,
+        true
+      );
+      setKeyDown(true);
+    }
+    if (keys.a.up) {
+      // setKeyDown(false);
+    }
+    if (keys.s.up) {
+      // setKeyDown(false);
+    }
+    if (keys.d.up) {
+      // setKeyDown(false);
+    }
+    if (keys.w.up) {
+      // setKeyDown(false);
+    }
+    if (keys.up.up) {
+      // setKeyDown(false);
+    }
+    if (keys.down.up) {
+      // setKeyDown(false);
+    }
+    if (keys.left.up) {
+      // setKeyDown(false);
+    }
+    if (keys.right.up) {
+      // setKeyDown(false);
+    }
+
+    if (focus && focus.current) {
+      focus.current.getWorldPosition(vector);
+      if (keyDown === false) {
+        controls.moveTo(vector.x, vector.y, vector.z, true);
+      }
+    }
+    return controls.update(delta);
+  });
+};
 
 export default Controls;
