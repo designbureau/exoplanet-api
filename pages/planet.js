@@ -1,6 +1,6 @@
 // import Head from "next/head";
 import Nav from "../components/Nav";
-import CatalogueNav from "../components/CatalogueNav";
+// import CatalogueNav from "../components/CatalogueNav";
 import { useRef, useState, useMemo, forwardRef } from "react";
 import { Canvas, useFrame, useThree, extend } from "@react-three/fiber";
 import SkyBox from "../components/SkyBox";
@@ -28,9 +28,9 @@ export default function Home() {
             <directionalLight intensity={0.5} position={[2, 0, 5]} />
             <EnvContext.Provider value={Constants}>
               {useMemo(() => <SkyBox />,[])}
-              {systemData && (<NewSystemNav
+              {/* {systemData && (<NewSystemNav
                 systemData={systemData}
-              />)}
+              />)} */}
               <RenderPlanet planet={planets && planets[0]} />
             </EnvContext.Provider>
             <Controls focus={focus}/>
