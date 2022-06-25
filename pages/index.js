@@ -77,7 +77,7 @@ export default function Home() {
             initialTarget={initialTarget}
             follow={follow}
           />
-          <Perf />
+          {/* <Perf /> */}
         </Canvas>
       </div>
       <div className="controls">
