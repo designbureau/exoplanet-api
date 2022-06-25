@@ -205,7 +205,7 @@ const Planet = (props) => {
   }
 
   //TODO: remove exaggeration
-  // scale = scale * 10;
+  scale = scale * constants.radius.jupiter;
 
 
 

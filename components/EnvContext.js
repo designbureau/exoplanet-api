@@ -9,8 +9,8 @@ export const Constants = {
     earth: 332946,
   },
   radius: {
-    sol: 10,
-    jupiter: 1,
+    sol: 1,
+    jupiter: 0.10045,
     earth: 11.209,
   },
   distance: {
