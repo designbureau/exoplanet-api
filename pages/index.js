@@ -39,7 +39,7 @@ export default function Home() {
     }
   }
 
-  // console.log({refs});
+  console.log({refs});
 
   return (
     <>

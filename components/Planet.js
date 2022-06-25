@@ -195,11 +195,13 @@ const Planet = (props) => {
 
   let scale = 1;
 
-  if (radius) {
-    scale = radius;
-  }
+
   if (mass) {
     scale = mass;
+  }
+
+  if (radius) {
+    scale = radius;
   }
 
   //TODO: remove exaggeration

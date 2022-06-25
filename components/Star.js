@@ -175,13 +175,18 @@ const Star = (props) => {
   }
 
   let scale = 1;
-  if (radius) {
-    scale = radius;
-  }
+
   if (mass) {
     scale = mass;
   }
-  scale = scale * constants.radius.sol * 100;
+
+  if (radius) {
+    scale = radius;
+  }
+
+  // scale = scale * constants.radius.sol * 100;
+  scale = scale * constants.radius.sol;
+
 
   let temperature = 6500;
   let spectraltype;
@@ -365,7 +370,7 @@ const Star = (props) => {
               alpha={0.75}
               colorD={color}
             />
-            <Displace ref={displace} strength={0.0125} scale={transformScale} type={"perlin"} />
+            {/* <Displace ref={displace} strength={0.0125} scale={transformScale} type={"perlin"} /> */}
           </LayerMaterial>
         </mesh>
         <sprite

@@ -54,35 +54,32 @@ const CreateBinary = (
       setRefsArray={setRefsArray}
     />
   );
-  let Planet = systemData.planet && (
-    <CreatePlanet
-      data={systemData.planet}
+  // let Planet = systemData.planet && (
+  //   <CreatePlanet
+  //     data={systemData.planet}
+  //     setFocus={setFocus}
+  //     setClicked={setClicked}
+  //     refs={refs}
+  //     setViewState={setViewState}
+  //     setRefsArray={setRefsArray}
+  //   />
+  // );
+
+
+    //TODO: figure out how to do circumbinary planets. Maybe treat it like a star in setting refs
+  let Planet;
+  systemData.planet && ( Planet = systemData.planet.map((planet, i) => {
+      <CreatePlanet
+      data={planet}
       setFocus={setFocus}
       setClicked={setClicked}
       refs={refs}
       setViewState={setViewState}
       setRefsArray={setRefsArray}
     />
-  );
+  }));
 
-  // systemData.binary && systemData.binary? x = systemData.binary.separation[1]._ : null;
-  // systemData.binary && console.log(systemData.binary[0].separation[1]._);
 
-  // let separation = 1000;
-
-  // systemData.binary &&  (console.log(systemData.binary[0].separation));
-  // console.log({separation});
-
-  // let data  = JsonFind(systemData);
-
-  // console.log(data);
-  // data && console.log( "separation", data.checkKey("separation"));
-
-  // systemData.binary && (
-  //   const data = systemData && JsonFind(systemData);
-  //   const planets = data && data.checkKey("planet");
-
-  // );
 
   let Binary;
   const au = 1000;
