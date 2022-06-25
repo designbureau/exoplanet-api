@@ -194,6 +194,11 @@ const Planet = (props) => {
   //TODO: remove exaggeration
   // scale = scale * 10;
 
+
+
+  // meshRef.rotation.y = Math.PI * 180;
+
+
   // scale = scale / constants.mass.jupiter;
 
   const planetTexture = PlanetTexture(mass, radius, props.name);
