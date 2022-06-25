@@ -222,7 +222,7 @@ const Planet = (props) => {
   return (
     <group 
     position={position}
-    
+    rotation={[inclination * Math.PI / 90, 0, 0]}
     >
       <line ref={orbitRef}
         geometry={geometry}
@@ -234,7 +234,7 @@ const Planet = (props) => {
           // linewidth={1}
           opacity={0.25}
           transparent={true}
-          rotation={inclination / 90}
+          // rotation={inclination / 90}
         />
       </line>
 
