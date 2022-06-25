@@ -184,8 +184,8 @@ const Star = (props) => {
     scale = radius;
   }
 
-  // scale = scale * constants.radius.sol * 100;
   scale = scale * constants.radius.sol;
+  // scale = scale * constants.radius.sol;
 
 
   let temperature = 6500;
