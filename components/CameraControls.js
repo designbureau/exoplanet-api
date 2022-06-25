@@ -8,7 +8,7 @@ import CameraControls from "camera-controls";
 controls.install({ THREE });
 extend({ controls });
 
-const Controls = ({focus, setFocus, clicked, setClicked }) => {
+const Controls = ({focus, initialTarget, setInitialTarget, clicked, setClicked }) => {
   let width = window.innerWidth;
   let height = window.innerHeight;
   const camera = useThree((state) => state.camera);
@@ -31,7 +31,7 @@ const Controls = ({focus, setFocus, clicked, setClicked }) => {
   camera.updateProjectionMatrix();
   controls.minDistance = radius + (radius * 0.2);
 
-  // console.log({width, height})
+  console.log({camera})
 
   // console.log("focus", {focus})
 
@@ -39,6 +39,11 @@ const Controls = ({focus, setFocus, clicked, setClicked }) => {
     if (clicked) {
       console.log({ clicked });
       controls.fitToBox(focus.current, true);
+
+      // let vectorInit = new THREE.Vector3();
+      // focus.current.getWorldPosition(vectorInit);
+      // controls.setLookAt(vectorInit.x,vectorInit.y,vectorInit.z, vectorInit.x,vectorInit.y, vectorInit.z, true);
+
       clicked = setClicked(false);
     }
   }
@@ -163,7 +168,35 @@ const Controls = ({focus, setFocus, clicked, setClicked }) => {
     if (focus && focus.current) {
       focus.current.getWorldPosition(vector);
       if (keyDown === false) {
-        controls.moveTo(vector.x, vector.y, vector.z, true);
+        if(initialTarget){
+          controls.moveTo(vector.x, vector.y, vector.z, false);
+          setInitialTarget(false);
+        }
+        else{
+          // controls.lerpLookAt( currentPosition.x,currentPosition.y,currentPosition.z, currentPosition.x,currentPosition.y,currentPosition.a, vector.x, vector.y, vector.z, vector.x, vector.y, vector.z, 100, true );  
+         
+         //Could use a toggle to switch state between different follow modes
+          // controls.setTarget(vector.x, vector.y, vector.z, true);
+          controls.moveTo(vector.x, vector.y, vector.z, false);
+
+
+          // controls.lerpLookAt(currentPosition, vector.x, vector.y, vector.z, true)
+
+          // lerpLookAt( positionAX, positionAY, positionAZ, targetAX, targetAY, targetAZ, positionBX, positionBY, positionBZ, targetBX, targetBY, targetBZ, t, enableTransition )
+
+
+
+
+          // if(clicked){
+          //   controls.moveTo(vector.x, vector.y, vector.z, true);
+          //   clicked = setClicked(false);
+          // }
+          // else{
+          //   controls.moveTo(vector.x, vector.y, vector.z, false);
+          // }
+        }
+       
+
       }
     }
     return controls.update(delta);

@@ -14,6 +14,8 @@ export default function Home() {
   const [systemData, setSystemData] = useState(null);
   const [cursor, setCursor] = useState("default");
   const [clicked, setClicked] = useState(false);
+  const [initialTarget, setInitialTarget] = useState(false);
+
   const refs = useRef(new Array());
   const [focus, setFocus] = useState(null);
 
@@ -24,11 +26,13 @@ export default function Home() {
 
   const [refsArray, setRefsArray] = useState(new Array());
 
+  //Set first star in array as initial view
   if (Array.isArray(refs.current)) {
     if (refs.current[0]) {
-      console.log(focus);
+      // console.log(focus);
       if (focus === null || focus.current === null) {
         setFocus(refs.current[0].star);
+        setInitialTarget(true);
         setClicked(true);
       }
     }
@@ -68,6 +72,8 @@ export default function Home() {
             setFocus={setFocus}
             clicked={clicked}
             setClicked={setClicked}
+            setInitialTarget={setInitialTarget}
+            initialTarget={initialTarget}
           />
           <Perf />
         </Canvas>

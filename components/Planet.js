@@ -96,7 +96,7 @@ const Planet = (props) => {
   if( props.planetDetails.eccentricity && props.planetDetails.eccentricity[0].hasOwnProperty("_")){
     eccentricity = parseFloat(props.planetDetails.eccentricity[0]._);
   }
-  else if(props.planetDetails.semimajoraxis && props.planetDetails.eccentricity[0].length){
+  else if(props.planetDetails.eccentricity && props.planetDetails.eccentricity[0].length){
     eccentricity = parseFloat(props.planetDetails.eccentricity[0]);
   }
   console.log({eccentricity})
@@ -104,7 +104,7 @@ const Planet = (props) => {
   const inclination = props.planetDetails.inclination? parseFloat(props.planetDetails.inclination[0]) : 0;
   const periastron = props.planetDetails.periastron? parseFloat(props.planetDetails.periastron[0]): 0;
   const ellipse = getEllipse(semimajoraxis, eccentricity);
-  const speed = 0.005;
+  const speed = 0.0005;
 
   const periapsis = getPeriapsis(semimajoraxis, eccentricity) - semimajoraxis;
 
@@ -200,16 +200,23 @@ const Planet = (props) => {
 
   // props.refs.push(planetRef);
 
-  let position = [0, 0, 0];
 
   // console.log("planet details", props.planetDetails);
 
 
-  // console.log({planetRef})
+  console.log({periapsis})
+
+  let position = [0, 0, 0];
+  position = [periapsis, 0, 0];
+
+
+  console.log({position});
+  console.log({inclination});
+
 
   return (
     <group 
-    // position={[periapsis, 0, 0]}
+    position={position}
     
     >
       <line ref={orbitRef}
@@ -227,7 +234,7 @@ const Planet = (props) => {
       </line>
 
       <mesh
-        position={position}
+        // position={position}
         // position={[periapsis, 0, 0]}
         {...props}
         ref={planetRef}
