@@ -99,16 +99,27 @@ const Planet = (props) => {
   else if(props.planetDetails.eccentricity && props.planetDetails.eccentricity[0].length){
     eccentricity = parseFloat(props.planetDetails.eccentricity[0]);
   }
-  console.log({eccentricity})
+  // console.log({eccentricity})
 
-  const inclination = props.planetDetails.inclination? parseFloat(props.planetDetails.inclination[0]) : 0;
+
+  console.log(props.planetDetails.inclination);
+  let inclination = 0;
+  if( props.planetDetails.inclination && props.planetDetails.inclination[0].hasOwnProperty("_")){
+    inclination = parseFloat(props.planetDetails.inclination[0]._);
+  }
+  else if(props.planetDetails.inclination && props.planetDetails.inclination[0].length){
+    inclination = parseFloat(props.planetDetails.inclination[0]);
+  }
+
   const periastron = props.planetDetails.periastron? parseFloat(props.planetDetails.periastron[0]): 0;
   const ellipse = getEllipse(semimajoraxis, eccentricity);
   const speed = 0.0005;
 
   const periapsis = getPeriapsis(semimajoraxis, eccentricity) - semimajoraxis;
 
-  console.log({periapsis});
+  console.log(props.planetDetails.hasOwnProperty("inclination"));
+
+  console.log({inclination});
 
   //Orbits
   const curve = new THREE.EllipseCurve(

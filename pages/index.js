@@ -15,6 +15,7 @@ export default function Home() {
   const [cursor, setCursor] = useState("default");
   const [clicked, setClicked] = useState(false);
   const [initialTarget, setInitialTarget] = useState(false);
+  const [follow, setFollow] = useState(false);
 
   const refs = useRef(new Array());
   const [focus, setFocus] = useState(null);
@@ -44,7 +45,7 @@ export default function Home() {
     <>
       <Nav setSystemData={setSystemData} refs={refs} />
       {systemData && (
-        <SystemNav refs={refs} setFocus={setFocus} setClicked={setClicked} />
+        <SystemNav refs={refs} setFocus={setFocus} setClicked={setClicked} setFollow={setFollow} follow={follow} />
       )}
       <div id="canvas-container" style={{ cursor: cursor }}>
         <Canvas dpr={[1, 2]}>
@@ -74,9 +75,13 @@ export default function Home() {
             setClicked={setClicked}
             setInitialTarget={setInitialTarget}
             initialTarget={initialTarget}
+            follow={follow}
           />
           <Perf />
         </Canvas>
+      </div>
+      <div className="controls">
+        <button onClick={()=>setFollow(!follow)}>{follow ? "Follow Orbit" : "Lock Position" }</button>
       </div>
       {/* <div className="controls-info">Controls: Move:w,a,s,d | Rotation:up,down,left,right | Sensitivity:+,- | Reset target: enter</div> */}
     </>

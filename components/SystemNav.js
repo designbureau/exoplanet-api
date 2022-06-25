@@ -1,4 +1,4 @@
-const SystemNav = ({ refs, setFocus, setClicked }) => {
+const SystemNav = ({ refs, setFocus, setClicked}) => {
   // {refs.current && console.log("refs lekker", refs.current)}
 
   return (

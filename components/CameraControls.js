@@ -8,7 +8,7 @@ import CameraControls from "camera-controls";
 controls.install({ THREE });
 extend({ controls });
 
-const Controls = ({focus, initialTarget, setInitialTarget, clicked, setClicked }) => {
+const Controls = ({focus, initialTarget, setInitialTarget, clicked, setClicked, follow }) => {
   let width = window.innerWidth;
   let height = window.innerHeight;
   const camera = useThree((state) => state.camera);
@@ -177,7 +177,13 @@ const Controls = ({focus, initialTarget, setInitialTarget, clicked, setClicked }
          
          //Could use a toggle to switch state between different follow modes
           // controls.setTarget(vector.x, vector.y, vector.z, true);
-          controls.moveTo(vector.x, vector.y, vector.z, false);
+
+          if(follow){
+            controls.moveTo(vector.x, vector.y, vector.z, false);
+          }
+          else{
+            controls.setTarget(vector.x, vector.y, vector.z, true);
+          }
 
 
           // controls.lerpLookAt(currentPosition, vector.x, vector.y, vector.z, true)
