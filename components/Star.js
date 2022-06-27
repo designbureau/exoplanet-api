@@ -262,7 +262,7 @@ const Star = (props) => {
         
         color={color}
         intensity={0.7}
-        distance={1000000}
+        distance={30000}
       />
         
         <group>

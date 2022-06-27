@@ -26,7 +26,7 @@ const Controls = ({focus, initialTarget, setInitialTarget, clicked, setClicked, 
 
   camera.far = 1000000000;
   camera.near = 0.001;
-  camera.fov = 50;
+  camera.fov = 75;
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
   controls.minDistance = radius + (radius * 0.2);
