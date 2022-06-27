@@ -7,6 +7,7 @@ export const Constants = {
     sol: 1,
     jupiter: 1047.35,
     earth: 332946,
+    jupiter_mass_in_earth_masses: 317.8,
   },
   radius: {
     sol: 11,

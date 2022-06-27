@@ -1,14 +1,19 @@
 import * as THREE from "three";
 // import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import { useFrame } from "@react-three/fiber";
-import { useRef, useState, useContext, useEffect, useLayoutEffect } from "react";
+import {
+  useRef,
+  useState,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+} from "react";
 import { EnvContext } from "./EnvContext";
 import PlanetTexture from "./PlanetTextures";
 import { getEllipse, getPeriapsis } from "./HelperFunctions";
 
 const Planet = (props) => {
   // This reference will give us direct access to the mesh
-
 
   // const getRef = (element) => (itemsEls.current.push(element))
   const constants = useContext(EnvContext);
@@ -18,8 +23,6 @@ const Planet = (props) => {
   }, [props.refs]);
 
   // props.setViewState(refs => ({ ...refs.current, planetRef}));
-
-
 
   // Set up state for the hover and active state
   // const [hover, setHover] = useState(false);
@@ -31,82 +34,88 @@ const Planet = (props) => {
   //Semimajoraxis
   let semimajoraxis;
   // if(props.planetDetails.semimajoraxis && Array.isArray(props.planetDetails.semimajoraxis[0])){
-  if(props.planetDetails.hasOwnProperty("semimajoraxis")){
-    if(props.planetDetails.semimajoraxis && props.planetDetails.semimajoraxis[0]){
-      if(props.planetDetails.semimajoraxis[0]._){
-        semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]._)
-      }
-      else{
+  if (props.planetDetails.hasOwnProperty("semimajoraxis")) {
+    if (
+      props.planetDetails.semimajoraxis &&
+      props.planetDetails.semimajoraxis[0]
+    ) {
+      if (props.planetDetails.semimajoraxis[0]._) {
+        semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]._);
+      } else {
         semimajoraxis = parseFloat(props.planetDetails.semimajoraxis[0]);
       }
-    }
-    else if(props.planetDetails.semimajoraxis){
+    } else if (props.planetDetails.semimajoraxis) {
       semimajoraxis = parseFloat(props.planetDetails.semimajoraxis);
-    }
-    else{
+    } else {
       semimajoraxis = 10;
     }
-  }
-  else{
+  } else {
     semimajoraxis = 10;
   }
   semimajoraxis = semimajoraxis * constants.distance.au;
 
   // semimajoraxis = semimajoraxis * au;
-  console.log({semimajoraxis});
+  console.log({ semimajoraxis });
 
   //Period
   let period;
 
-  if(props.planetDetails.hasOwnProperty("period")){
-    if(Array.isArray(props.planetDetails.period)){
-      if(props.planetDetails.period[0].hasOwnProperty("_")){
+  if (props.planetDetails.hasOwnProperty("period")) {
+    if (Array.isArray(props.planetDetails.period)) {
+      if (props.planetDetails.period[0].hasOwnProperty("_")) {
         period = parseFloat(props.planetDetails.period[0]._);
-      }
-      else if(props.planetDetails.period[0].hasOwnProperty("$")){
-        if(props.planetDetails.period[0].$.hasOwnProperty("upperlimit")){
+      } else if (props.planetDetails.period[0].hasOwnProperty("$")) {
+        if (props.planetDetails.period[0].$.hasOwnProperty("upperlimit")) {
           period = parseFloat(props.planetDetails.period[0].$.upperlimit);
-        }
-        else if(props.planetDetails.period[0].$.hasOwnProperty("lowerlimit")){
+        } else if (
+          props.planetDetails.period[0].$.hasOwnProperty("lowerlimit")
+        ) {
           period = parseFloat(props.planetDetails.period[0].$.lowerlimit);
         }
-      }
-      else{
+      } else {
         period = parseFloat(props.planetDetails.period[0]);
       }
-    }
-    else{
+    } else {
       period = parseFloat(props.planetDetails.period);
     }
-  }
-  else{
+  } else {
     period = 365;
   }
 
-  console.log({period});
-
+  console.log({ period });
 
   //Eccentricity
   let eccentricity = 0;
-  if( props.planetDetails.eccentricity && props.planetDetails.eccentricity[0].hasOwnProperty("_")){
+  if (
+    props.planetDetails.eccentricity &&
+    props.planetDetails.eccentricity[0].hasOwnProperty("_")
+  ) {
     eccentricity = parseFloat(props.planetDetails.eccentricity[0]._);
-  }
-  else if(props.planetDetails.eccentricity && props.planetDetails.eccentricity[0].length){
+  } else if (
+    props.planetDetails.eccentricity &&
+    props.planetDetails.eccentricity[0].length
+  ) {
     eccentricity = parseFloat(props.planetDetails.eccentricity[0]);
   }
   // console.log({eccentricity})
 
-
   console.log(props.planetDetails.inclination);
   let inclination = 0;
-  if( props.planetDetails.inclination && props.planetDetails.inclination[0].hasOwnProperty("_")){
+  if (
+    props.planetDetails.inclination &&
+    props.planetDetails.inclination[0].hasOwnProperty("_")
+  ) {
     inclination = parseFloat(props.planetDetails.inclination[0]._);
-  }
-  else if(props.planetDetails.inclination && props.planetDetails.inclination[0].length){
+  } else if (
+    props.planetDetails.inclination &&
+    props.planetDetails.inclination[0].length
+  ) {
     inclination = parseFloat(props.planetDetails.inclination[0]);
   }
 
-  const periastron = props.planetDetails.periastron? parseFloat(props.planetDetails.periastron[0]): 0;
+  const periastron = props.planetDetails.periastron
+    ? parseFloat(props.planetDetails.periastron[0])
+    : 0;
   const ellipse = getEllipse(semimajoraxis, eccentricity);
   const speed = 0.0005;
 
@@ -114,7 +123,7 @@ const Planet = (props) => {
 
   console.log(props.planetDetails.hasOwnProperty("inclination"));
 
-  console.log({inclination});
+  console.log({ inclination });
 
   //Orbits
   const curve = new THREE.EllipseCurve(
@@ -128,8 +137,7 @@ const Planet = (props) => {
     0 // aRotation
   );
 
-
-    // console.log({ellipse});
+  // console.log({ellipse});
 
   const orbitRef = useRef();
 
@@ -153,18 +161,16 @@ const Planet = (props) => {
   // const elapsedTime = clock.getElapsedTime();
 
   useFrame((state, delta) => {
-
     const elapsedTime = state.clock.getElapsedTime();
-    
+
     planetRef.current.rotation.x = Math.PI * 0.5;
     planetRef.current.rotation.y += 0.001;
 
-    planetRef.current.position.x = ellipse.xRadius * Math.cos((elapsedTime / period) * speed);
-    planetRef.current.position.y = ellipse.yRadius * Math.sin((elapsedTime / period) * speed);
-
+    planetRef.current.position.x =
+      ellipse.xRadius * Math.cos((elapsedTime / period) * speed);
+    planetRef.current.position.y =
+      ellipse.yRadius * Math.sin((elapsedTime / period) * speed);
   });
-
-
 
   let radius;
   if (props.planetDetails.hasOwnProperty("radius")) {
@@ -189,13 +195,33 @@ const Planet = (props) => {
 
   let scale = 1;
 
+  /* https://www.aanda.org/articles/aa/full_html/2017/08/aa29922-16/aa29922-16.html */
+  /* 
+    We suggest that the transition between the two regimes of “small” and “large” 
+    planets  occurs at a mass of 124 ± 7M⊕ and a radius of 12.1 ± 0.5R⊕. Furthermore, 
+    the M-R relation is R ∝ M0.55 ± 0.02 and R ∝ M0.01 ± 0.02 for small and large planets, 
+    respectively.
+  */
 
   if (mass) {
     scale = mass;
+    const earthMasses =  mass * constants.mass.jupiter_mass_in_earth_masses;
+    if(earthMasses < 124){
+      scale = mass ** 0.55;
+      console.log("mass radius proportion smaller planets", "Mass ** 0.55");
+    }
+    else{
+      scale = mass ** 0.01; 
+      console.log("mass radius proportion larger planets", "Mass ** 0.01");
+    }
   }
 
   if (radius) {
     scale = radius;
+    console.log("scale set by radius");
+  }
+  if(!radius){
+    console.log("scale set by mass");
   }
 
   //Relative to sol radius
@@ -205,28 +231,22 @@ const Planet = (props) => {
 
   // props.refs.push(planetRef);
 
-
   // console.log("planet details", props.planetDetails);
 
-
-  console.log({periapsis})
+  console.log({ periapsis });
 
   let position = [0, 0, 0];
   position = [periapsis, 0, 0];
 
-
-  console.log({position});
-  console.log({inclination});
-
+  console.log({ position });
+  console.log({ inclination });
 
   return (
-    <group 
-    position={position}
-    rotation={[inclination * Math.PI / 90, 0, 0]}
-    >
-      <line ref={orbitRef}
+    <group position={position} rotation={[(inclination * Math.PI) / 90, 0, 0]}>
+      <line
+        ref={orbitRef}
         geometry={geometry}
-      //  rotation={inclination / 90}
+        //  rotation={inclination / 90}
       >
         <lineBasicMaterial
           attach="material"
@@ -259,23 +279,18 @@ const Planet = (props) => {
           props.setClicked(true);
           props.setViewState({
             focus: planetRef,
-            clicked: true
+            clicked: true,
           });
 
-    
-
           e.stopPropagation();
-          
         }}
-      // castShadow={true}
-      // receiveShadow={true}
-      // onPointerOver={(event) => setHover(true)}
-      // onPointerOut={(event) => setHover(false)}
+        // castShadow={true}
+        // receiveShadow={true}
+        // onPointerOver={(event) => setHover(true)}
+        // onPointerOut={(event) => setHover(false)}
       >
         <sphereGeometry args={[scale, 256, 256]} />
-        <meshStandardMaterial
-          map={planetTexture}
-        />
+        <meshStandardMaterial map={planetTexture} />
       </mesh>
     </group>
   );
