@@ -14,6 +14,8 @@ export default function Home() {
   const [systemData, setSystemData] = useState(null);
   const [cursor, setCursor] = useState("default");
   const [clicked, setClicked] = useState(false);
+  const [dragged, setDragged] = useState(false);
+
   const [initialTarget, setInitialTarget] = useState(false);
   const [follow, setFollow] = useState(false);
 
@@ -61,6 +63,7 @@ export default function Home() {
                 systemData={systemData}
                 setFocus={setFocus}
                 setClicked={setClicked}
+                setDragged={setDragged}
                 setViewState={setViewState}
                 viewState={viewState}
                 setRefsArray={setRefsArray}
@@ -72,6 +75,8 @@ export default function Home() {
             focus={focus}
             setFocus={setFocus}
             clicked={clicked}
+            setDragged={setDragged}
+            dragged={dragged}
             setClicked={setClicked}
             setInitialTarget={setInitialTarget}
             initialTarget={initialTarget}

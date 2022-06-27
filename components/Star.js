@@ -43,10 +43,12 @@ const Star = (props) => {
 
   useFrame((state, delta) => {
     starRef.current.rotation.y += 0.00005;
+    const elapsedTime = state.clock.getElapsedTime();
+
     // noise.current.scale += Math.sin(delta * 0.025);
     // noise2.current.scale += Math.sin(delta * 0.03);
     // noise3.current.scale += Math.sin(delta * 0.025);
-    noiseSpot.current.scale += Math.sin(delta * 0.025);
+    noiseSpot.current.scale = Math.sin(elapsedTime * 0.0025);
     // noiseSpot2.current.scale += Math.sin(delta * 0.00125);
     // noiseSpot3.current.scale += Math.sin(delta * 0.00125);
     // noiseSpot4.current.scale += Math.sin(delta * 0.00125);
@@ -82,6 +84,7 @@ const Star = (props) => {
           name={planet.name[0]}
           setFocus={props.setFocus}
           setClicked={props.setClicked}
+          setDragged={props.setDragged}
           planetDetails={planet}
           setViewState={props.setViewState}
           setRefsArray={props.setRefsArray}
@@ -265,6 +268,7 @@ const Star = (props) => {
   //   transformScale = scale * 50;
   // }
 
+  let start, end, delta;
 
   return <group ref={group} name={props.starSystemData.name[0]} position={props.position}>
       <pointLight
@@ -283,6 +287,19 @@ const Star = (props) => {
           name={props.starSystemData.name[0]}
           // scale={active ? 1.5 : 1}
           // onClick={(event) => setActive(!active)}
+          onPointerDown={(e) => {
+            console.log(e)
+            start = new Date();
+          }}
+          onPointerUp={(e) => {
+            end = new Date();
+            delta = (end - start) / 1000.0;
+            console.log(delta);
+            if(delta > .3){
+              console.log("drag");
+              props.setDragged(true);
+            }
+          }}
           onClick={(e) => {
             console.log("clicked mesh", starRef);
             let vector = new THREE.Vector3();

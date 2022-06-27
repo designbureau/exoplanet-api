@@ -9,7 +9,8 @@ const CreateBinary = (
   setClicked,
   refs,
   setViewState,
-  setRefsArray
+  setRefsArray,
+  setDragged
 ) => {
   // return (
   //   <>
@@ -49,6 +50,7 @@ const CreateBinary = (
       data={systemData.star}
       setFocus={setFocus}
       setClicked={setClicked}
+      setDragged={setDragged}
       refs={refs}
       setViewState={setViewState}
       setRefsArray={setRefsArray}
@@ -73,6 +75,7 @@ const CreateBinary = (
       data={planet}
       setFocus={setFocus}
       setClicked={setClicked}
+      setDragged={setDragged}
       refs={refs}
       setViewState={setViewState}
       setRefsArray={setRefsArray}
@@ -105,7 +108,8 @@ const CreateBinary = (
         setClicked,
         refs,
         setViewState,
-        setRefsArray
+        setRefsArray,
+        setDragged
       );
     }));
 

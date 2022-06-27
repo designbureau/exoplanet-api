@@ -241,6 +241,9 @@ const Planet = (props) => {
   console.log({ position });
   console.log({ inclination });
 
+  let start, end, delta;
+
+
   return (
     <group position={position} rotation={[(inclination * Math.PI) / 90, 0, 0]}>
       <line
@@ -267,6 +270,19 @@ const Planet = (props) => {
         // rotateX={Math.PI * 180}
         // scale={active ? 1.5 : 1}
         // onClick={(event) => setActive(!active)}
+        onPointerDown={(e) => {
+          console.log(e)
+          start = new Date();
+        }}
+        onPointerUp={(e) => {
+          end = new Date();
+          delta = (end - start) / 1000.0;
+          console.log(delta);
+          if(delta > .3){
+            console.log("drag");
+            props.setDragged(true);
+          }
+        }}
         onClick={(e) => {
           console.log("clicked mesh", planetRef);
           // console.log(planetRef.current.position);

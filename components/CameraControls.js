@@ -8,7 +8,7 @@ import CameraControls from "camera-controls";
 controls.install({ THREE });
 extend({ controls });
 
-const Controls = ({focus, initialTarget, setInitialTarget, clicked, setClicked, follow }) => {
+const Controls = ({focus, initialTarget, setInitialTarget, clicked, setClicked, follow, dragged, setDragged }) => {
   let width = window.innerWidth;
   let height = window.innerHeight;
   const camera = useThree((state) => state.camera);
@@ -38,8 +38,15 @@ const Controls = ({focus, initialTarget, setInitialTarget, clicked, setClicked, 
   if (focus) {
     if (clicked) {
       console.log({ clicked });
-      controls.fitToBox(focus.current, true);
 
+      //TODO: could probably compare if current focus changes? 
+      if(!dragged){
+        controls.fitToBox(focus.current, true);
+      }
+      if(dragged){
+        setDragged(!dragged);
+      }
+      
       // let vectorInit = new THREE.Vector3();
       // focus.current.getWorldPosition(vectorInit);
       // controls.setLookAt(vectorInit.x,vectorInit.y,vectorInit.z, vectorInit.x,vectorInit.y, vectorInit.z, true);
