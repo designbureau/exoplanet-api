@@ -11,7 +11,7 @@ const Planet = (props) => {
 
 
   // const getRef = (element) => (itemsEls.current.push(element))
-
+  const constants = useContext(EnvContext);
   const planetRef = useRef();
   useEffect(() => {
     props.refs.current.push(planetRef);
@@ -26,12 +26,7 @@ const Planet = (props) => {
   // const [active, setActive] = useState(false);
   // Subscribe this component to the render-loop, rotate the mesh every frame
 
-  // TODO: replace random defaults
-  const au = 1000;
-
-
   console.log("planet details", props.planetDetails);
-
 
   //Semimajoraxis
   let semimajoraxis;
@@ -55,7 +50,7 @@ const Planet = (props) => {
   else{
     semimajoraxis = 10;
   }
-  semimajoraxis = semimajoraxis * au;
+  semimajoraxis = semimajoraxis * constants.distance.au;
 
   // semimajoraxis = semimajoraxis * au;
   console.log({semimajoraxis});
@@ -169,7 +164,6 @@ const Planet = (props) => {
 
   });
 
-  const constants = useContext(EnvContext);
 
 
   let radius;
@@ -204,15 +198,8 @@ const Planet = (props) => {
     scale = radius;
   }
 
-  //TODO: remove exaggeration
-  scale = scale * constants.radius.jupiter;
-
-
-
-  // meshRef.rotation.y = Math.PI * 180;
-
-
-  // scale = scale / constants.mass.jupiter;
+  //Relative to sol radius
+  scale = scale * constants.radius.jupiter * constants.radius.scale;
 
   const planetTexture = PlanetTexture(mass, radius, props.name);
 

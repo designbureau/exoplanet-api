@@ -9,12 +9,14 @@ export const Constants = {
     earth: 332946,
   },
   radius: {
-    sol: 1,
-    jupiter: 0.10045,
+    sol: 11,
+    jupiter: 1,
     earth: 11.209,
+    scale: 4,
   },
   distance: {
-    au: 5,
+    au: 215.032 * 11,
+    au_sol_radius: 215.032,
   }
 };
 

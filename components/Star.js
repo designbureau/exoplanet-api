@@ -184,7 +184,7 @@ const Star = (props) => {
     scale = radius;
   }
 
-  scale = scale * constants.radius.sol;
+  scale = scale * constants.radius.sol * constants.radius.scale;
   // scale = scale * constants.radius.sol;
 
 
@@ -381,7 +381,13 @@ const Star = (props) => {
           // ]}
           ref={glow}
         >
-          <circleGeometry args={[2 * scale, 128]} />
+              {/* const habitableZoneGeometry = new THREE.RingGeometry(
+        innerRadius,
+        outerRadius,
+        128
+      ); */}
+          {/* <circleGeometry args={[2 * scale, 128]} /> */}
+          <ringGeometry args={[scale + 0.01 , 2 * scale, 128]}/>
           <LayerMaterial
             transparent
             depthWrite={false}
