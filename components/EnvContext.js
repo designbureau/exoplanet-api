@@ -12,7 +12,7 @@ export const Constants = {
     sol: 11,
     jupiter: 1,
     earth: 11.209,
-    scale: 4,
+    scale: 2,
   },
   distance: {
     au: 215.032 * 11,
