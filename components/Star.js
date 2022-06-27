@@ -158,7 +158,15 @@ const Star = (props) => {
   let radius;
   if (props.starSystemData.hasOwnProperty("radius")) {
     if (props.starSystemData.radius.hasOwnProperty("_")) {
-      radius = parseFloat(props.planetDetails.radius._);
+      radius = parseFloat(props.starSystemData.radius._);
+    }
+    if (Array.isArray(props.starSystemData.radius)) {
+      if (props.starSystemData.radius[0].hasOwnProperty("_")) {
+        radius = parseFloat(props.starSystemData.radius[0]._);
+      }
+      else{
+        radius = parseFloat(props.starSystemData.radius[0]);
+      }
     }
   }
   let mass;
@@ -178,15 +186,18 @@ const Star = (props) => {
 
   if (mass) {
     scale = mass;
+    console.log("star mass", mass)
   }
 
   if (radius) {
     scale = radius;
+    console.log("star radius", radius)
   }
 
   scale = scale * constants.radius.sol * constants.radius.scale;
   // scale = scale * constants.radius.sol;
 
+  console.log("scale final", scale);
 
   let temperature = 6500;
   let spectraltype;
@@ -253,7 +264,6 @@ const Star = (props) => {
   // if( scale < 2){
   //   transformScale = scale * 50;
   // }
-  let worldPosition = new THREE.Vector3();
 
 
   return <group ref={group} name={props.starSystemData.name[0]} position={props.position}>
@@ -274,15 +284,7 @@ const Star = (props) => {
           // scale={active ? 1.5 : 1}
           // onClick={(event) => setActive(!active)}
           onClick={(e) => {
-            
-            // setCurrentFocus(mesh);
-
-            
             console.log("clicked mesh", starRef);
-            // console.log("current pos", e.object.position)
-            // console.log({vector})
-            // console.log("world position", vector);
-
             let vector = new THREE.Vector3();
             e.object.getWorldPosition(vector);
             props.setFocus(starRef);
@@ -387,7 +389,7 @@ const Star = (props) => {
         128
       ); */}
           {/* <circleGeometry args={[2 * scale, 128]} /> */}
-          <ringGeometry args={[scale + 0.01 , 2 * scale, 128]}/>
+          <ringGeometry args={[scale, 2 * scale, 128]}/>
           <LayerMaterial
             transparent
             depthWrite={false}
