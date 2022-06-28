@@ -11,7 +11,6 @@ import {
   Depth,
   Fresnel,
   Displace,
-  Gradient,
 } from "lamina";
 // import { Billboard } from "@react-three/drei";
 
@@ -41,42 +40,12 @@ const Star = (props) => {
   const lightRef = useRef();
 
 
-  useFrame((state, delta) => {
-    starRef.current.rotation.y += 0.00005;
-    const elapsedTime = state.clock.getElapsedTime();
 
-    // noise.current.scale += Math.sin(delta * 0.025);
-    // noise2.current.scale += Math.sin(delta * 0.03);
-    // noise3.current.scale += Math.sin(delta * 0.025);
-    noiseSpot.current.scale = Math.sin(elapsedTime * 0.0025);
-    // noiseSpot2.current.scale += Math.sin(delta * 0.00125);
-    // noiseSpot3.current.scale += Math.sin(delta * 0.00125);
-    // noiseSpot4.current.scale += Math.sin(delta * 0.00125);
-    // displace.current.scale += Math.sin(delta * 0.05);
-    // camera.updateProjectionMatrix();
-    glow.current.quaternion.setFromRotationMatrix(camera.matrix);
-
-  });
-  // Return view, these are regular three.js elements expressed in JSX
-  // const starNormalTexture = useLoader(
-  //   TextureLoader,
-  //   "/textures/8k_sun_bw2.jpg"
-  // );
-  // starNormalTexture.encoding = THREE.sRGBEncoding;
-
-  // console.log("star system props", props.starSystemData);
 
   const planetElements = useRef(new Array())
 
-  // const arrLength = props.starSystemData.planet ? props.starSystemData.planet.length : 0;
-  // console.log(arrLength);
-
   const Planets =
     props.starSystemData.planet && props.starSystemData.planet.map((planet) => {
-      // let x = Math.random() * 50 - 1;
-      // let y = Math.random() * 50 - 1;
-      // let z = Math.random() * 50 - 1;
-
       return (
         <Planet
           key={planet.name[0]}
@@ -92,14 +61,6 @@ const Star = (props) => {
         />
       );
     });
-
-
-
-
-    // props.refs.current.system = system;
-
-
-   
 
       // const system = {};
       // system.star = starRef;
@@ -128,35 +89,6 @@ const Star = (props) => {
 
       }, [props]);
 
-
-    // let specificArrayInObject = props.viewState.refs.slice();
-    //   specificArrayInObject.push(system);
-    //   const newObj = { ...viewState, refs: specificArrayInObject };
-    //   props.setViewState(newObj);
-
-      // props.setViewState(viewState => ({...viewState, refs: system}) );
-      // props.setRefsArray(refsArray => [...refsArray, { system }]);
-
-      // props.setRefsArray();
-
-  
-      
-
-
-
-    //   useLayoutEffect(() => {
-
-    // },[props.refs]);
-    // console.log({system});
-
-
-
-    
-    // console.log({planetElements});
-  // console.log("group mesh", group);
-  // console.log("star mesh", mesh);
-  // console.log("star position", props.position);
-  // console.log(props);
 
   let radius;
   if (props.starSystemData.hasOwnProperty("radius")) {
@@ -262,13 +194,31 @@ const Star = (props) => {
 
   // const SphereGeometry = useMemo((scale) => , []);
 
-  let transformScale = Math.log(scale) + 20;
+  // let transformScale = Math.log(scale) + 20;
+  let transformScale = scale * 0.01;
   // console.log(transformScale);
   // if( scale < 2){
   //   transformScale = scale * 50;
   // }
 
   let start, end, delta;
+
+
+  useFrame((state, delta) => {
+    starRef.current.rotation.y += 0.00005;
+    const elapsedTime = state.clock.getElapsedTime();
+    // noise.current.scale += Math.sin(delta * 0.025);
+    // noise2.current.scale += Math.sin(delta * 0.03);
+    // noise3.current.scale += Math.sin(delta * 0.025);
+    noiseSpot.current.scale = Math.sin(elapsedTime * 0.00125);
+    // noiseSpot2.current.scale += Math.sin(delta * 0.00125);
+    // noiseSpot3.current.scale += Math.sin(delta * 0.00125);
+    // noiseSpot4.current.scale += Math.sin(delta * 0.00125);
+    // displace.current.scale += Math.sin(delta * 0.05);
+    // camera.updateProjectionMatrix();
+    glow.current.quaternion.setFromRotationMatrix(camera.matrix);
+  });
+
 
   return <group ref={group} name={props.starSystemData.name[0]} position={props.position}>
       <pointLight
@@ -335,10 +285,10 @@ const Star = (props) => {
             <Noise
               ref={noise}
               mapping={"local"}
-              scale={transformScale * 0.7}
+              scale={transformScale * 2}
               type={"perlin"}
               mode={"multiply"}
-              alpha={0.5}
+              alpha={0.25}
             />
             <Noise
               ref={noise3}
@@ -362,7 +312,7 @@ const Star = (props) => {
               scale={transformScale * .01}
               type={"perlin"}
               mode={"multiply"}
-              alpha={0.5}
+              alpha={0.25}
             />
              <Noise
               ref={noiseSpot2}
@@ -375,7 +325,7 @@ const Star = (props) => {
              <Noise
               ref={noiseSpot3}
               mapping={"local"}
-              scale={transformScale * .0001}
+              scale={transformScale * .00025}
               type={"perlin"}
               mode={"softlight"}
               alpha={0.25}
@@ -392,19 +342,7 @@ const Star = (props) => {
             {/* <Displace ref={displace} strength={0.0125} scale={transformScale} type={"perlin"} /> */}
           </LayerMaterial>
         </mesh>
-        <sprite
-          // position={[
-          //   props.position[0],
-          //   props.position[1],
-          //   props.position[2] + 0.1,
-          // ]}
-          ref={glow}
-        >
-              {/* const habitableZoneGeometry = new THREE.RingGeometry(
-        innerRadius,
-        outerRadius,
-        128
-      ); */}
+        <sprite ref={glow} >
           {/* <circleGeometry args={[2 * scale, 128]} /> */}
           <ringGeometry args={[scale, 2 * scale, 128]}/>
           <LayerMaterial
