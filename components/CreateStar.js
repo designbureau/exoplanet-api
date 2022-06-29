@@ -22,7 +22,7 @@ const CreateStar = ({ data, setFocus, setClicked, refs, setViewState, setRefsArr
 
     // console.log("star", star.name[0]);
     return <Star
-      key={star.name[0]}
+      key={i}
       position={[x, y, z]}
       starSystemData={star}
       setFocus={setFocus}

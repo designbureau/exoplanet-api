@@ -1,6 +1,6 @@
 import CreateStar from "./CreateStar";
 import CreatePlanet from "./CreatePlanet";
-// import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import JsonFind from "json-find";
 
 const CreateBinary = (
@@ -56,33 +56,23 @@ const CreateBinary = (
       setRefsArray={setRefsArray}
     />
   );
-  // let Planet = systemData.planet && (
-  //   <CreatePlanet
-  //     data={systemData.planet}
-  //     setFocus={setFocus}
-  //     setClicked={setClicked}
-  //     refs={refs}
-  //     setViewState={setViewState}
-  //     setRefsArray={setRefsArray}
-  //   />
-  // );
 
+  //TODO: figure out how to do circumbinary planets. Maybe treat it like a star in setting refs
 
-    //TODO: figure out how to do circumbinary planets. Maybe treat it like a star in setting refs
   let Planet;
-  systemData.planet && ( Planet = systemData.planet.map((planet, i) => {
-      <CreatePlanet
-      data={planet}
-      setFocus={setFocus}
-      setClicked={setClicked}
-      setDragged={setDragged}
-      refs={refs}
-      setViewState={setViewState}
-      setRefsArray={setRefsArray}
-    />
-  }));
+    if(systemData.planet){
 
-
+      Planet = <CreatePlanet
+        data={systemData.planet}
+        setFocus={setFocus}
+        setClicked={setClicked}
+        setDragged={setDragged}
+        refs={refs}
+        setViewState={setViewState}
+        setRefsArray={setRefsArray}
+        pType={true}
+      />;
+    }
 
   let Binary;
   const au = 1000;

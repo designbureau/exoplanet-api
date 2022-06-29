@@ -8,7 +8,7 @@ const SystemNav = ({ refs, setFocus, setClicked}) => {
           refs.current.map((system, i) => {
             return (
               <li key={i}>
-                {system.star.current && (
+                {system.star && (
                   <span
                     onClick={() => {
                       setFocus(system.star);
@@ -19,7 +19,7 @@ const SystemNav = ({ refs, setFocus, setClicked}) => {
                   </span>
                 )}
                 <ul>
-                  {system.planets.current &&
+                  {system.planets &&
                     system.planets.current.map((planet, i) => {
                       return (
                         planet.current && (

@@ -18,9 +18,23 @@ const Planet = (props) => {
   // const getRef = (element) => (itemsEls.current.push(element))
   const constants = useContext(EnvContext);
   const planetRef = useRef();
+  const planetElements = useRef(new Array())
+
+
+  // console.log("props", props);
   useEffect(() => {
-    props.refs.current.push(planetRef);
-  }, [props.refs]);
+    if(props.pType){
+      const system = {};
+      planetElements.current.push(planetRef);
+      system.planets = planetElements;
+      props.refs.current.push(system);
+      props.setRefsArray(system);
+    }
+    else{
+      props.refs.current.push(planetRef);
+    }
+
+  }, [props]);
 
   // props.setViewState(refs => ({ ...refs.current, planetRef}));
 
