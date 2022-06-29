@@ -31,7 +31,9 @@ const Planet = (props) => {
       props.setRefsArray(system);
     }
     else{
-      props.refs.current.push(planetRef);
+      if(!props.refs.current.includes(planetRef)){
+        props.refs.current.push(planetRef);
+      }
     }
 
   }, [props]);

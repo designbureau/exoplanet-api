@@ -19,7 +19,7 @@ export default function Home() {
   const [initialTarget, setInitialTarget] = useState(false);
   const [follow, setFollow] = useState(false);
 
-  const refs = useRef(new Array());
+  let [refs, setRefs] = useState(new Array());
   const [focus, setFocus] = useState(null);
 
   const [viewState, setViewState] = useState({
@@ -45,7 +45,7 @@ export default function Home() {
 
   return (
     <>
-      <Nav setSystemData={setSystemData} refs={refs} />
+      <Nav setSystemData={setSystemData} refs={refs} setRefs={setRefs} />
       {systemData && (
         <SystemNav refs={refs} setFocus={setFocus} setClicked={setClicked} setFollow={setFollow} follow={follow} />
       )}

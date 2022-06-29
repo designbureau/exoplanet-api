@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, user } from "react";
 import Link from "next/link";
 
-const Nav = ({setSystemData, refs}) => {
+const Nav = ({setSystemData, refs, setRefs}) => {
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
   const [navActive, setNavActive] = useState(false);
@@ -23,7 +23,9 @@ const Nav = ({setSystemData, refs}) => {
 
   const navHandler = () => {
     setNavActive(!navActive);
+    console.log("refs before", refs.current );
     refs.current = new Array();
+    console.log("refs after", refs.current );
   }
 
   const clickHandler = (system) => {

@@ -42,7 +42,7 @@ const Star = (props) => {
 
 
 
-  const planetElements = useRef(new Array())
+  const planetElements = useRef(new Array());
 
   const Planets =
     props.starSystemData.planet && props.starSystemData.planet.map((planet) => {
